@@ -1,10 +1,10 @@
 <img width="962" height="250" alt="ASRL banner" src="https://github.com/user-attachments/assets/810f8745-f17f-430d-8b6c-df349ddeb278" />
 
-
-
-**Visit the App**: [Live Demo](https://prcm-asrl.netlify.app)
+---
 
 # 🧠 PRCM | ASRL Demo Experience
+
+**Visit the App**: [Live Demo](https://prcm-asrl.netlify.app)
 
 Welcome to the comprehensive PRCM | ASRL demo experience! This collection of interconnected demos showcases the full potential of our enhanced learning platform.
 
