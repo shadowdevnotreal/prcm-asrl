@@ -2,10 +2,7 @@
 
 
 
-### For Users
-1. **Visit the App**: [Live Demo](https://prcm-asrl.netlify.app)
-2. **Import a Deck**: Use the built-in sample or import your own JSON/CSV
-3. **Start Studying**: The app will guide you through your personalized learning journey
+**Visit the App**: [Live Demo](https://prcm-asrl.netlify.app)
 
 # 🧠 PRCM | ASRL Demo Experience
 
