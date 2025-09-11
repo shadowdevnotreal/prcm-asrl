@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRCM | ASRL DEMO - Welcome</title>
+    <style>
+        :root {
+            /* Light Theme */
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #e2e8f0;
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --border: #e2e8f0;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --gradient-start: #f7fafc;
+            --gradient-end: #edf2f7;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a202c;
+            --bg-secondary: #2d3748;
+            --bg-tertiary: #4a5568;
+            --text-primary: #f7fafc;
+            --text-secondary: #e2e8f0;
+            --text-muted: #a0aec0;
+            --border: #4a5568;
+            --card-bg: #2d3748;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --gradient-start: #2d3748;
+            --gradient-end: #1a202c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        /* Header */
+        .header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 4px 8px var(--shadow));
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.125rem, 2vw, 1.5rem);
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: flex;
+            flex-direction: column;
+            sm:flex-direction: row;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            padding: 1rem 2.5rem;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .cta-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Demo Path Section */
+        .demo-path {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .demo-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px var(--shadow);
+        }
+
+        .demo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 20px 20px 0 0;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .demo-card.featured {
+            border-color: var(--primary);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
+        }
+
+        .demo-card.featured::before {
+            height: 8px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+        }
+
+        .step-badge {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .demo-card.featured .step-badge {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .card-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+
+        .card-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-tag {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+        }
+
+        .card-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-top: auto;
+        }
+
+        /* Features Overview */
+        .features-overview {
+            margin-bottom: 4rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .feature-emoji {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .feature-content h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .feature-content p {
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Quick Start Guide */
+        .quick-start {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 8px 32px var(--shadow);
+        }
+
+        .quick-start h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .quick-start p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .start-steps {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            text-align: center;
+            max-width: 150px;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+
+        .step p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .main-container {
+                padding: 2rem 1rem;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+
+            .start-steps {
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .stagger-children > * {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+        .stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+        .stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+        .stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+        .stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+        .stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <span>🧠</span>
+                <span>PRCM | ASRL DEMO</span>
+            </div>
+            
+            <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+                <span id="themeIcon">🌙</span>
+                <span id="themeText">Dark Mode</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section animate-in">
+            <div class="hero-icon">🧠</div>
+            <h1 class="hero-title">Welcome to PRCM | ASRL DEMO</h1>
+            <p class="hero-subtitle">
+                Explore our comprehensive demo ecosystem featuring enhanced dark mode, interactive analytics, 
+                and accessibility-first design. Experience the future of intelligent flashcard learning.
+            </p>
+            
+            <div class="hero-cta">
+                <a href="index.html" class="cta-primary">
+                    <span>🚀</span>
+                    <span>Start Demo Experience</span>
+                </a>
+                <a href="#demo-path" class="cta-secondary">
+                    <span>🗺️</span>
+                    <span>Explore Demo Path</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Demo Path -->
+        <section class="demo-path" id="demo-path">
+            <h2 class="section-title">Choose Your Demo Path</h2>
+            <p class="section-subtitle">
+                Each demo showcases different aspects of our intelligent learning platform. 
+                Start anywhere or follow our recommended sequence.
+            </p>
+
+            <div class="demo-grid stagger-children">
+                <!-- Marketing Overview - Featured -->
+                <a href="index.html" class="demo-card featured">
+                    <div class="card-header">
+                        <span class="card-icon">🏠</span>
+                        <span class="step-badge">Start Here</span>
+                    </div>
+                    <h3 class="card-title">Marketing Overview</h3>
+                    <p class="card-description">
+                        Comprehensive marketing experience with user profiles, activity heat maps, 
+                        and feature showcases using real data from our power user Alex Chen.
+                    </p>
+                    <div class="card-features">
+                        <span class="feature-tag">🔥 Live Data</span>
+                        <span class="feature-tag">📊 Analytics Dashboard</span>
+                        <span class="feature-tag">👤 User Profiles</span>
+                        <span class="feature-tag">📈 Activity Heat Maps</span>
+                    </div>
+                    <div class="card-action">
+                        <span>Begin Experience</span>
+                        <span>→</span>
+                    </div>
+                </a>
+
+                <!-- Interactive Demo -->
+                <a href="interactive-demo.html" class="demo-card">
+                    <div class="card-header">
+                        <span class="card-icon">🎮</span>
+                        <span class="step-badge">Step 1</span>
+                    </div>
+                    <h3 class="card-title">Interactive Demo</h3>
+                    <p class="card-description">
+                        Experience the actual Anki interface with real Japanese flashcards, 
+                        live statistics tracking, and fully functional settings panel.
+                    </p>
+                    <div class="card-features">
+                        <span class="feature-tag">🎴 Real Flashcards</span>
+                        <span class="feature-tag">📈 Live Stats</span>
+                        <span class="feature-tag">⚙️ Full Settings</span>
+                        <span class="feature-tag">🎯 SM-2 Algorithm</span>
+                    </div>
+                    <div class="card-action">
+                        <span>Try the App</span>
+                        <span>→</span>
+                    </div>
+                </a>
+
+                <!-- User Guide -->
+                <a href="user-guide.html" class="demo-card">
+                    <div class="card-header">
+                        <span class="card-icon">📚</span>
+                        <span class="step-badge">Step 2</span>
+                    </div>
+                    <h3 class="card-title">Complete User Guide</h3>
+                    <p class="card-description">
+                        Comprehensive documentation covering all features, accessibility options, 
+                        animation controls, and advanced statistics explanations.
+                    </p>
+                    <div class="card-features">
+                        <span class="feature-tag">📖 Full Documentation</span>
+                        <span class="feature-tag">♿ Accessibility</span>
+                        <span class="feature-tag">🎨 Customization</span>
+                        <span class="feature-tag">🛠️ Troubleshooting</span>
+                    </div>
+                    <div class="card-action">
+                        <span>Learn Features</span>
+                        <span>→</span>
+                    </div>
+                </a>
+
+                <!-- Technical Showcase -->
+                <a href="technical-showcase.html" class="demo-card">
+                    <div class="card-header">
+                        <span class="card-icon">🔧</span>
+                        <span class="step-badge">Step 3</span>
+                    </div>
+                    <h3 class="card-title">Technical Architecture</h3>
+                    <p class="card-description">
+                        Deep dive into React 18 architecture, TypeScript implementation, 
+                        performance benchmarks, and engineering excellence.
+                    </p>
+                    <div class="card-features">
+                        <span class="feature-tag">⚛️ React 18</span>
+                        <span class="feature-tag">📱 PWA Ready</span>
+                        <span class="feature-tag">🚀 Performance</span>
+                        <span class="feature-tag">🧪 Testing</span>
+                    </div>
+                    <div class="card-action">
+                        <span>View Architecture</span>
+                        <span>→</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Features Overview -->
+        <section class="features-overview">
+            <h2 class="section-title">Key Features Demonstrated</h2>
+            <p class="section-subtitle">
+                Discover the advanced capabilities that make our learning platform exceptional.
+            </p>
+
+            <div class="features-grid stagger-children">
+                <div class="feature-item">
+                    <span class="feature-emoji">🌙</span>
+                    <div class="feature-content">
+                        <h4>Enhanced Dark Mode</h4>
+                        <p>WCAG AAA compliant themes with perfect contrast ratios for comfortable studying in any environment.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <span class="feature-emoji">📊</span>
+                    <div class="feature-content">
+                        <h4>Interactive Analytics</h4>
+                        <p>GitHub-style activity heat maps and real-time performance tracking with detailed insights.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <span class="feature-emoji">♿</span>
+                    <div class="feature-content">
+                        <h4>Accessibility First</h4>
+                        <p>Text scaling, motion controls, keyboard navigation, and screen reader optimization.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <span class="feature-emoji">🎨</span>
+                    <div class="feature-content">
+                        <h4>12 Accent Colors</h4>
+                        <p>Personalize your learning experience with beautiful color themes and customization options.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <span class="feature-emoji">🧠</span>
+                    <div class="feature-content">
+                        <h4>SM-2 Spaced Repetition</h4>
+                        <p>Intelligent algorithm adapts to your learning pace for maximum retention efficiency.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <span class="feature-emoji">⚡</span>
+                    <div class="feature-content">
+                        <h4>Lightning Performance</h4>
+                        <p>Sub-second load times, smooth animations, and optimized for all devices and browsers.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Start Guide -->
+        <section class="quick-start">
+            <h3>🚀 Quick Start Guide</h3>
+            <p>
+                Ready to explore? Follow these simple steps to get the most out of your demo experience. 
+                Each section builds upon the previous one for a complete understanding.
+            </p>
+
+            <div class="start-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <p>Start with Marketing Overview</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <p>Try Interactive Demo</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <p>Read User Guide</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <p>Explore Technical Details</p>
+                </div>
+            </div>
+
+            <a href="index.html" class="cta-primary">
+                <span>🎯</span>
+                <span>Begin Demo Journey</span>
+            </a>
+        </section>
+    </main>
+
+    <script>
+        // Theme Management - Persists across all demo pages
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            // Apply theme
+            document.body.setAttribute('data-theme', newTheme);
+            
+            // Update button
+            updateThemeButton(newTheme);
+            
+            // Save to localStorage for persistence across all pages
+            localStorage.setItem('anki-demo-theme', newTheme);
+            
+            // Also save with individual page keys for compatibility
+            localStorage.setItem('anki-theme', newTheme);
+            
+            console.log(`Theme changed to: ${newTheme}`);
+        }
+        
+        // Make functions globally available
+        window.toggleTheme = toggleTheme;
+
+        function updateThemeButton(theme) {
+            const icon = document.getElementById('themeIcon');
+            const text = document.getElementById('themeText');
+            
+            if (theme === 'dark') {
+                icon.textContent = '☀️';
+                text.textContent = 'Light Mode';
+            } else {
+                icon.textContent = '🌙';
+                text.textContent = 'Dark Mode';
+            }
+        }
+
+        // Load saved theme on page load
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('anki-demo-theme') || 
+                               localStorage.getItem('anki-theme') || 
+                               'light';
+            
+            document.body.setAttribute('data-theme', savedTheme);
+            updateThemeButton(savedTheme);
+        }
+
+        // Smooth scroll for anchor links
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Add demo card interactions
+        function initCardInteractions() {
+            document.querySelectorAll('.demo-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-8px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        }
+
+        // Keyboard shortcuts
+        function initKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                // Toggle theme with Ctrl/Cmd + D
+                if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                    e.preventDefault();
+                    toggleTheme();
+                }
+                
+                // Quick start with Enter
+                if (e.key === 'Enter' && e.ctrlKey) {
+                    window.location.href = 'index.html';
+                }
+                
+                // Navigate demos with number keys
+                if (e.key >= '1' && e.key <= '4' && !e.ctrlKey && !e.metaKey) {
+                    const demos = ['index.html', 'interactive-demo.html', 'user-guide.html', 'technical-showcase.html'];
+                    const index = parseInt(e.key) - 1;
+                    if (demos[index]) {
+                        window.location.href = demos[index];
+                    }
+                }
+            });
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+            initSmoothScroll();
+            initCardInteractions();
+            initKeyboardShortcuts();
+            
+            // Add staggered animation to elements
+            const staggerElements = document.querySelectorAll('.stagger-children > *');
+            staggerElements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.1}s`;
+            });
+            
+            console.log('🧠 PRCM | ASRL DEMO - Start Page Loaded');
+            console.log('💡 Keyboard shortcuts:');
+            console.log('  - Ctrl/Cmd + D: Toggle theme');
+            console.log('  - Ctrl + Enter: Quick start');
+            console.log('  - 1-4: Navigate to demos');
+        });
+    </script>
+</body>
+</html>

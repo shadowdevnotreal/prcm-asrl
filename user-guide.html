@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRCM | ASRL DEMO - User Guide</title>
+    <meta name="description" content="Comprehensive user guide for Anki flashcard app with enhanced features, dark mode, and accessibility controls">
+    <meta name="keywords" content="Anki, flashcards, spaced repetition, study app, user guide">
+    <meta name="author" content="Anki Team">
+    <style>
+        :root {
+            /* Light Theme Colors */
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-blue: #3b82f6;
+            --accent-indigo: #6366f1;
+            --accent-purple: #8b5cf6;
+            --accent-pink: #ec4899;
+            --accent-red: #ef4444;
+            --accent-orange: #f97316;
+            --accent-yellow: #eab308;
+            --accent-green: #22c55e;
+            --accent-teal: #14b8a6;
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-lime: #84cc16;
+            
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e2e8f0;
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --text-muted: #a0aec0;
+            --border-color: #e2e8f0;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            
+            /* Animation Settings */
+            --transition-speed: 0.3s;
+            --shimmer-intensity: 0.3;
+            --animation-scale: 1;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border-color: #475569;
+            --shadow-light: rgba(0, 0, 0, 0.3);
+            --shadow-medium: rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme="high-contrast"] {
+            --bg-primary: #000000;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #333333;
+            --text-primary: #ffffff;
+            --text-secondary: #e0e0e0;
+            --text-muted: #cccccc;
+            --border-color: #666666;
+            --primary-color: #00ff00;
+            --secondary-color: #ff00ff;
+        }
+
+        .text-xs { font-size: 0.75rem; }
+        .text-sm { font-size: 0.875rem; }
+        .text-base { font-size: 1rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-2xl { font-size: 1.5rem; }
+
+        [data-text-size="small"] { font-size: 0.9em; }
+        [data-text-size="medium"] { font-size: 1em; }
+        [data-text-size="large"] { font-size: 1.1em; }
+        [data-text-size="xl"] { font-size: 1.2em; }
+
+        [data-font-family="system"] { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
+        [data-font-family="inter"] { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        [data-font-family="roboto"] { font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        [data-reduce-motion="true"] * {
+            animation: none !important;
+            transition: none !important;
+        }
+
+        body {
+            font-family: var(--font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif);
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-tertiary) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: all var(--transition-speed) ease;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            gap: 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .header-nav-btn {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .header-nav-btn:hover,
+        .header-nav-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle-btn {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .theme-toggle-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .settings-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .settings-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        /* Enhanced Container Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .enhanced-container {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .enhanced-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px var(--shadow-light);
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-speed) ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .enhanced-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--shadow-medium);
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 2rem 0;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            border: 1px solid var(--border-color);
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            max-height: calc(100vh - 140px);
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            padding: 0 1.5rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 0.75rem 2rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all var(--transition-speed) ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+        }
+
+        .nav-link.section-header {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-top: 1.25rem;
+            padding-left: 2rem;
+            border: none;
+        }
+
+        .nav-link.section-header:hover {
+            background: none;
+            color: var(--text-muted);
+        }
+
+        /* Main Content */
+        .main-content {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 3rem 4rem;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .content-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .content-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-section h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .content-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem 0;
+            color: var(--text-primary);
+        }
+
+        .content-section h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.5rem 0 1rem 0;
+            color: var(--text-primary);
+        }
+
+        .content-section p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .content-section ul, .content-section ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .content-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            box-shadow: -4px 0 20px var(--shadow-medium);
+            z-index: 1000;
+            transition: right var(--transition-speed) ease;
+            overflow-y: auto;
+        }
+
+        .settings-panel.open {
+            right: 0;
+        }
+
+        .settings-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .settings-content {
+            padding: 1.5rem;
+        }
+
+        .settings-group {
+            margin-bottom: 2rem;
+        }
+
+        .settings-group h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 24px;
+            background: var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .toggle-switch.active {
+            background: var(--primary-color);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .toggle-switch.active::after {
+            left: 26px;
+        }
+
+        .setting-select, .setting-slider {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .color-option.active {
+            border-color: var(--text-primary);
+            transform: scale(1.1);
+        }
+
+        /* Feature Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 36px var(--shadow-medium);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-speed) ease;
+            z-index: 999;
+        }
+
+        .overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Print Styles */
+        @media print {
+            .header, .settings-panel, .overlay {
+                display: none !important;
+            }
+            
+            .container {
+                grid-template-columns: 1fr;
+                max-width: none;
+                padding: 0;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .main-content {
+                box-shadow: none;
+                border: none;
+                padding: 1rem;
+                background: white !important;
+                color: black !important;
+            }
+            
+            .content-section {
+                display: block !important;
+                opacity: 1 !important;
+                transform: none !important;
+                page-break-inside: avoid;
+            }
+            
+            .content-section h1,
+            .content-section h2,
+            .content-section h3 {
+                color: black !important;
+                background: none !important;
+                -webkit-text-fill-color: initial !important;
+            }
+            
+            .content-section p,
+            .content-section li {
+                color: black !important;
+            }
+            
+            .enhanced-card,
+            .feature-card {
+                background: white !important;
+                border: 1px solid #ccc !important;
+                box-shadow: none !important;
+                break-inside: avoid;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .header-nav {
+                gap: 0.5rem;
+            }
+            
+            .header-nav-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .header-nav {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
+            .header-nav-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .main-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .settings-panel {
+                width: 100%;
+                right: -100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-nav-btn {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.8rem;
+            }
+            
+            .header-controls {
+                gap: 0.5rem;
+            }
+            
+            .theme-toggle-btn,
+            .settings-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .theme-toggle-btn {
+                width: auto;
+                height: auto;
+            }
+        }
+
+        /* Shimmer Animation */
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .shimmer-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shimmer-effect::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, var(--shimmer-intensity)),
+                transparent
+            );
+            animation: shimmer 2s infinite;
+        }
+
+        [data-shimmer="false"] .shimmer-effect::after {
+            display: none;
+        }
+
+        /* Focus Mode */
+        [data-focus-mode="true"] .sidebar,
+        [data-focus-mode="true"] .header-menu-btn {
+            opacity: 0.3;
+        }
+
+        [data-focus-mode="true"] .main-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="light" data-text-size="medium" data-font-family="system">
+    <!-- Demo Navigation Header -->
+    <div style="background: var(--primary-color); color: white; padding: 0.75rem 2rem; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;">
+            <div style="display: flex; align-items: center; gap: 2rem;">
+                <h1 style="font-size: 1.25rem; font-weight: bold; margin: 0;">📚 User Guide</h1>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <a href="index.html" style="color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 6px; transition: all 0.2s; background: rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">🏠 Marketing</a>
+                    <a href="interactive-demo.html" style="color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 6px; transition: all 0.2s; background: rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">🎮 Interactive Demo</a>
+                    <span style="color: rgba(255,255,255,0.9); font-size: 0.9rem; background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 6px;">📚 User Guide</span>
+                    <a href="technical-showcase.html" style="color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 6px; transition: all 0.2s; background: rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">🔧 Technical</a>
+                </div>
+            </div>
+            <div style="font-size: 0.9rem; opacity: 0.8;">
+                Step 2 of 4: Learn the Features
+            </div>
+        </div>
+    </div>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">Anki Documentation</div>
+            
+            <!-- Navigation Buttons -->
+            <nav class="header-nav">
+                <a href="#overview" class="header-nav-btn active" onclick="showSection('overview')">📖 Overview</a>
+                <a href="#installation" class="header-nav-btn" onclick="showSection('installation')">💻 Installation</a>
+                <a href="#appearance" class="header-nav-btn" onclick="showSection('appearance')">🎨 Appearance</a>
+                <a href="#animations" class="header-nav-btn" onclick="showSection('animations')">⚡ Animations</a>
+                <a href="#statistics" class="header-nav-btn" onclick="showSection('statistics')">📊 Statistics</a>
+                <a href="#profile" class="header-nav-btn" onclick="showSection('profile')">👤 Profile</a>
+                <a href="#troubleshooting" class="header-nav-btn" onclick="showSection('troubleshooting')">🔧 Help</a>
+            </nav>
+            
+            <!-- Header Controls -->
+            <div class="header-controls">
+                <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
+                    🌙
+                </button>
+                <button class="settings-btn" onclick="toggleSettings()">
+                    ⚙️ Settings
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <h2>User Guide</h2>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#overview" class="nav-link active" onclick="showSection('overview')">Overview</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#" class="nav-link section-header">Getting Started</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#installation" class="nav-link" onclick="showSection('installation')">Installation</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#first-deck" class="nav-link" onclick="showSection('first-deck')">Creating Your First Deck</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#basic-study" class="nav-link" onclick="showSection('basic-study')">Basic Study Session</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link section-header">Core Features</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#spaced-repetition" class="nav-link" onclick="showSection('spaced-repetition')">Spaced Repetition</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#card-types" class="nav-link" onclick="showSection('card-types')">Card Types</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#deck-management" class="nav-link" onclick="showSection('deck-management')">Deck Management</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#statistics" class="nav-link" onclick="showSection('statistics')">Statistics & Analytics</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link section-header">Advanced Features</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#appearance" class="nav-link" onclick="showSection('appearance')">Appearance & Accessibility</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#animations" class="nav-link" onclick="showSection('animations')">Animation Controls</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#profile" class="nav-link" onclick="showSection('profile')">User Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#export-import" class="nav-link" onclick="showSection('export-import')">Import & Export</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link section-header">Support</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#troubleshooting" class="nav-link" onclick="showSection('troubleshooting')">Troubleshooting</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#faq" class="nav-link" onclick="showSection('faq')">FAQ</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <section id="overview" class="content-section active">
+                <h1>Welcome to Anki</h1>
+                <p>Anki is a powerful, intelligent flashcard application that uses spaced repetition to help you learn and remember information more effectively. With our enhanced features, you now have more control over your learning experience than ever before.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card shimmer-effect">
+                        <div class="feature-icon">🧠</div>
+                        <div class="feature-title">Intelligent Spaced Repetition</div>
+                        <div class="feature-description">Our SM-2 algorithm adapts to your learning pace, showing cards at optimal intervals for maximum retention.</div>
+                    </div>
+
+                    <div class="feature-card shimmer-effect">
+                        <div class="feature-icon">🎨</div>
+                        <div class="feature-title">Enhanced Appearance</div>
+                        <div class="feature-description">Dark mode, high contrast, 12 accent colors, and comprehensive accessibility features for all users.</div>
+                    </div>
+
+                    <div class="feature-card shimmer-effect">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">Interactive Analytics</div>
+                        <div class="feature-description">Activity heat maps, performance charts, and detailed statistics to track your learning progress.</div>
+                    </div>
+
+                    <div class="feature-card shimmer-effect">
+                        <div class="feature-icon">⚡</div>
+                        <div class="feature-title">Animation Controls</div>
+                        <div class="feature-description">Customize shimmer effects, card transitions, and loading animations to match your preferences.</div>
+                    </div>
+                </div>
+
+                <h2>What's New</h2>
+                <div class="enhanced-card">
+                    <h3>🌙 Enhanced Dark Mode</h3>
+                    <p>Experience a beautifully designed dark theme with proper contrast ratios and eye-comfortable colors. Perfect for late-night study sessions.</p>
+                </div>
+
+                <div class="enhanced-card">
+                    <h3>♿ Accessibility First</h3>
+                    <p>WCAG AAA compliant high contrast mode, text size controls, reduce motion options, and keyboard navigation support.</p>
+                </div>
+
+                <div class="enhanced-card">
+                    <h3>📈 Advanced Analytics</h3>
+                    <p>GitHub-style activity heat maps, performance trends, SM-2 analysis charts, and time-of-day performance insights.</p>
+                </div>
+            </section>
+
+            <!-- Installation Section -->
+            <section id="installation" class="content-section">
+                <h1>Installation Guide</h1>
+                <p>Get started with Anki in just a few simple steps. Our app supports all major platforms and devices.</p>
+
+                <h2>System Requirements</h2>
+                <ul>
+                    <li>iOS 13.0+ / Android 8.0+ / Windows 10+ / macOS 10.14+</li>
+                    <li>At least 100MB free storage space</li>
+                    <li>Internet connection for syncing (optional)</li>
+                </ul>
+
+                <h2>Download Options</h2>
+                <div class="feature-grid">
+                    <div class="enhanced-card">
+                        <h3>📱 Mobile Apps</h3>
+                        <p>Download from App Store or Google Play for the complete mobile experience with touch gestures and offline support.</p>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>💻 Desktop Apps</h3>
+                        <p>Full-featured desktop applications for Windows, macOS, and Linux with advanced deck editing capabilities.</p>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>🌐 Web Version</h3>
+                        <p>Access your decks from any browser with our responsive web application. Perfect for quick reviews.</p>
+                    </div>
+                </div>
+
+                <h2>First-Time Setup</h2>
+                <ol>
+                    <li>Create your free Anki account</li>
+                    <li>Choose your preferred appearance settings</li>
+                    <li>Set up your study preferences</li>
+                    <li>Import your first deck or create new cards</li>
+                    <li>Start your first study session</li>
+                </ol>
+            </section>
+
+            <!-- Appearance Settings Section -->
+            <section id="appearance" class="content-section">
+                <h1>Appearance & Accessibility</h1>
+                <p>Customize Anki's appearance to match your preferences and accessibility needs. Our comprehensive settings ensure a comfortable learning experience for everyone.</p>
+
+                <h2>🌙 Theme Options</h2>
+                <div class="enhanced-card">
+                    <h3>Light Mode</h3>
+                    <p>Clean, bright interface with colorful backgrounds perfect for daytime study sessions.</p>
+                    
+                    <h3>Dark Mode</h3>
+                    <p>Easy on the eyes with proper contrast ratios, ideal for evening study or low-light environments.</p>
+                    
+                    <h3>High Contrast Mode</h3>
+                    <p>WCAG AAA compliant design with maximum contrast for users with visual impairments.</p>
+                    
+                    <h3>Auto Theme</h3>
+                    <p>Automatically switch between light and dark modes based on your system settings or time of day.</p>
+                </div>
+
+                <h2>🎨 Accent Colors</h2>
+                <p>Choose from 12 beautiful accent colors to personalize your experience:</p>
+                <div class="color-palette">
+                    <div class="color-option active" style="background-color: #3b82f6;" title="Blue"></div>
+                    <div class="color-option" style="background-color: #6366f1;" title="Indigo"></div>
+                    <div class="color-option" style="background-color: #8b5cf6;" title="Purple"></div>
+                    <div class="color-option" style="background-color: #ec4899;" title="Pink"></div>
+                    <div class="color-option" style="background-color: #ef4444;" title="Red"></div>
+                    <div class="color-option" style="background-color: #f97316;" title="Orange"></div>
+                    <div class="color-option" style="background-color: #eab308;" title="Yellow"></div>
+                    <div class="color-option" style="background-color: #22c55e;" title="Green"></div>
+                    <div class="color-option" style="background-color: #14b8a6;" title="Teal"></div>
+                    <div class="color-option" style="background-color: #06b6d4;" title="Cyan"></div>
+                    <div class="color-option" style="background-color: #10b981;" title="Emerald"></div>
+                    <div class="color-option" style="background-color: #84cc16;" title="Lime"></div>
+                </div>
+
+                <h2>📝 Typography Settings</h2>
+                <div class="enhanced-card">
+                    <h3>Text Size</h3>
+                    <ul>
+                        <li><strong>Small:</strong> Compact view for more content on screen</li>
+                        <li><strong>Medium:</strong> Standard size for optimal readability</li>
+                        <li><strong>Large:</strong> Enhanced readability for comfortable viewing</li>
+                        <li><strong>Extra Large:</strong> Maximum readability for accessibility</li>
+                    </ul>
+                    
+                    <h3>Font Families</h3>
+                    <ul>
+                        <li><strong>System:</strong> Your device's default font for familiarity</li>
+                        <li><strong>Inter:</strong> Modern, highly legible typeface</li>
+                        <li><strong>Roboto:</strong> Google's clean, friendly design</li>
+                    </ul>
+                </div>
+
+                <h2>♿ Accessibility Features</h2>
+                <div class="feature-grid">
+                    <div class="enhanced-card">
+                        <h3>Reduce Motion</h3>
+                        <p>Disable animations and transitions for users sensitive to motion or to improve performance.</p>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>Focus Mode</h3>
+                        <p>Minimize distractions by dimming non-essential UI elements during study sessions.</p>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>Keyboard Navigation</h3>
+                        <p>Full keyboard support for navigation and card interactions without requiring a mouse.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Animation Controls Section -->
+            <section id="animations" class="content-section">
+                <h1>Animation Controls</h1>
+                <p>Fine-tune your visual experience with comprehensive animation settings. Control everything from subtle shimmer effects to card transition speeds.</p>
+
+                <h2>✨ Shimmer Effects</h2>
+                <div class="enhanced-card">
+                    <h3>Intensity Control</h3>
+                    <p>Adjust the intensity of shimmer animations on cards and UI elements. Set to low for subtle effects, or high for more pronounced visual feedback.</p>
+                    
+                    <h3>Toggle On/Off</h3>
+                    <p>Completely disable shimmer effects to reduce visual distraction or improve performance on older devices.</p>
+                </div>
+
+                <h2>🔄 Card Transitions</h2>
+                <div class="enhanced-card">
+                    <h3>Flip Effects</h3>
+                    <p>Choose between different card flip animations when revealing answers:</p>
+                    <ul>
+                        <li><strong>Classic Flip:</strong> Traditional card flip animation</li>
+                        <li><strong>Fade Transition:</strong> Smooth crossfade between question and answer</li>
+                        <li><strong>Slide Reveal:</strong> Answer slides in from the bottom</li>
+                        <li><strong>Instant:</strong> No animation for fastest response</li>
+                    </ul>
+                    
+                    <h3>Speed Settings</h3>
+                    <ul>
+                        <li><strong>Slow:</strong> 0.5s transitions for relaxed study pace</li>
+                        <li><strong>Normal:</strong> 0.3s balanced speed for most users</li>
+                        <li><strong>Fast:</strong> 0.1s quick transitions for rapid reviews</li>
+                    </ul>
+                </div>
+
+                <h2>⏳ Loading Animations</h2>
+                <div class="enhanced-card">
+                    <h3>Deck Loading</h3>
+                    <p>Customize loading indicators when opening decks or syncing data. Choose from spinner, progress bar, or skeleton loading styles.</p>
+                    
+                    <h3>Card Loading</h3>
+                    <p>Control how new cards appear during study sessions with smooth entrance animations.</p>
+                </div>
+
+                <div class="code-block">
+                    <strong>Animation Performance Tips:</strong><br>
+                    • Disable animations on older devices for better performance<br>
+                    • Use "Fast" transitions for speed reviews<br>
+                    • Enable "Reduce Motion" if you're sensitive to movement<br>
+                    • Customize intensity based on your display brightness
+                </div>
+            </section>
+
+            <!-- Statistics Section -->
+            <section id="statistics" class="content-section">
+                <h1>Statistics & Analytics</h1>
+                <p>Track your learning progress with comprehensive analytics and interactive charts. Understand your study patterns and optimize your learning strategy.</p>
+
+                <h2>📊 Activity Heat Map</h2>
+                <div class="enhanced-card">
+                    <h3>365-Day Learning Calendar</h3>
+                    <p>Visualize your study consistency with a GitHub-style activity heat map showing your daily review counts over the past year. Darker colors indicate more intensive study days.</p>
+                    
+                    <h3>Study Streaks</h3>
+                    <p>Track your current streak and longest streak of consecutive study days. Maintain momentum and build lasting study habits.</p>
+                </div>
+
+                <h2>📈 Performance Charts</h2>
+                <div class="feature-grid">
+                    <div class="enhanced-card">
+                        <h3>Accuracy Trends</h3>
+                        <p>Monitor your accuracy percentage over time across different decks and subjects. Identify areas for improvement.</p>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>Difficulty Distribution</h3>
+                        <p>See how your cards are distributed across difficulty levels and track your progress from "Again" to "Easy".</p>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>Time Analysis</h3>
+                        <p>Understand your study patterns with time-of-day performance data and session duration trends.</p>
+                    </div>
+                </div>
+
+                <h2>🧠 SM-2 Analysis</h2>
+                <div class="enhanced-card">
+                    <h3>Ease Factor Histograms</h3>
+                    <p>Visualize the distribution of ease factors across your cards to understand which materials are challenging or well-learned.</p>
+                    
+                    <h3>Retention Curves</h3>
+                    <p>See how well you retain information over different intervals and identify optimal review timing.</p>
+                    
+                    <h3>Algorithm Insights</h3>
+                    <p>Get detailed insights into how the spaced repetition algorithm is adapting to your learning patterns.</p>
+                </div>
+
+                <div class="code-block">
+                    <strong>Sample User Stats (Alex Chen):</strong><br>
+                    Total Reviews: 8,932<br>
+                    Overall Accuracy: 87%<br>
+                    Current Streak: 23 days<br>
+                    Longest Streak: 45 days<br>
+                    Average Session: 15 minutes<br>
+                    Favorite Study Time: 7-9 PM
+                </div>
+            </section>
+
+            <!-- User Profile Section -->
+            <section id="profile" class="content-section">
+                <h1>User Profile</h1>
+                <p>Manage your account, track achievements, and customize your learning experience with comprehensive profile settings.</p>
+
+                <h2>👤 Profile Overview</h2>
+                <div class="enhanced-card">
+                    <h3>Alex Chen</h3>
+                    <p><strong>Member since:</strong> January 2023</p>
+                    <p><strong>Total Reviews:</strong> 8,932</p>
+                    <p><strong>Overall Accuracy:</strong> 87%</p>
+                    <p><strong>Current Streak:</strong> 23 days</p>
+                    <p><strong>Study Goal:</strong> 50 cards per day</p>
+                    <p><strong>Preferred Study Time:</strong> 7:00 PM - 9:00 PM</p>
+                </div>
+
+                <h2>🏆 Achievement System</h2>
+                <div class="feature-grid">
+                    <div class="enhanced-card">
+                        <h3>🔥 Streak Master</h3>
+                        <p>Maintain a 30-day study streak</p>
+                        <small>Progress: 23/30 days</small>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>📚 Knowledge Seeker</h3>
+                        <p>Review 10,000 cards</p>
+                        <small>Progress: 8,932/10,000</small>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>🎯 Accuracy Expert</h3>
+                        <p>Achieve 90% accuracy rate</p>
+                        <small>Progress: 87/90%</small>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>⏰ Early Bird</h3>
+                        <p>Complete 7 morning study sessions</p>
+                        <small>Earned ✅</small>
+                    </div>
+                </div>
+
+                <h2>📊 Study Statistics</h2>
+                <div class="enhanced-card">
+                    <h3>Weekly Summary</h3>
+                    <ul>
+                        <li>Cards reviewed this week: 347</li>
+                        <li>New cards learned: 42</li>
+                        <li>Average session length: 18 minutes</li>
+                        <li>Most studied deck: Japanese Vocabulary</li>
+                        <li>Peak performance day: Wednesday</li>
+                    </ul>
+                </div>
+
+                <h2>⚙️ Profile Settings</h2>
+                <div class="enhanced-card">
+                    <h3>Study Preferences</h3>
+                    <ul>
+                        <li>Daily review goal: 50 cards</li>
+                        <li>New cards per day: 10</li>
+                        <li>Review ahead limit: 4 days</li>
+                        <li>Notification time: 7:00 PM</li>
+                        <li>Auto-sync: Enabled</li>
+                    </ul>
+                </div>
+
+                <h2>📤 Export Options</h2>
+                <div class="enhanced-card">
+                    <h3>Full Profile Export</h3>
+                    <p>Export your complete study data including:</p>
+                    <ul>
+                        <li>All card history and statistics</li>
+                        <li>Deck configurations and settings</li>
+                        <li>Learning progress and achievements</li>
+                        <li>Study session logs and analytics</li>
+                    </ul>
+                    <p>Available formats: JSON, CSV, PDF Report</p>
+                </div>
+            </section>
+
+            <!-- Spaced Repetition Section -->
+            <section id="spaced-repetition" class="content-section">
+                <h1>Understanding Spaced Repetition</h1>
+                <p>Learn how Anki's intelligent SM-2 algorithm optimizes your study sessions for maximum retention and minimal effort.</p>
+
+                <h2>🧠 How It Works</h2>
+                <div class="enhanced-card">
+                    <h3>The Science Behind Spaced Repetition</h3>
+                    <p>Spaced repetition is based on the forgetting curve - the idea that we forget information over time unless we actively review it. By spacing reviews at increasing intervals, we can efficiently move information from short-term to long-term memory.</p>
+                </div>
+
+                <h2>⚡ SM-2 Algorithm</h2>
+                <div class="enhanced-card">
+                    <h3>Adaptive Learning Intervals</h3>
+                    <p>The SM-2 algorithm adapts to your performance:</p>
+                    <ul>
+                        <li><strong>Again (Red):</strong> Card is shown again within 1-10 minutes</li>
+                        <li><strong>Hard (Orange):</strong> Interval increased by 1.2x</li>
+                        <li><strong>Good (Green):</strong> Interval multiplied by the ease factor</li>
+                        <li><strong>Easy (Blue):</strong> Interval multiplied by ease factor × 1.3</li>
+                    </ul>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="enhanced-card">
+                        <h3>Ease Factor</h3>
+                        <p>Each card has an ease factor that determines how quickly intervals increase. Cards you find easy will have longer intervals.</p>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>Optimal Timing</h3>
+                        <p>Reviews are scheduled just before you're likely to forget, maximizing retention while minimizing study time.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <strong>Example Learning Schedule:</strong><br>
+                    Day 1: Learn new card<br>
+                    Day 2: First review (if Good: next review in 4 days)<br>
+                    Day 6: Second review (if Good: next review in 13 days)<br>
+                    Day 19: Third review (if Good: next review in 34 days)<br>
+                    And so on...
+                </div>
+            </section>
+
+            <!-- Troubleshooting Section -->
+            <section id="troubleshooting" class="content-section">
+                <h1>Troubleshooting</h1>
+                <p>Common issues and solutions to help you get the most out of your Anki experience.</p>
+
+                <h2>🔧 Common Issues</h2>
+                <div class="enhanced-card">
+                    <h3>Sync Problems</h3>
+                    <p><strong>Issue:</strong> Cards not syncing between devices</p>
+                    <p><strong>Solution:</strong> Check internet connection, log out and back in, or force sync in settings.</p>
+                </div>
+
+                <div class="enhanced-card">
+                    <h3>Performance Issues</h3>
+                    <p><strong>Issue:</strong> App running slowly or lagging</p>
+                    <p><strong>Solution:</strong> Disable animations, reduce text size, or clear app cache.</p>
+                </div>
+
+                <div class="enhanced-card">
+                    <h3>Display Problems</h3>
+                    <p><strong>Issue:</strong> Text too small or hard to read</p>
+                    <p><strong>Solution:</strong> Increase text size, enable high contrast mode, or switch to dark theme.</p>
+                </div>
+
+                <h2>🎯 Optimization Tips</h2>
+                <ul>
+                    <li>Study consistently at the same time each day</li>
+                    <li>Don't skip difficult cards - they need more practice</li>
+                    <li>Use the "Hard" button when you struggled with a card</li>
+                    <li>Keep study sessions under 30 minutes for better focus</li>
+                    <li>Review new cards before old ones when possible</li>
+                </ul>
+            </section>
+
+            <!-- FAQ Section -->
+            <section id="faq" class="content-section">
+                <h1>Frequently Asked Questions</h1>
+                
+                <div class="enhanced-card">
+                    <h3>How often should I study?</h3>
+                    <p>Consistency is key. It's better to study 15 minutes daily than 2 hours once a week. Aim for daily reviews to maintain optimal retention.</p>
+                </div>
+
+                <div class="enhanced-card">
+                    <h3>What's the difference between "Hard" and "Again"?</h3>
+                    <p>"Again" means you got it wrong and need to see it soon. "Hard" means you got it right but struggled, so the interval increases only slightly.</p>
+                </div>
+
+                <div class="enhanced-card">
+                    <h3>Can I study without an internet connection?</h3>
+                    <p>Yes! Anki works offline. Your progress will sync automatically when you reconnect to the internet.</p>
+                </div>
+
+                <div class="enhanced-card">
+                    <h3>How do I backup my data?</h3>
+                    <p>Your data is automatically synced to our servers. You can also export decks manually or use the full profile export feature.</p>
+                </div>
+
+                <div class="enhanced-card">
+                    <h3>Is there a limit to how many cards I can create?</h3>
+                    <p>No limit! Create as many cards and decks as you need. Premium features include advanced statistics and unlimited cloud storage.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h2>Settings</h2>
+            <button onclick="toggleSettings()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">×</button>
+        </div>
+        <div class="settings-content">
+            <!-- Theme Settings -->
+            <div class="settings-group">
+                <h3>🌙 Theme</h3>
+                <div class="setting-item">
+                    <span class="setting-label">Theme Mode</span>
+                    <select class="setting-select" onchange="changeTheme(this.value)">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="high-contrast">High Contrast</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Accessibility Settings -->
+            <div class="settings-group">
+                <h3>♿ Accessibility</h3>
+                <div class="setting-item">
+                    <span class="setting-label">Text Size</span>
+                    <select class="setting-select" onchange="changeTextSize(this.value)">
+                        <option value="small">Small</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="large">Large</option>
+                        <option value="xl">Extra Large</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">Font Family</span>
+                    <select class="setting-select" onchange="changeFontFamily(this.value)">
+                        <option value="system" selected>System</option>
+                        <option value="inter">Inter</option>
+                        <option value="roboto">Roboto</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">Reduce Motion</span>
+                    <div class="toggle-switch" onclick="toggleReduceMotion()" id="reduceMotionToggle"></div>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">Focus Mode</span>
+                    <div class="toggle-switch" onclick="toggleFocusMode()" id="focusModeToggle"></div>
+                </div>
+            </div>
+
+            <!-- Animation Settings -->
+            <div class="settings-group">
+                <h3>✨ Animations</h3>
+                <div class="setting-item">
+                    <span class="setting-label">Shimmer Effects</span>
+                    <div class="toggle-switch active" onclick="toggleShimmer()" id="shimmerToggle"></div>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">Shimmer Intensity</span>
+                    <input type="range" class="setting-slider" min="0.1" max="0.8" step="0.1" value="0.3" onchange="changeShimmerIntensity(this.value)">
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">Transition Speed</span>
+                    <select class="setting-select" onchange="changeTransitionSpeed(this.value)">
+                        <option value="0.5">Slow</option>
+                        <option value="0.3" selected>Normal</option>
+                        <option value="0.1">Fast</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Accent Color Settings -->
+            <div class="settings-group">
+                <h3>🎨 Accent Color</h3>
+                <div class="color-palette">
+                    <div class="color-option active" style="background-color: #3b82f6;" onclick="changeAccentColor('#3b82f6', 'blue')"></div>
+                    <div class="color-option" style="background-color: #6366f1;" onclick="changeAccentColor('#6366f1', 'indigo')"></div>
+                    <div class="color-option" style="background-color: #8b5cf6;" onclick="changeAccentColor('#8b5cf6', 'purple')"></div>
+                    <div class="color-option" style="background-color: #ec4899;" onclick="changeAccentColor('#ec4899', 'pink')"></div>
+                    <div class="color-option" style="background-color: #ef4444;" onclick="changeAccentColor('#ef4444', 'red')"></div>
+                    <div class="color-option" style="background-color: #f97316;" onclick="changeAccentColor('#f97316', 'orange')"></div>
+                    <div class="color-option" style="background-color: #eab308;" onclick="changeAccentColor('#eab308', 'yellow')"></div>
+                    <div class="color-option" style="background-color: #22c55e;" onclick="changeAccentColor('#22c55e', 'green')"></div>
+                    <div class="color-option" style="background-color: #14b8a6;" onclick="changeAccentColor('#14b8a6', 'teal')"></div>
+                    <div class="color-option" style="background-color: #06b6d4;" onclick="changeAccentColor('#06b6d4', 'cyan')"></div>
+                    <div class="color-option" style="background-color: #10b981;" onclick="changeAccentColor('#10b981', 'emerald')"></div>
+                    <div class="color-option" style="background-color: #84cc16;" onclick="changeAccentColor('#84cc16', 'lime')"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeSettings()"></div>
+
+    <script>
+        // Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show target section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update header navigation
+            document.querySelectorAll('.header-nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            const activeBtn = document.querySelector(`[href="#${sectionId}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+            
+            // Update sidebar navigation (if exists)
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            const sidebarLink = document.querySelector(`[href="#${sectionId}"]`);
+            if (sidebarLink && sidebarLink.classList.contains('nav-link')) {
+                sidebarLink.classList.add('active');
+            }
+        }
+        
+        // Theme toggle function
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            changeTheme(newTheme);
+            
+            // Update theme toggle icon
+            const themeBtn = document.querySelector('.theme-toggle-btn');
+            themeBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        // Settings Panel
+        function toggleSettings() {
+            const panel = document.getElementById('settingsPanel');
+            const overlay = document.getElementById('overlay');
+            
+            panel.classList.toggle('open');
+            overlay.classList.toggle('show');
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsPanel').classList.remove('open');
+            document.getElementById('overlay').classList.remove('show');
+        }
+
+        // Theme Management
+        function changeTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            // Save to both storage keys for persistence across all pages
+            localStorage.setItem('anki-demo-theme', theme);
+            localStorage.setItem('anki-theme', theme);
+        }
+
+        function changeTextSize(size) {
+            document.body.setAttribute('data-text-size', size);
+            localStorage.setItem('anki-text-size', size);
+        }
+
+        function changeFontFamily(font) {
+            document.body.setAttribute('data-font-family', font);
+            localStorage.setItem('anki-font-family', font);
+        }
+
+        function changeAccentColor(color, name) {
+            document.documentElement.style.setProperty('--primary-color', color);
+            document.documentElement.style.setProperty('--secondary-color', color);
+            
+            // Update active color option
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            localStorage.setItem('anki-accent-color', color);
+        }
+
+        function toggleReduceMotion() {
+            const toggle = document.getElementById('reduceMotionToggle');
+            const isActive = toggle.classList.contains('active');
+            
+            toggle.classList.toggle('active');
+            document.body.setAttribute('data-reduce-motion', !isActive);
+            localStorage.setItem('anki-reduce-motion', !isActive);
+        }
+
+        function toggleFocusMode() {
+            const toggle = document.getElementById('focusModeToggle');
+            const isActive = toggle.classList.contains('active');
+            
+            toggle.classList.toggle('active');
+            document.body.setAttribute('data-focus-mode', !isActive);
+            localStorage.setItem('anki-focus-mode', !isActive);
+        }
+
+        function toggleShimmer() {
+            const toggle = document.getElementById('shimmerToggle');
+            const isActive = toggle.classList.contains('active');
+            
+            toggle.classList.toggle('active');
+            document.body.setAttribute('data-shimmer', isActive);
+            localStorage.setItem('anki-shimmer', isActive);
+        }
+
+        function changeShimmerIntensity(intensity) {
+            document.documentElement.style.setProperty('--shimmer-intensity', intensity);
+            localStorage.setItem('anki-shimmer-intensity', intensity);
+        }
+
+        function changeTransitionSpeed(speed) {
+            document.documentElement.style.setProperty('--transition-speed', speed + 's');
+            localStorage.setItem('anki-transition-speed', speed);
+        }
+
+        // Load saved settings
+        function loadSettings() {
+            const theme = localStorage.getItem('anki-demo-theme') || 
+                          localStorage.getItem('anki-theme') || 
+                          'light';
+            const textSize = localStorage.getItem('anki-text-size') || 'medium';
+            const fontFamily = localStorage.getItem('anki-font-family') || 'system';
+            const accentColor = localStorage.getItem('anki-accent-color') || '#3b82f6';
+            const reduceMotion = localStorage.getItem('anki-reduce-motion') === 'true';
+            const focusMode = localStorage.getItem('anki-focus-mode') === 'true';
+            const shimmer = localStorage.getItem('anki-shimmer') !== 'false';
+            const shimmerIntensity = localStorage.getItem('anki-shimmer-intensity') || '0.3';
+            const transitionSpeed = localStorage.getItem('anki-transition-speed') || '0.3';
+
+            changeTheme(theme);
+            changeTextSize(textSize);
+            changeFontFamily(fontFamily);
+            
+            document.documentElement.style.setProperty('--primary-color', accentColor);
+            document.documentElement.style.setProperty('--secondary-color', accentColor);
+            document.documentElement.style.setProperty('--shimmer-intensity', shimmerIntensity);
+            document.documentElement.style.setProperty('--transition-speed', transitionSpeed + 's');
+            
+            document.body.setAttribute('data-reduce-motion', reduceMotion);
+            document.body.setAttribute('data-focus-mode', focusMode);
+            document.body.setAttribute('data-shimmer', shimmer);
+            
+            // Update toggle states
+            if (reduceMotion) document.getElementById('reduceMotionToggle').classList.add('active');
+            if (focusMode) document.getElementById('focusModeToggle').classList.add('active');
+            if (shimmer) document.getElementById('shimmerToggle').classList.add('active');
+        }
+
+        // Mobile responsiveness
+        function handleResize() {
+            if (window.innerWidth <= 768) {
+                document.getElementById('overlay').classList.remove('show');
+            }
+        }
+
+        // Make functions globally available
+        window.showSection = showSection;
+        window.toggleTheme = toggleTheme;
+        window.toggleSettings = toggleSettings;
+        window.closeSettings = closeSettings;
+        window.changeTheme = changeTheme;
+        window.changeTextSize = changeTextSize;
+        window.changeFontFamily = changeFontFamily;
+        window.changeAccentColor = changeAccentColor;
+        window.toggleReduceMotion = toggleReduceMotion;
+        window.toggleFocusMode = toggleFocusMode;
+        window.toggleShimmer = toggleShimmer;
+        window.changeShimmerIntensity = changeShimmerIntensity;
+        window.changeTransitionSpeed = changeTransitionSpeed;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings();
+            window.addEventListener('resize', handleResize);
+            
+            // Initialize theme toggle icon
+            const currentTheme = document.body.getAttribute('data-theme') || 'light';
+            const themeBtn = document.querySelector('.theme-toggle-btn');
+            if (themeBtn) {
+                themeBtn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+            }
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeSettings();
+                }
+            });
+        });
+
+        // Print functionality
+        window.addEventListener('beforeprint', function() {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'block';
+                section.style.opacity = '1';
+                section.style.transform = 'none';
+            });
+        });
+
+        window.addEventListener('afterprint', function() {
+            document.querySelectorAll('.content-section').forEach((section, index) => {
+                if (index > 0) {
+                    section.style.display = 'none';
+                    section.style.opacity = '0';
+                    section.style.transform = 'translateY(20px)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

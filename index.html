@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRCM | ASRL DEMO - Marketing Overview</title>
+    <meta name="description" content="Comprehensive marketing campaign package for Anki flashcard app featuring enhanced dark mode, interactive analytics, and accessibility controls">
+    <meta name="keywords" content="Anki, flashcards, marketing, spaced repetition, learning app, educational technology">
+    <meta name="author" content="Anki Marketing Team">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        :root {
+            /* Light Theme Colors */
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-blue: #3b82f6;
+            --accent-indigo: #6366f1;
+            --accent-purple: #8b5cf6;
+            --accent-pink: #ec4899;
+            --accent-red: #ef4444;
+            --accent-orange: #f97316;
+            --accent-yellow: #eab308;
+            --accent-green: #22c55e;
+            --accent-teal: #14b8a6;
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-lime: #84cc16;
+            
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e2e8f0;
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --text-muted: #a0aec0;
+            --border-color: #e2e8f0;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            
+            /* Animation Settings */
+            --transition-speed: 0.3s;
+            --shimmer-intensity: 0.3;
+            --animation-scale: 1;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border-color: #475569;
+            --shadow-light: rgba(0, 0, 0, 0.3);
+            --shadow-medium: rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme="high-contrast"] {
+            --bg-primary: #000000;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #333333;
+            --text-primary: #ffffff;
+            --text-secondary: #e0e0e0;
+            --text-muted: #cccccc;
+            --border-color: #666666;
+            --primary-color: #00ff00;
+            --secondary-color: #ff00ff;
+        }
+
+        [data-text-size="small"] { font-size: 0.9em; }
+        [data-text-size="medium"] { font-size: 1em; }
+        [data-text-size="large"] { font-size: 1.1em; }
+        [data-text-size="xl"] { font-size: 1.2em; }
+
+        [data-font-family="system"] { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
+        [data-font-family="inter"] { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        [data-font-family="roboto"] { font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        [data-reduce-motion="true"] * {
+            animation: none !important;
+            transition: none !important;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-tertiary) 100%);
+            color: var(--text-primary);
+            transition: all var(--transition-speed) ease;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px var(--shadow-light);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(15, 23, 42, 0.90);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px var(--shadow-medium);
+        }
+        
+        .enhanced-container {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .enhanced-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px var(--shadow-light);
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-speed) ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .enhanced-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 36px var(--shadow-medium);
+        }
+
+        .demo-flow-card {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 24px var(--shadow-light);
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-speed) ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-flow-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .demo-flow-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 48px var(--shadow-medium);
+            border-color: var(--primary-color);
+        }
+
+        .flow-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--primary-color);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-indicator {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(102, 126, 234, 0.2);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .header-nav-btn {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .header-nav-btn:hover,
+        .header-nav-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle-btn {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .theme-toggle-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .settings-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .settings-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        /* Activity Heat Map */
+        .activity-heatmap {
+            display: grid;
+            grid-template-columns: repeat(53, 1fr);
+            gap: 3px;
+            max-width: 800px;
+            margin: 20px 0;
+        }
+
+        .heatmap-day {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            background: var(--bg-tertiary);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .heatmap-day[data-level="1"] { background: rgba(34, 197, 94, 0.3); }
+        .heatmap-day[data-level="2"] { background: rgba(34, 197, 94, 0.5); }
+        .heatmap-day[data-level="3"] { background: rgba(34, 197, 94, 0.7); }
+        .heatmap-day[data-level="4"] { background: rgba(34, 197, 94, 0.9); }
+
+        /* Chart Styles */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .chart-bar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 4px;
+            transition: all var(--transition-speed) ease;
+            cursor: pointer;
+        }
+
+        .chart-bar:hover {
+            transform: scaleY(1.05);
+            opacity: 0.8;
+        }
+
+        /* Shimmer Animation */
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .shimmer-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shimmer-effect::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, var(--shimmer-intensity)),
+                transparent
+            );
+            animation: shimmer 2s infinite;
+        }
+
+        [data-shimmer="false"] .shimmer-effect::after {
+            display: none;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .header-nav {
+                gap: 0.5rem;
+            }
+            
+            .header-nav-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .header-nav {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
+            .header-nav-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            .activity-heatmap {
+                grid-template-columns: repeat(26, 1fr);
+            }
+
+            .heatmap-day {
+                width: 10px;
+                height: 10px;
+            }
+
+        }
+        
+        @media (max-width: 480px) {
+            .header-nav-btn {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Enhanced animations */
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(-10px) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .animate-bounce-in {
+            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .stagger-children > * {
+            animation-delay: calc(var(--stagger-delay, 0) * 150ms);
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            box-shadow: -4px 0 20px var(--shadow-medium);
+            z-index: 1000;
+            transition: right var(--transition-speed) ease;
+            overflow-y: auto;
+        }
+
+        .settings-panel.open {
+            right: 0;
+        }
+
+        .settings-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-primary);
+        }
+
+        .settings-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .close-settings {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all var(--transition-speed) ease;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-settings:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .settings-content {
+            padding: 1.5rem;
+        }
+
+        .setting-group {
+            margin-bottom: 2rem;
+        }
+
+        .setting-group-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(var(--border-color), 0.5);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .setting-select {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-width: 120px;
+        }
+
+        .toggle-switch {
+            width: 50px;
+            height: 26px;
+            background: var(--bg-tertiary);
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .toggle-switch.active {
+            background: var(--primary-color);
+        }
+
+        .toggle-switch.active::after {
+            left: 27px;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.75rem;
+            margin-top: 0.75rem;
+        }
+
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.active {
+            border-color: var(--text-primary);
+        }
+
+        .color-option.active::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+            .settings-panel {
+                width: 320px;
+                right: -320px;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light" data-text-size="medium" data-font-family="inter">
+    <!-- Header -->
+    <header class="header">
+        <div class="container mx-auto px-6 py-4">
+            <div class="header-container">
+                <div class="text-2xl font-bold gradient-text">
+                    🧠 PRCM | ASRL DEMO
+                </div>
+                
+                <!-- Navigation Buttons -->
+                <nav class="header-nav">
+                    <a href="#hero" class="header-nav-btn active" onclick="scrollToSection('hero')">🏠 Home</a>
+                    <a href="#features" class="header-nav-btn" onclick="scrollToSection('features')">✨ Features</a>
+                    <a href="#experience" class="header-nav-btn" onclick="scrollToSection('experience')">🎯 Experience</a>
+                    <a href="#analytics" class="header-nav-btn" onclick="scrollToSection('analytics')">📊 Analytics</a>
+                    <a href="#cta" class="header-nav-btn" onclick="scrollToSection('cta')">🚀 Get Started</a>
+                </nav>
+                
+                <!-- Header Controls -->
+                <div class="header-controls">
+                    <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
+                        🌙
+                    </button>
+                    <button class="settings-btn" onclick="toggleSettings()">
+                        ⚙️ Settings
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="gradient-bg text-white py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 animate-bounce-in">
+                <h1 class="text-3xl md:text-4xl font-black mb-6 leading-tight">
+                    Master Any Subject with
+                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-pink-300">
+                        Intelligent Flashcards
+                    </span>
+                </h1>
+                <p class="text-lg md:text-xl mb-8 text-blue-100 max-w-3xl mx-auto leading-relaxed">
+                    Experience the power of spaced repetition with our enhanced dark mode, interactive analytics, and accessibility-first design. Transform how you learn and retain information.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                    <button class="bg-white text-indigo-600 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-blue-50 transform hover:scale-105 transition-all duration-300 shadow-xl shimmer-effect" onclick="startDemoExperience()">
+                        🚀 Start Full Demo Experience
+                    </button>
+                    <button class="border-2 border-white text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-white hover:text-indigo-600 transform hover:scale-105 transition-all duration-300" onclick="openInteractiveDemo()">
+                        🎮 Try Interactive Demo
+                    </button>
+                </div>
+            </div>
+
+            <!-- Feature Highlights -->
+            <div class="grid md:grid-cols-4 gap-8 mt-20 stagger-children">
+                <div class="glass-effect rounded-2xl p-6 text-center shimmer-effect animate-bounce-in" style="--stagger-delay: 0;">
+                    <div class="text-4xl mb-4">🌙</div>
+                    <h3 class="text-xl font-bold mb-2 text-indigo-900 dark:text-white">Enhanced Dark Mode</h3>
+                    <p class="text-indigo-700 dark:text-indigo-200">WCAG AAA compliant with perfect contrast ratios</p>
+                </div>
+                <div class="glass-effect rounded-2xl p-6 text-center shimmer-effect animate-bounce-in" style="--stagger-delay: 1;">
+                    <div class="text-4xl mb-4">📊</div>
+                    <h3 class="text-xl font-bold mb-2 text-indigo-900 dark:text-white">Interactive Analytics</h3>
+                    <p class="text-indigo-700 dark:text-indigo-200">GitHub-style heat maps and performance insights</p>
+                </div>
+                <div class="glass-effect rounded-2xl p-6 text-center shimmer-effect animate-bounce-in" style="--stagger-delay: 2;">
+                    <div class="text-4xl mb-4">♿</div>
+                    <h3 class="text-xl font-bold mb-2 text-indigo-900 dark:text-white">Accessibility First</h3>
+                    <p class="text-indigo-700 dark:text-indigo-200">Text scaling, motion controls, and keyboard navigation</p>
+                </div>
+                <div class="glass-effect rounded-2xl p-6 text-center shimmer-effect animate-bounce-in" style="--stagger-delay: 3;">
+                    <div class="text-4xl mb-4">🎨</div>
+                    <h3 class="text-xl font-bold mb-2 text-indigo-900 dark:text-white">12 Accent Colors</h3>
+                    <p class="text-indigo-700 dark:text-indigo-200">Personalize your learning experience</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Experience Flow -->
+    <section id="experience" class="py-20" style="background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-tertiary) 100%);">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 gradient-text">
+                    🎯 Complete Demo Experience
+                </h2>
+                <p class="text-xl max-w-3xl mx-auto" style="color: var(--text-secondary);">
+                    Explore our full-featured demo ecosystem. Start with marketing, experience the interactive demo, learn from documentation, and discover the technical architecture.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Interactive Demo -->
+                <div class="demo-flow-card shimmer-effect" onclick="openInteractiveDemo()">
+                    <div class="progress-indicator">Step 1</div>
+                    <div class="flow-icon">🎮</div>
+                    <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary);">Interactive Study Demo</h3>
+                    <p class="text-lg mb-6" style="color: var(--text-secondary);">
+                        Experience the full Anki study interface with real flashcards, progress tracking, and all enhanced features. Study Japanese vocabulary, track your accuracy, and see your stats update in real-time.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">✅ Fully Functional</span>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">🎴 Real Cards</span>
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">📊 Live Stats</span>
+                    </div>
+                </div>
+
+                <!-- User Documentation -->
+                <div class="demo-flow-card shimmer-effect" onclick="openDocumentation()">
+                    <div class="progress-indicator">Step 2</div>
+                    <div class="flow-icon">📚</div>
+                    <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary);">Complete User Guide</h3>
+                    <p class="text-lg mb-6" style="color: var(--text-secondary);">
+                        Comprehensive documentation covering all features, accessibility options, animation controls, and advanced statistics. Learn how to maximize your learning efficiency.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium">📖 Complete Guide</span>
+                        <span class="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm font-medium">♿ Accessibility</span>
+                        <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">⚡ Features</span>
+                    </div>
+                </div>
+
+                <!-- Technical Showcase -->
+                <div class="demo-flow-card shimmer-effect" onclick="openTechnicalShowcase()">
+                    <div class="progress-indicator">Step 3</div>
+                    <div class="flow-icon">🔧</div>
+                    <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary);">Technical Architecture</h3>
+                    <p class="text-lg mb-6" style="color: var(--text-secondary);">
+                        Deep dive into the technical implementation featuring React 18, TypeScript, advanced algorithms, PWA capabilities, and comprehensive testing strategies.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">⚛️ React 18</span>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">📱 PWA</span>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">🧪 Testing</span>
+                    </div>
+                </div>
+
+                <!-- Marketing Overview -->
+                <div class="demo-flow-card shimmer-effect" onclick="scrollToSection('features')">
+                    <div class="progress-indicator">Current</div>
+                    <div class="flow-icon">🏠</div>
+                    <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary);">Marketing Overview</h3>
+                    <p class="text-lg mb-6" style="color: var(--text-secondary);">
+                        You're currently viewing the marketing experience! Explore user profiles, activity heat maps, and comprehensive feature showcases with live data.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">📍 Current Page</span>
+                        <span class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm font-medium">👤 User Profile</span>
+                        <span class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">🔥 Heat Maps</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="mt-16 text-center">
+                <div class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-8 text-white">
+                    <h3 class="text-2xl font-bold mb-4">🚀 Ready to Explore?</h3>
+                    <p class="text-lg mb-6 opacity-90">
+                        Each demo is fully functional and showcases different aspects of the Anki experience. Start with any section that interests you most!
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button class="bg-white text-purple-600 px-6 py-3 rounded-xl font-bold hover:bg-gray-100 transition-colors" onclick="startGuidedTour()">
+                            🎯 Start Guided Tour
+                        </button>
+                        <button class="border-2 border-white text-white px-6 py-3 rounded-xl font-bold hover:bg-white hover:text-purple-600 transition-colors" onclick="openRandomDemo()">
+                            🎲 Surprise Me!
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced User Profile Section -->
+    <section id="features" class="py-20 bg-gradient-to-br from-slate-50 to-blue-50" style="background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-tertiary) 100%);">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 gradient-text">
+                    Meet Alex Chen - Power User
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" style="color: var(--text-secondary);">
+                    See how our enhanced features help real users achieve their learning goals with comprehensive tracking and personalized insights.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- User Profile Card -->
+                <div class="enhanced-container shimmer-effect">
+                    <div class="flex items-center mb-6">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold mr-6">
+                            AC
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-1" style="color: var(--text-primary);">Alex Chen</h3>
+                            <p class="text-gray-600" style="color: var(--text-secondary);">Medical Student • Member since Jan 2023</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6 mb-8">
+                        <div class="enhanced-card text-center">
+                            <div class="text-3xl font-bold text-indigo-600 mb-1 animate-counter" data-target="8932" style="color: var(--primary-color);">0</div>
+                            <div class="text-sm text-gray-500" style="color: var(--text-muted);">Total Reviews</div>
+                        </div>
+                        <div class="enhanced-card text-center">
+                            <div class="text-3xl font-bold text-green-600 mb-1 animate-counter" data-target="87">0</div>
+                            <div class="text-sm text-gray-500" style="color: var(--text-muted);">Accuracy Rate</div>
+                        </div>
+                        <div class="enhanced-card text-center">
+                            <div class="text-3xl font-bold text-orange-600 mb-1 animate-counter" data-target="23">0</div>
+                            <div class="text-sm text-gray-500" style="color: var(--text-muted);">Current Streak</div>
+                        </div>
+                        <div class="enhanced-card text-center">
+                            <div class="text-3xl font-bold text-purple-600 mb-1 animate-counter" data-target="45">0</div>
+                            <div class="text-sm text-gray-500" style="color: var(--text-muted);">Best Streak</div>
+                        </div>
+                    </div>
+
+                    <!-- Achievement Badges -->
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">Recent Achievements</h4>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium animate-bounce-in" style="animation-delay: 0.2s;">🔥 Streak Master</span>
+                            <span class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-3 py-1 rounded-full text-sm font-medium animate-bounce-in" style="animation-delay: 0.4s;">📚 Knowledge Seeker</span>
+                            <span class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-1 rounded-full text-sm font-medium animate-bounce-in" style="animation-delay: 0.6s;">⏰ Early Bird</span>
+                        </div>
+                    </div>
+
+                    <!-- Study Preferences -->
+                    <div class="enhanced-card">
+                        <h4 class="text-lg font-semibold mb-3" style="color: var(--text-primary);">Study Preferences</h4>
+                        <div class="space-y-2 text-sm" style="color: var(--text-secondary);">
+                            <div class="flex justify-between">
+                                <span>Daily Goal:</span>
+                                <span class="font-medium">50 cards</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Best Study Time:</span>
+                                <span class="font-medium">7-9 PM</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Favorite Deck:</span>
+                                <span class="font-medium">Japanese Vocabulary</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Heat Map -->
+                <div class="enhanced-container">
+                    <h3 class="text-2xl font-bold mb-6" style="color: var(--text-primary);">365-Day Activity Heat Map</h3>
+                    <p class="text-gray-600 mb-6" style="color: var(--text-secondary);">
+                        Track daily study consistency with our GitHub-style activity visualization. Darker squares indicate more intensive study sessions.
+                    </p>
+                    
+                    <!-- Heat Map Grid -->
+                    <div class="activity-heatmap" id="activityHeatmap">
+                        <!-- Generated by JavaScript -->
+                    </div>
+                    
+                    <div class="flex items-center justify-between mt-4 text-sm" style="color: var(--text-muted);">
+                        <span>Less</span>
+                        <div class="flex gap-1">
+                            <div class="heatmap-day"></div>
+                            <div class="heatmap-day" data-level="1"></div>
+                            <div class="heatmap-day" data-level="2"></div>
+                            <div class="heatmap-day" data-level="3"></div>
+                            <div class="heatmap-day" data-level="4"></div>
+                        </div>
+                        <span>More</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Analytics Section -->
+    <section id="analytics" class="py-20" style="background: var(--bg-secondary);">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 gradient-text">
+                    Interactive Analytics Dashboard
+                </h2>
+                <p class="text-xl max-w-3xl mx-auto" style="color: var(--text-secondary);">
+                    Gain deep insights into your learning patterns with comprehensive charts, performance trends, and SM-2 algorithm analysis.
+                </p>
+            </div>
+
+            <!-- Analytics Content -->
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Performance Chart -->
+                <div class="enhanced-container">
+                    <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary);">Weekly Performance</h3>
+                    <div class="chart-container">
+                        <div style="display: flex; align-items: end; justify-content: space-around; height: 80%; gap: 8px;">
+                            <div class="chart-bar animate-grow" style="height: 60%; width: 40px;" data-value="45" title="Monday: 45 cards"></div>
+                            <div class="chart-bar animate-grow" style="height: 80%; width: 40px; animation-delay: 0.1s;" data-value="62" title="Tuesday: 62 cards"></div>
+                            <div class="chart-bar animate-grow" style="height: 45%; width: 40px; animation-delay: 0.2s;" data-value="34" title="Wednesday: 34 cards"></div>
+                            <div class="chart-bar animate-grow" style="height: 90%; width: 40px; animation-delay: 0.3s;" data-value="78" title="Thursday: 78 cards"></div>
+                            <div class="chart-bar animate-grow" style="height: 75%; width: 40px; animation-delay: 0.4s;" data-value="58" title="Friday: 58 cards"></div>
+                            <div class="chart-bar animate-grow" style="height: 85%; width: 40px; animation-delay: 0.5s;" data-value="67" title="Saturday: 67 cards"></div>
+                            <div class="chart-bar animate-grow" style="height: 70%; width: 40px; animation-delay: 0.6s;" data-value="52" title="Sunday: 52 cards"></div>
+                        </div>
+                    </div>
+                    <p class="text-sm mt-4" style="color: var(--text-secondary);">
+                        Your weekly performance shows consistent improvement with peak activity on Thursday.
+                    </p>
+                </div>
+
+                <!-- Weekly Performance Summary -->
+                <div class="enhanced-container">
+                    <h3 class="text-2xl font-bold mb-6" style="color: var(--text-primary);">Weekly Summary</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 rounded-lg animate-bounce-in" style="background: var(--bg-tertiary); animation-delay: 0.1s;">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 rounded-lg bg-blue-500 flex items-center justify-center text-white font-bold mr-4">
+                                    347
+                                </div>
+                                <div>
+                                    <div class="font-semibold" style="color: var(--text-primary);">Cards Reviewed</div>
+                                    <div class="text-sm" style="color: var(--text-secondary);">This week</div>
+                                </div>
+                            </div>
+                            <div class="text-green-600 text-sm font-medium">+12%</div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 rounded-lg animate-bounce-in" style="background: var(--bg-tertiary); animation-delay: 0.2s;">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 rounded-lg bg-green-500 flex items-center justify-center text-white font-bold mr-4">
+                                    42
+                                </div>
+                                <div>
+                                    <div class="font-semibold" style="color: var(--text-primary);">New Cards</div>
+                                    <div class="text-sm" style="color: var(--text-secondary);">Learned this week</div>
+                                </div>
+                            </div>
+                            <div class="text-green-600 text-sm font-medium">+8%</div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 rounded-lg animate-bounce-in" style="background: var(--bg-tertiary); animation-delay: 0.3s;">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 rounded-lg bg-purple-500 flex items-center justify-center text-white font-bold mr-4">
+                                    18
+                                </div>
+                                <div>
+                                    <div class="font-semibold" style="color: var(--text-primary);">Avg Session</div>
+                                    <div class="text-sm" style="color: var(--text-secondary);">Minutes per session</div>
+                                </div>
+                            </div>
+                            <div class="text-green-600 text-sm font-medium">+3 min</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SM-2 Algorithm Insights -->
+                <div class="enhanced-container lg:col-span-2">
+                    <h3 class="text-2xl font-bold mb-6" style="color: var(--text-primary);">SM-2 Algorithm Insights</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="text-center enhanced-card animate-bounce-in" style="animation-delay: 0.1s;">
+                            <div class="text-3xl font-bold text-indigo-600 mb-2 animate-counter" data-target="2.4" style="color: var(--primary-color);">0</div>
+                            <div class="text-sm font-medium mb-1" style="color: var(--text-primary);">Average Ease Factor</div>
+                            <div class="text-xs" style="color: var(--text-secondary);">Cards adapt to your learning pace</div>
+                        </div>
+                        <div class="text-center enhanced-card animate-bounce-in" style="animation-delay: 0.2s;">
+                            <div class="text-3xl font-bold text-green-600 mb-2 animate-counter" data-target="89">0</div>
+                            <div class="text-sm font-medium mb-1" style="color: var(--text-primary);">Retention Rate</div>
+                            <div class="text-xs" style="color: var(--text-secondary);">Information successfully retained</div>
+                        </div>
+                        <div class="text-center enhanced-card animate-bounce-in" style="animation-delay: 0.3s;">
+                            <div class="text-3xl font-bold text-orange-600 mb-2 animate-counter" data-target="13">0</div>
+                            <div class="text-sm font-medium mb-1" style="color: var(--text-primary);">Avg Interval (days)</div>
+                            <div class="text-xs" style="color: var(--text-secondary);">Optimal review scheduling</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section id="cta" class="py-20 gradient-bg text-white">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6">
+                    Ready to Transform Your Learning?
+                </h2>
+                <p class="text-xl mb-12 max-w-2xl mx-auto opacity-90">
+                    Experience the complete Anki demo ecosystem. Each section showcases different aspects of our intelligent learning platform.
+                </p>
+                
+                <div class="grid md:grid-cols-3 gap-8 mb-12">
+                    <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-6 shimmer-effect animate-bounce-in" style="animation-delay: 0.1s;">
+                        <div class="text-3xl font-bold mb-2">5M+</div>
+                        <div class="text-sm opacity-80">Active Users</div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-6 shimmer-effect animate-bounce-in" style="animation-delay: 0.2s;">
+                        <div class="text-3xl font-bold mb-2">98%</div>
+                        <div class="text-sm opacity-80">User Satisfaction</div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-6 shimmer-effect animate-bounce-in" style="animation-delay: 0.3s;">
+                        <div class="text-3xl font-bold mb-2">50+</div>
+                        <div class="text-sm opacity-80">Languages Supported</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                    <button class="bg-white text-purple-600 px-12 py-4 rounded-2xl font-bold text-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-xl shimmer-effect" onclick="openInteractiveDemo()">
+                        🎮 Try Interactive Demo
+                    </button>
+                    <button class="border-2 border-white text-white px-12 py-4 rounded-2xl font-bold text-lg hover:bg-white hover:text-purple-600 transform hover:scale-105 transition-all duration-300" onclick="openDocumentation()">
+                        📚 View Documentation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h3 class="settings-title">⚙️ Settings</h3>
+            <button class="close-settings" onclick="toggleSettings()">×</button>
+        </div>
+        
+        <div class="settings-content">
+            <div class="setting-group">
+                <h4 class="setting-group-title">🎨 Appearance</h4>
+                
+                <div class="setting-item">
+                    <span class="setting-label">Theme Mode</span>
+                    <select class="setting-select" onchange="changeTheme(this.value)">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="high-contrast">High Contrast</option>
+                    </select>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">Text Size</span>
+                    <select class="setting-select" onchange="changeTextSize(this.value)">
+                        <option value="small">Small</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="large">Large</option>
+                        <option value="xl">Extra Large</option>
+                    </select>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">Font Family</span>
+                    <select class="setting-select" onchange="changeFontFamily(this.value)">
+                        <option value="system" selected>System</option>
+                        <option value="inter">Inter</option>
+                        <option value="roboto">Roboto</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="setting-group">
+                <h4 class="setting-group-title">♿ Accessibility</h4>
+                
+                <div class="setting-item">
+                    <span class="setting-label">Reduce Motion</span>
+                    <div class="toggle-switch" onclick="toggleReduceMotion()" id="reduceMotionToggle"></div>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">High Contrast</span>
+                    <div class="toggle-switch" onclick="toggleHighContrast()" id="highContrastToggle"></div>
+                </div>
+            </div>
+            
+            <div class="setting-group">
+                <h4 class="setting-group-title">🎨 Accent Colors</h4>
+                <div class="color-grid">
+                    <div class="color-option active" style="background-color: #667eea;" onclick="changeAccentColor('#667eea', 'indigo')" title="Indigo"></div>
+                    <div class="color-option" style="background-color: #3b82f6;" onclick="changeAccentColor('#3b82f6', 'blue')" title="Blue"></div>
+                    <div class="color-option" style="background-color: #8b5cf6;" onclick="changeAccentColor('#8b5cf6', 'purple')" title="Purple"></div>
+                    <div class="color-option" style="background-color: #ec4899;" onclick="changeAccentColor('#ec4899', 'pink')" title="Pink"></div>
+                    <div class="color-option" style="background-color: #ef4444;" onclick="changeAccentColor('#ef4444', 'red')" title="Red"></div>
+                    <div class="color-option" style="background-color: #f97316;" onclick="changeAccentColor('#f97316', 'orange')" title="Orange"></div>
+                    <div class="color-option" style="background-color: #eab308;" onclick="changeAccentColor('#eab308', 'yellow')" title="Yellow"></div>
+                    <div class="color-option" style="background-color: #22c55e;" onclick="changeAccentColor('#22c55e', 'green')" title="Green"></div>
+                    <div class="color-option" style="background-color: #14b8a6;" onclick="changeAccentColor('#14b8a6', 'teal')" title="Teal"></div>
+                    <div class="color-option" style="background-color: #06b6d4;" onclick="changeAccentColor('#06b6d4', 'cyan')" title="Cyan"></div>
+                    <div class="color-option" style="background-color: #10b981;" onclick="changeAccentColor('#10b981', 'emerald')" title="Emerald"></div>
+                    <div class="color-option" style="background-color: #84cc16;" onclick="changeAccentColor('#84cc16', 'lime')" title="Lime"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Settings Overlay -->
+    <div class="overlay" id="overlay" onclick="toggleSettings()"></div>
+
+
+    <script>
+        // Demo Navigation Functions
+        function startDemoExperience() {
+            // Start with a guided tour through all sections
+            startGuidedTour();
+        }
+
+        function openInteractiveDemo() {
+            console.log('Opening interactive demo...');
+            window.location.href = 'interactive-demo.html';
+        }
+
+        function openDocumentation() {
+            console.log('Opening user guide...');
+            window.location.href = 'user-guide.html';
+        }
+
+        function openTechnicalShowcase() {
+            console.log('Opening technical showcase...');
+            window.location.href = 'technical-showcase.html';
+        }
+        
+        // Make navigation functions globally available
+        window.openInteractiveDemo = openInteractiveDemo;
+        window.openDocumentation = openDocumentation;
+        window.openTechnicalShowcase = openTechnicalShowcase;
+        window.startDemoExperience = startDemoExperience;
+        window.startGuidedTour = startGuidedTour;
+        window.openRandomDemo = openRandomDemo;
+        window.toggleTheme = toggleTheme;
+
+        function startGuidedTour() {
+            // Create a guided tour overlay
+            const tour = document.createElement('div');
+            tour.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                text-align: center;
+                padding: 2rem;
+            `;
+            
+            tour.innerHTML = `
+                <div style="max-width: 500px;">
+                    <h2 style="font-size: 2rem; margin-bottom: 1rem;">🎯 Welcome to the PRCM | ASRL DEMO!</h2>
+                    <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+                        You're about to explore four interconnected demonstrations:
+                        <br><br>
+                        1️⃣ <strong>Interactive Demo</strong> - Try the actual app<br>
+                        2️⃣ <strong>User Guide</strong> - Learn all features<br>
+                        3️⃣ <strong>Technical Showcase</strong> - See the engineering<br>
+                        4️⃣ <strong>Marketing Overview</strong> - This page!
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <button onclick="closeTour(); openInteractiveDemo();" 
+                                style="background: #667eea; color: white; border: none; padding: 1rem 2rem; border-radius: 1rem; cursor: pointer; font-weight: bold;">
+                            🎮 Start with Interactive Demo
+                        </button>
+                        <button onclick="closeTour();" 
+                                style="background: transparent; color: white; border: 2px solid white; padding: 1rem 2rem; border-radius: 1rem; cursor: pointer; font-weight: bold;">
+                            ❌ Close & Explore
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(tour);
+            
+            window.closeTour = function() {
+                document.body.removeChild(tour);
+            };
+        }
+
+        function openRandomDemo() {
+            const demos = [
+                () => openInteractiveDemo(),
+                () => openDocumentation(),
+                () => openTechnicalShowcase(),
+                () => scrollToSection('features')
+            ];
+            
+            const randomDemo = demos[Math.floor(Math.random() * demos.length)];
+            randomDemo();
+        }
+
+        // Generate activity heat map
+        function generateHeatMap() {
+            const heatmapContainer = document.getElementById('activityHeatmap');
+            if (!heatmapContainer) return;
+            
+            const days = 365;
+            const today = new Date();
+            
+            for (let i = days - 1; i >= 0; i--) {
+                const day = document.createElement('div');
+                day.className = 'heatmap-day';
+                
+                // Simulate activity levels (0-4)
+                const activityLevel = Math.random() > 0.7 ? Math.floor(Math.random() * 5) : 0;
+                if (activityLevel > 0) {
+                    day.setAttribute('data-level', activityLevel);
+                }
+                
+                // Add date for tooltips
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                day.setAttribute('title', date.toDateString() + ': ' + (activityLevel * 10 + 5) + ' cards reviewed');
+                
+                heatmapContainer.appendChild(day);
+            }
+        }
+
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.animate-counter');
+            
+            counters.forEach(counter => {
+                const target = parseFloat(counter.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        if (target % 1 === 0) {
+                            counter.textContent = Math.ceil(current);
+                        } else {
+                            counter.textContent = current.toFixed(1);
+                        }
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        if (target % 1 === 0) {
+                            counter.textContent = target;
+                        } else {
+                            counter.textContent = target.toFixed(1);
+                        }
+                        // Add % for percentage values
+                        if (counter.getAttribute('data-target') === '87') {
+                            counter.textContent += '%';
+                        } else if (counter.getAttribute('data-target') === '89') {
+                            counter.textContent += '%';
+                        }
+                    }
+                };
+                
+                // Start animation when element comes into view
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            setTimeout(() => updateCounter(), Math.random() * 500);
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+                
+                observer.observe(counter);
+            });
+        }
+
+        // Chart bar growth animation
+        function animateChartBars() {
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes growHeight {
+                    from {
+                        height: 0 !important;
+                        opacity: 0;
+                    }
+                    to {
+                        opacity: 1;
+                    }
+                }
+                .animate-grow {
+                    animation: growHeight 1s ease-out forwards;
+                    height: 0;
+                    opacity: 0;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Smooth scroll navigation
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Update active nav button
+                document.querySelectorAll('.header-nav-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                const activeBtn = document.querySelector(`[href="#${sectionId}"]`);
+                if (activeBtn) {
+                    activeBtn.classList.add('active');
+                }
+            }
+        }
+        
+        // Theme toggle function - persists across all demo pages
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.body.setAttribute('data-theme', newTheme);
+            
+            // Update theme toggle icon
+            const themeBtn = document.querySelector('.theme-toggle-btn');
+            themeBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+            
+            // Save to both storage keys for persistence across all pages
+            localStorage.setItem('anki-demo-theme', newTheme);
+            localStorage.setItem('anki-theme', newTheme);
+        }
+
+        // Settings Functions
+        function toggleSettings() {
+            const panel = document.getElementById('settingsPanel');
+            const overlay = document.getElementById('overlay');
+            
+            panel.classList.toggle('open');
+            overlay.classList.toggle('show');
+        }
+
+        function changeTextSize(size) {
+            document.body.setAttribute('data-text-size', size);
+            localStorage.setItem('anki-text-size', size);
+        }
+
+        function changeFontFamily(font) {
+            document.body.setAttribute('data-font-family', font);
+            localStorage.setItem('anki-font-family', font);
+        }
+
+        function toggleReduceMotion() {
+            const toggle = document.getElementById('reduceMotionToggle');
+            const isActive = toggle.classList.contains('active');
+            
+            toggle.classList.toggle('active');
+            document.body.setAttribute('data-reduce-motion', !isActive);
+            localStorage.setItem('anki-reduce-motion', !isActive);
+        }
+
+        function toggleHighContrast() {
+            const toggle = document.getElementById('highContrastToggle');
+            const currentTheme = document.body.getAttribute('data-theme');
+            
+            if (currentTheme === 'high-contrast') {
+                changeTheme('light');
+                toggle.classList.remove('active');
+            } else {
+                changeTheme('high-contrast');
+                toggle.classList.add('active');
+            }
+        }
+
+        function changeAccentColor(color, name) {
+            document.documentElement.style.setProperty('--primary-color', color);
+            document.documentElement.style.setProperty('--secondary-color', color);
+            
+            // Update active color option
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            localStorage.setItem('anki-accent-color', color);
+        }
+        
+        // Initialize everything when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            generateHeatMap();
+            animateCounters();
+            animateChartBars();
+            
+            // Load saved theme - check both storage keys for persistence
+            const savedTheme = localStorage.getItem('anki-demo-theme') || 
+                               localStorage.getItem('anki-theme') || 
+                               'light';
+            document.body.setAttribute('data-theme', savedTheme);
+            const themeBtn = document.querySelector('.theme-toggle-btn');
+            if (themeBtn) {
+                themeBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+            }
+            
+            // Save to both keys for consistency
+            localStorage.setItem('anki-demo-theme', savedTheme);
+            localStorage.setItem('anki-theme', savedTheme);
+            
+            // Handle scroll-spy for navigation
+            const sections = ['hero', 'features', 'experience', 'analytics', 'cta'];
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const sectionId = entry.target.id;
+                        document.querySelectorAll('.header-nav-btn').forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        const activeBtn = document.querySelector(`[href="#${sectionId}"]`);
+                        if (activeBtn) {
+                            activeBtn.classList.add('active');
+                        }
+                    }
+                });
+            }, { threshold: 0.3 });
+            
+            sections.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    observer.observe(section);
+                }
+            });
+            
+            // Add stagger delay to elements with stagger-children class
+            document.querySelectorAll('.stagger-children').forEach(parent => {
+                Array.from(parent.children).forEach((child, index) => {
+                    child.style.setProperty('--stagger-delay', index);
+                });
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    // Close any overlays
+                } else if (e.key === 'Enter' && e.ctrlKey) {
+                    // Quick start demo
+                    openInteractiveDemo();
+                }
+            });
+
+            // Add welcome message
+            console.log('🧠 Welcome to the PRCM | ASRL DEMO!');
+            console.log('🎮 Press Ctrl+Enter to launch the interactive demo');
+            console.log('📚 Explore all four interconnected demo experiences');
+        });
+    </script>
+</body>
+</html>
