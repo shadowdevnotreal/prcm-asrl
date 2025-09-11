@@ -1,6 +1,13 @@
 [build]
   publish = "."
 
+# Redirect root URL to START_HERE.html
+[[redirects]]
+  from = "/"
+  to = "/START_HERE.html"
+  status = 301
+
+# Handle 404 errors
 [[redirects]]
   from = "/*"
   to = "/START_HERE.html"
