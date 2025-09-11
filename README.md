@@ -4,7 +4,7 @@
 
 # 🧠 PRCM | ASRL Demo Experience
 
-**Visit the App**: [Live Demo](https://prcm-asrl.netlify.app)
+**Visit the App**: [Live Demo](https://prcm-asrl.netlify.app/start_here.html)
 
 Welcome to the comprehensive PRCM | ASRL demo experience! This collection of interconnected demos showcases the full potential of our enhanced learning platform.
 
