@@ -132,33 +132,6 @@ Each demo is self-contained but interconnected:
 - Consistent theming and accessibility settings
 - Seamless transitions between experiences
 
-## 🛠 Development Notes
-
-### CSS Variables System
-```css
-:root {
-  --primary-color: #667eea;
-  --bg-primary: #f8fafc;
-  --text-primary: #1a202c;
-  --transition-speed: 0.3s;
-}
-```
-
-### Theme Implementation
-```javascript
-function changeTheme(theme) {
-  document.body.setAttribute('data-theme', theme);
-  localStorage.setItem('anki-theme', theme);
-}
-```
-
-### Animation Controls
-```css
-[data-reduce-motion="true"] * {
-  animation: none !important;
-  transition: none !important;
-}
-```
 
 ## 📝 Demo Scenarios
 
