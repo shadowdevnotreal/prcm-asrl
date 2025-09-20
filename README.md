@@ -172,3 +172,6 @@ This demo experience showcases the enhanced Anki platform. Each component demons
 ---
 
 **🎮 Ready to start? Open `index.html` and begin your journey!**
+
+<a href="https://www.buymeacoffee.com/diatasso" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy Me A Kitten" style="height: 60px !important;width: 217px !important;" ></a>
+
