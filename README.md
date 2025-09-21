@@ -23,9 +23,6 @@
 
 *A comprehensive PRCM | ASRL demo experience showcasing the full potential of our enhanced learning platform with interconnected demos and real-time analytics.*
 
-[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://shell.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/shadowdevnotreal/prcm-asrl)
-[![Run in Gitpod](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/shadowdevnotreal/prcm-asrl)
-[![Open in Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/shadowdevnotreal/prcm-asrl)
 
 </div>
 
@@ -77,7 +74,7 @@ Experience the complete journey through our interconnected demo ecosystem:
 ## ✨ **Advanced Feature Suite**
 
 ### 🧠 **Cognitive Science Integration**
-<details>
+<details open>
 <summary><strong>Scientific Learning Enhancement</strong> - Evidence-based learning optimization</summary>
 
 - **🎯 SM-2 Spaced Repetition** - Proven algorithm for optimal memory retention scheduling
@@ -92,7 +89,7 @@ Experience the complete journey through our interconnected demo ecosystem:
 </details>
 
 ### ♿ **Universal Design & Accessibility**
-<details>
+<details open>
 <summary><strong>Inclusive Learning Platform</strong> - WCAG AAA compliant with comprehensive accommodations</summary>
 
 - **🎨 High Contrast Modes** - WCAG AAA compliant color ratios for visual accessibility
@@ -107,7 +104,7 @@ Experience the complete journey through our interconnected demo ecosystem:
 </details>
 
 ### 🎨 **Premium User Experience**
-<details>
+<details open>
 <summary><strong>Modern Interface Design</strong> - Sophisticated UI with micro-interactions</summary>
 
 - **🌙 Advanced Theming** - 12+ accent colors with glassmorphism effects and smooth transitions
@@ -122,7 +119,7 @@ Experience the complete journey through our interconnected demo ecosystem:
 </details>
 
 ### 📊 **Intelligent Analytics Engine**
-<details>
+<details open>
 <summary><strong>Comprehensive Learning Intelligence</strong> - Real-time insights with predictive analytics</summary>
 
 - **📈 Interactive Dashboards** - Real-time performance visualization with hover interactions
@@ -140,7 +137,6 @@ Experience the complete journey through our interconnected demo ecosystem:
 
 ## 🏗️ **System Architecture & Learning Science**
 
-<details>
 <summary><strong>Intelligent Learning Platform Architecture</strong> - Scalable, scientific, and user-centered design</summary>
 
 ### 🔧 **Core Learning Engine**
@@ -181,6 +177,7 @@ graph TD
     style F fill:#f3e5f5
     style G fill:#e8f5e8
 ```
+</details>
 
 ### 🎓 **Learning Experience Workflow**
 ```mermaid
@@ -240,39 +237,6 @@ sequenceDiagram
 3. User Guide (user-guide.html) - Learn all features
 4. Technical Showcase (technical-showcase.html) - Deep dive
 ```
-
-#### Option 2: Clone and Run Locally
-```bash
-# Clone the repository
-git clone https://github.com/shadowdevnotreal/prcm-asrl.git
-
-# Navigate to project directory
-cd prcm-asrl
-
-# Open directly in browser (no build required)
-open index.html  # macOS
-start index.html # Windows
-xdg-open index.html # Linux
-```
-
-#### Option 3: Cloud Development
-[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://shell.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/shadowdevnotreal/prcm-asrl)
-
-**Cloud Shell Setup:**
-```bash
-# In Cloud Shell (no local dependencies needed)
-git clone https://github.com/shadowdevnotreal/prcm-asrl.git
-cd prcm-asrl
-
-# Serve with simple HTTP server
-python3 -m http.server 8080
-
-# Open preview URL to experience the demos
-```
-
-#### Option 4: One-Click Development
-- [![Run in Gitpod](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/shadowdevnotreal/prcm-asrl)
-- [![Open in Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/shadowdevnotreal/prcm-asrl)
 
 ### 🎮 **Demo Experience Workflow**
 
@@ -460,25 +424,6 @@ We welcome contributions from educators, developers, and learning science resear
 - **♿ Accessibility** - Enhance inclusive learning features
 - **🌍 Internationalization** - Add support for global learners
 - **🎨 UX Design** - Improve learning interface and experience
-
-### 📋 **Development Setup**
-
-```bash
-# Fork the repository
-git fork https://github.com/shadowdevnotreal/prcm-asrl
-
-# Create feature branch
-git checkout -b feature/learning-enhancement
-
-# Make your changes with learning science consideration
-# Test thoroughly across accessibility requirements
-
-# Commit with conventional commits
-git commit -m "feat: enhance spaced repetition algorithm"
-
-# Push and create pull request
-git push origin feature/learning-enhancement
-```
 
 ### 🧪 **Learning Platform Quality Checklist**
 
