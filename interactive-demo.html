@@ -478,91 +478,99 @@
             .charts-2col  { grid-template-columns: 1fr; }
             .ach-grid     { grid-template-columns: 1fr; }
         }
-        /* ── Tooltip system ───────────────────────────────────────── */
-        [data-tip] { position: relative; }
-
-        [data-tip]::after {
-            content: attr(data-tip);
-            position: absolute;
-            bottom: calc(100% + 10px);
-            left: 50%;
-            transform: translateX(-50%);
-            background: #0b1120;
-            color: #e2e8f0;
-            font-size: 0.73rem;
-            font-weight: 400;
-            line-height: 1.5;
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(99,102,241,.3);
-            white-space: normal;
-            width: max-content;
-            max-width: 220px;
-            pointer-events: none;
+        /* ── Guided tour ──────────────────────────────────────────── */
+        .tour-overlay {
+            position: fixed; inset: 0; z-index: 8000;
+            pointer-events: none; transition: opacity .3s;
             opacity: 0;
-            visibility: hidden;
-            transition: opacity .18s ease, visibility .18s ease;
-            z-index: 9000;
-            text-align: left;
-            box-shadow: 0 6px 20px rgba(0,0,0,.5);
         }
-        [data-tip]::before {
+        .tour-overlay.active { opacity: 1; pointer-events: auto; }
+
+        /* Spotlight: a box that punches a hole via box-shadow */
+        .tour-spot {
+            position: fixed; z-index: 8001; border-radius: 10px;
+            box-shadow: 0 0 0 9999px rgba(0,0,0,.72);
+            pointer-events: none;
+            transition: top .35s ease, left .35s ease, width .35s ease, height .35s ease, border-radius .35s ease;
+        }
+
+        /* Coach-mark callout bubble */
+        .tour-callout {
+            position: fixed; z-index: 8002;
+            background: #0b1120;
+            border: 1px solid rgba(99,102,241,.45);
+            border-radius: 14px;
+            padding: 18px 20px 16px;
+            width: 300px;
+            box-shadow: 0 12px 40px rgba(0,0,0,.6);
+            transition: top .35s ease, left .35s ease, bottom .35s ease, right .35s ease;
+        }
+        .tour-callout::before {
             content: '';
             position: absolute;
-            bottom: calc(100% + 4px);
-            left: 50%;
-            transform: translateX(-50%);
-            border: 5px solid transparent;
-            border-top-color: rgba(99,102,241,.3);
+            width: 10px; height: 10px;
+            background: #0b1120;
+            border-left: 1px solid rgba(99,102,241,.45);
+            border-top: 1px solid rgba(99,102,241,.45);
+        }
+        .tour-callout.arrow-down::before {
+            bottom: -6px; left: 50%; transform: translateX(-50%) rotate(225deg);
+        }
+        .tour-callout.arrow-up::before {
+            top: -6px; left: 50%; transform: translateX(-50%) rotate(45deg);
+        }
+        .tour-callout.arrow-left::before {
+            left: -6px; top: 28px; transform: rotate(-45deg);
+        }
+
+        .tour-step-lbl {
+            font-size: 0.625rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .1em; color: var(--accent-h); margin-bottom: 8px;
+        }
+        .tour-title {
+            font-size: 0.9375rem; font-weight: 700; color: #fff; margin-bottom: 6px;
+        }
+        .tour-body {
+            font-size: 0.8125rem; line-height: 1.55; color: #cbd5e1; margin-bottom: 14px;
+        }
+        .tour-actions {
+            display: flex; align-items: center; justify-content: space-between; gap: 8px;
+        }
+        .tour-skip {
+            font-size: 0.75rem; color: var(--text3); background: none; border: none;
+            cursor: pointer; padding: 4px 0; text-decoration: underline;
+        }
+        .tour-skip:hover { color: var(--text1); }
+        .tour-next {
+            background: var(--accent); color: #fff; border: none;
+            padding: 7px 18px; border-radius: 8px; font-size: 0.8125rem; font-weight: 700;
+            cursor: pointer; transition: background .15s;
+        }
+        .tour-next:hover { background: var(--accent-h); }
+        .tour-action-hint {
+            font-size: 0.75rem; color: var(--accent-h); font-style: italic;
+        }
+        /* Pulsing ring around spotlight target */
+        .tour-pulse {
+            position: fixed; z-index: 8000; border-radius: 10px;
+            border: 2px solid rgba(99,102,241,.6);
             pointer-events: none;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity .18s ease, visibility .18s ease;
-            z-index: 9001;
+            animation: tourPulse 1.4s ease-in-out infinite;
         }
-        [data-tip]:hover::after,
-        [data-tip]:focus-within::after { opacity: 1; visibility: visible; }
-        [data-tip]:hover::before,
-        [data-tip]:focus-within::before { opacity: 1; visibility: visible; }
-
-        /* Tooltip below — for elements near the bottom of viewport */
-        [data-tip-pos="below"]::after {
-            bottom: auto;
-            top: calc(100% + 10px);
+        @keyframes tourPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(99,102,241,.5); }
+            70%  { box-shadow: 0 0 0 10px rgba(99,102,241,0); }
+            100% { box-shadow: 0 0 0 0 rgba(99,102,241,0); }
         }
-        [data-tip-pos="below"]::before {
-            bottom: auto;
-            top: calc(100% + 4px);
-            border-top-color: transparent;
-            border-bottom-color: rgba(99,102,241,.3);
-        }
-
-        /* Tooltip align left — prevent overflow on right-edge elements */
-        [data-tip-pos="left"]::after {
-            left: auto;
-            right: 0;
-            transform: none;
-        }
-        [data-tip-pos="left"]::before {
-            left: auto;
-            right: 20px;
-            transform: none;
-        }
-
-        /* First-visit hint bar ──────────────────────────────────── */
-        .hint-bar {
-            display: flex; align-items: center; gap: 10px;
+        /* "Start tour" button for returning users */
+        .tour-start-btn {
+            display: inline-flex; align-items: center; gap: 6px;
             background: var(--accent-glow); border: 1px solid var(--accent-border);
-            border-radius: 10px; padding: 10px 16px; margin-bottom: 16px;
-            font-size: 0.8125rem; color: var(--text1); line-height: 1.4;
+            color: var(--accent-h); font-size: 0.8rem; font-weight: 600;
+            padding: 6px 12px; border-radius: 8px; cursor: pointer;
+            transition: background .15s; margin-bottom: 12px;
         }
-        .hint-bar-icon { font-size: 1.1rem; flex-shrink: 0; }
-        .hint-bar-close {
-            margin-left: auto; background: none; border: none;
-            color: var(--text3); cursor: pointer; font-size: 1rem; padding: 2px 4px;
-            flex-shrink: 0;
-        }
-        .hint-bar-close:hover { color: var(--text1); }
+        .tour-start-btn:hover { background: var(--accent-dim, rgba(99,102,241,.18)); }
 
         @media (max-width: 640px) {
             .session-stats { grid-template-columns: repeat(2, 1fr); }
@@ -574,6 +582,21 @@
     </style>
 </head>
 <body data-theme="dark" data-text-size="medium">
+
+<!-- ── Guided tour elements ──────────────────────────────────── -->
+<div class="tour-overlay" id="tour-overlay"></div>
+<div class="tour-spot"    id="tour-spot"    style="display:none"></div>
+<div class="tour-pulse"   id="tour-pulse"   style="display:none"></div>
+<div class="tour-callout" id="tour-callout" style="display:none">
+    <div class="tour-step-lbl" id="tour-step-lbl">Step 1 of 6</div>
+    <div class="tour-title"    id="tour-title"></div>
+    <div class="tour-body"     id="tour-body"></div>
+    <div class="tour-actions">
+        <button class="tour-skip" onclick="endTour()">Skip tour</button>
+        <span   class="tour-action-hint" id="tour-action-hint" style="display:none"></span>
+        <button class="tour-next" id="tour-next" onclick="tourNext()">Next →</button>
+    </div>
+</div>
 
 <!-- ── Settings panel ────────────────────────────────────────── -->
 <div class="settings-panel" id="settings-panel">
@@ -647,35 +670,19 @@
     </div>
 
     <nav class="section-tabs" role="tablist">
-        <button class="tab-btn active" onclick="showSection('flashcards',this)" role="tab"
-            data-tip="Study your due cards. The algorithm shows cards at the optimal moment — just before you'd forget them."
-            data-tip-pos="below">🎴 Study</button>
-        <button class="tab-btn" onclick="showSection('profile',this)" role="tab"
-            data-tip="Your learner profile — accuracy trends, achievements, study goals, and export options."
-            data-tip-pos="below">👤 Profile</button>
-        <button class="tab-btn" onclick="showSection('analytics',this)" role="tab"
-            data-tip="Performance charts: weekly card volume, accuracy trends, and time-of-day heatmap."
-            data-tip-pos="below">📊 Analytics</button>
-        <button class="tab-btn" onclick="showSection('statistics',this)" role="tab"
-            data-tip="Deep stats: algorithm parameters, ease factor distribution, FSRS stability, and 365-day activity map."
-            data-tip-pos="below">📈 Statistics</button>
-        <button class="tab-btn" onclick="showSection('decks',this)" role="tab"
-            data-tip="Manage your card decks — create, edit, import, and track per-deck progress."
-            data-tip-pos="below">📂 Decks</button>
-        <button class="tab-btn" onclick="showSection('achievements',this)" role="tab"
-            data-tip="Unlock badges for streaks, accuracy milestones, and review volume. Achievements track your long-term growth."
-            data-tip-pos="below">🏆 Achievements</button>
+        <button class="tab-btn active" onclick="showSection('flashcards',this)" role="tab">🎴 Study</button>
+        <button class="tab-btn" onclick="showSection('profile',this)" role="tab">👤 Profile</button>
+        <button class="tab-btn" onclick="showSection('analytics',this)" role="tab">📊 Analytics</button>
+        <button class="tab-btn" onclick="showSection('statistics',this)" role="tab">📈 Statistics</button>
+        <button class="tab-btn" onclick="showSection('decks',this)" role="tab">📂 Decks</button>
+        <button class="tab-btn" onclick="showSection('achievements',this)" role="tab">🏆 Achievements</button>
     </nav>
 
     <div class="topbar-right">
         <div class="streak-pill"
-            data-tip="23 consecutive days of reviewing cards. A streak breaks if you skip a day — even one card per day keeps it alive."
-            data-tip-pos="below"
         >🔥 23-day streak</div>
-        <button class="icon-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle theme"
-            data-tip="Switch between dark and light theme · Ctrl+D" data-tip-pos="below">🌙</button>
-        <button class="icon-btn" onclick="openSettings()" title="Settings"
-            data-tip="Customise theme, text size, font, and accent color" data-tip-pos="below">⚙️</button>
+        <button class="icon-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle theme">🌙</button>
+        <button class="icon-btn" onclick="openSettings()" title="Settings">⚙️</button>
     </div>
 </header>
 
@@ -685,22 +692,17 @@
     <!-- ── Flashcards ─────────────────────────────────────────── -->
     <div class="content-section active" id="flashcards">
 
-        <!-- First-visit hint bar -->
-        <div class="hint-bar" id="hint-bar">
-            <span class="hint-bar-icon">💡</span>
-            <span><strong>New here?</strong> Flip each card, then rate how well you remembered it. The algorithm schedules your next review automatically — harder cards come back sooner, easy ones wait longer.</span>
-            <button class="hint-bar-close" onclick="document.getElementById('hint-bar').style.display='none';localStorage.setItem('prcm-hint-dismissed','1')" title="Dismiss">✕</button>
-        </div>
+        <button class="tour-start-btn" id="tour-start-btn" onclick="startTour()" title="Guided walkthrough">
+            🎓 New here? Take the tour
+        </button>
 
         <div class="session-header">
             <span class="deck-label">📂 <strong>Japanese Vocabulary</strong> · Card <span id="card-num">3</span> of 47</span>
             <span class="algo-badge"
-                data-tip="SM-2 spaced repetition algorithm. Ease 2.4 = intervals grow 2.4× after each correct answer. Higher ease means longer gaps — your brain is retaining this well."
             >⚙️ SM-2 · Ease 2.4</span>
         </div>
 
         <div class="session-progress-wrap"
-            data-tip="Session progress — 3 of 47 cards reviewed today. The bar fills as you work through your due queue."
         >
             <div class="session-progress" id="sess-prog" style="width:6%"></div>
         </div>
@@ -709,24 +711,22 @@
         <div class="flashcard-scene">
             <div class="flashcard" onclick="flipCard()" id="flashcard"
                 aria-label="Flashcard — click to reveal answer"
-                data-tip="Click to flip and reveal the answer · keyboard shortcut: Space"
             >
                 <div class="card-face card-front">
                     <div class="card-badge-row">
                         <span class="algo-badge"
-                            data-tip="This card is scheduled by SM-2. The algorithm tracks how well you know it and decides the next review date."
                         >SM-2</span>
                     </div>
                     <div class="card-question" id="question">What is the Japanese word for "Hello"?</div>
-                    <div class="card-hint">Click card or press <kbd style="background:var(--card-bg2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-size:0.75em">Space</kbd> to reveal</div>
+                    <div class="card-hint" id="card-hint">Click card or press <kbd style="background:var(--card-bg2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-size:0.75em">Space</kbd> to reveal</div>
                 </div>
                 <div class="card-face card-back">
                     <div class="card-badge-row">
                         <span class="algo-badge"
-                            data-tip="After you rate this card, the algorithm calculates your next review interval and shows it on the rating buttons below."
                         >Next interval ↓</span>
                     </div>
                     <div class="card-answer" id="answer">こんにちは (Konnichiwa)</div>
+                    <div class="card-hint" style="color:var(--text3);font-size:0.75rem;margin-top:8px">Rate your recall using the buttons below</div>
                     <div class="card-note">Common greeting used throughout the day</div>
                 </div>
             </div>
@@ -735,29 +735,21 @@
         <!-- Rating buttons -->
         <div class="rating-row">
             <button class="rating-btn btn-again" onclick="answerCard('again')"
-                data-tip="You got it wrong or blanked completely. The card resets and reappears in ~10 minutes so you can try again. Ease factor drops — more practice needed. Keyboard: 1"
-                data-tip-pos="below"
             >
                 <span class="rating-label">❌ Again</span>
                 <span class="rating-interval">&lt; 1 min</span>
             </button>
             <button class="rating-btn btn-hard" onclick="answerCard('hard')"
-                data-tip="You remembered it but had to think hard. Interval grows by only 1.2× (less than normal). Ease factor decreases slightly — the algorithm will show this card more often. Keyboard: 2"
-                data-tip-pos="below"
             >
                 <span class="rating-label">😕 Hard</span>
                 <span class="rating-interval">1 day</span>
             </button>
             <button class="rating-btn btn-good" onclick="answerCard('good')"
-                data-tip="Correct with normal effort — the standard response. Interval multiplied by your ease factor (2.4×). This is the most common rating and the backbone of spaced repetition. Keyboard: 3"
-                data-tip-pos="below"
             >
                 <span class="rating-label">✅ Good</span>
                 <span class="rating-interval">4 days</span>
             </button>
             <button class="rating-btn btn-easy" onclick="answerCard('easy')"
-                data-tip="Instant recall — no hesitation at all. Interval grows by ease × 1.3, fast-tracking this card to a much longer gap. Use sparingly; only when it felt truly effortless. Keyboard: 4"
-                data-tip-pos="below"
             >
                 <span class="rating-label">😊 Easy</span>
                 <span class="rating-interval">8 days</span>
@@ -767,28 +759,24 @@
         <!-- Session stats -->
         <div class="session-stats">
             <div class="sstat s-accent"
-                data-tip="Total cards reviewed in this session. No minimum gate — but consistent daily volume is the #1 predictor of long-term retention."
             >
                 <div class="sstat-val" id="reviews">23</div>
                 <div class="sstat-lbl">Reviews Today</div>
                 <div class="sstat-chg">+5 from yesterday</div>
             </div>
             <div class="sstat s-green"
-                data-tip="Percentage of reviews rated Good or Easy out of all responses this session. KPI Gate: must stay ≥ 75% or the next session will include more easy warm-up cards."
             >
                 <div class="sstat-val" id="accuracy">87%</div>
                 <div class="sstat-lbl">Session Accuracy</div>
                 <div class="sstat-chg">+3% this week</div>
             </div>
             <div class="sstat s-yellow"
-                data-tip="Consecutive days you've reviewed at least one card. Streaks reinforce daily habits — even 5 minutes a day beats a 2-hour weekly cram. Best streak: 45 days."
             >
                 <div class="sstat-val">23</div>
                 <div class="sstat-lbl">Day Streak</div>
                 <div class="sstat-chg">Best: 45 days</div>
             </div>
             <div class="sstat s-blue"
-                data-tip="Total study time this session. Research shows 15–20 minutes of focused review is the sweet spot — beyond that, fatigue starts hurting recall quality."
             >
                 <div class="sstat-val" id="time-val">18m</div>
                 <div class="sstat-lbl">Time Studied</div>
@@ -839,8 +827,7 @@
     <!-- ── Analytics ──────────────────────────────────────────── -->
     <div class="content-section" id="analytics">
         <div class="panel">
-            <div class="panel-title"
-                data-tip="Each square = one day. Colour intensity shows how many cards you reviewed. Consistent light activity beats occasional intense sessions for long-term memory.">365-Day Activity Heat Map</div>
+            <div class="panel-title">365-Day Activity Heat Map</div>
             <p style="font-size:0.8125rem;color:var(--text2);margin-bottom:12px">Daily study consistency — darker = more intensive session.</p>
             <div class="heatmap-wrap" id="heatmap"></div>
             <div class="hm-legend" style="margin-top:8px">
@@ -884,14 +871,11 @@
         <div class="panel">
             <div class="panel-title">SM-2 + FSRS Algorithm Insights</div>
             <div class="algo-stat-row">
-                <div class="algo-stat"
-                    data-tip="SM-2 ease factor — how quickly review intervals grow. Starts at 2.5; drops when you rate Hard/Again, rises when you rate Easy. 2.4 is healthy; below 1.3 indicates a struggling card.">
+                <div class="algo-stat">
                     <div class="algo-stat-val">2.4</div><div class="algo-stat-lbl">Avg Ease Factor</div><div class="algo-stat-sub">Cards adapt to pace</div></div>
-                <div class="algo-stat"
-                    data-tip="Percentage of cards you still recalled at review time (not just same-session accuracy). KPI Gate: ≥ 70% required. FSRS models this as R(t) = e^(-t/S) — this is your average R at review time.">
+                <div class="algo-stat">
                     <div class="algo-stat-val">89%</div><div class="algo-stat-lbl">Retention Rate</div><div class="algo-stat-sub">Gate ≥ 70% ✓</div></div>
-                <div class="algo-stat"
-                    data-tip="Average number of days between reviews across your whole deck. 13 days means your cards are well-learned — new cards start at 1 day and grow with each successful recall.">
+                <div class="algo-stat">
                     <div class="algo-stat-val">13d</div><div class="algo-stat-lbl">Avg Interval</div><div class="algo-stat-sub">Optimal scheduling</div></div>
             </div>
         </div>
@@ -1153,14 +1137,205 @@ document.addEventListener('DOMContentLoaded', function() {
             if (m) { document.querySelectorAll('.csw').forEach(function(c){c.classList.remove('active');}); m.classList.add('active'); }
         }
     }
-    // Hide hint bar if user dismissed it before
-    if (localStorage.getItem('prcm-hint-dismissed')) {
-        var hb = document.getElementById('hint-bar');
-        if (hb) hb.style.display = 'none';
+    // Auto-start tour for first-time visitors
+    if (!localStorage.getItem('prcm-tour-done')) {
+        setTimeout(startTour, 600);
+    } else {
+        // Show replay button for returning users
+        var sb = document.getElementById('tour-start-btn');
+        if (sb) sb.style.display = 'inline-flex';
     }
-    console.log('🧠 PRCM | ASRL Study Session');
-    console.log('Space = flip  |  1/2/3/4 = rate  |  Ctrl+D = theme  |  ? = tooltips on hover');
+    console.log('🧠 PRCM | ASRL  |  startTour() to replay the guided tour');
 });
+
+/* ── Guided Tour Engine ───────────────────────────────────────── */
+var _tourStep = 0;
+var _tourActive = false;
+
+var TOUR_STEPS = [
+    {
+        target:  null,
+        title:   '👋 Welcome to PRCM | ASRL',
+        body:    'This is a spaced repetition study app. Cards are shown at the exact moment your brain is about to forget them — making every minute of study count.\n\nThis tour takes about 60 seconds.',
+        next:    true,
+        center:  true
+    },
+    {
+        target:  '#flashcard',
+        title:   '🎴 Step 1 — Flip the Card',
+        body:    'A question appears on the front. Read it and try to recall the answer before looking.\n\nClick the card (or press Space) to reveal the answer.',
+        waitFor: 'flip',
+        hint:    '👆 Click the card to continue'
+    },
+    {
+        target:  '.rating-row',
+        title:   '⭐ Step 2 — Rate Your Recall',
+        body:    'Now that you\'ve seen the answer, how well did you actually remember it?\n\nPick the button that best matches your honest recall. The algorithm schedules your next review based on this.',
+        waitFor: 'rate',
+        hint:    '👆 Tap a rating button to continue',
+        above:   true
+    },
+    {
+        target:  '.btn-again',
+        title:   '❌ Again — I forgot',
+        body:    'Got it wrong, or your mind went blank. The card resets and comes back within ~10 minutes so you can try again.\n\nBe honest — the system only works when ratings are accurate.',
+        next:    true,
+        above:   true
+    },
+    {
+        target:  '.btn-good',
+        title:   '✅ Good — I remembered',
+        body:    'Correct with normal effort — the most common response. Your next review is scheduled days away and the interval grows each time you get it right.\n\nHard = struggled (shorter gap) · Easy = instant recall (longer gap)',
+        next:    true,
+        above:   true
+    },
+    {
+        target:  '.session-stats',
+        title:   '📊 Track Your Progress',
+        body:    'These four cards show your session health:\n• Accuracy ≥ 75% to pass the gate\n• Keep streaks alive with just one card per day\n• 15–20 min/day beats a weekly cram session',
+        next:    true,
+        above:   true
+    },
+    {
+        target:  '.algo-badge',
+        title:   '⚙️ The Algorithm',
+        body:    'SM-2 · Ease 2.4 — the scheduling engine tracking this card.\n\nFSRS and IRT are also available in Settings. Explore the Analytics and Statistics tabs to see your learning data.',
+        next:    true,
+        last:    true
+    }
+];
+
+function startTour() {
+    _tourStep   = 0;
+    _tourActive = true;
+    var sb = document.getElementById('tour-start-btn');
+    if (sb) sb.style.display = 'none';
+    // Make sure flashcards section is visible
+    showSection('flashcards', document.querySelector('.tab-btn'));
+    // Reset card to front if it's flipped
+    var fc = document.getElementById('flashcard');
+    if (fc && fc.classList.contains('flipped')) {
+        fc.classList.remove('flipped');
+    }
+    showTourStep(0);
+}
+
+function endTour() {
+    _tourActive = false;
+    document.getElementById('tour-overlay').classList.remove('active');
+    document.getElementById('tour-spot').style.display    = 'none';
+    document.getElementById('tour-pulse').style.display   = 'none';
+    document.getElementById('tour-callout').style.display = 'none';
+    localStorage.setItem('prcm-tour-done', '1');
+    var sb = document.getElementById('tour-start-btn');
+    if (sb) sb.style.display = 'inline-flex';
+}
+
+function tourNext() {
+    _tourStep++;
+    if (_tourStep >= TOUR_STEPS.length) { endTour(); return; }
+    showTourStep(_tourStep);
+}
+
+function showTourStep(idx) {
+    var step = TOUR_STEPS[idx];
+    if (!step) { endTour(); return; }
+
+    // Update text content
+    document.getElementById('tour-step-lbl').textContent = 'Step ' + (idx + 1) + ' of ' + TOUR_STEPS.length;
+    document.getElementById('tour-title').textContent    = step.title;
+    document.getElementById('tour-body').textContent     = step.body;
+
+    var nextBtn  = document.getElementById('tour-next');
+    var hintEl   = document.getElementById('tour-action-hint');
+    var callout  = document.getElementById('tour-callout');
+    var overlay  = document.getElementById('tour-overlay');
+    var spot     = document.getElementById('tour-spot');
+    var pulse    = document.getElementById('tour-pulse');
+
+    // Show/hide Next button vs action hint
+    if (step.waitFor) {
+        nextBtn.style.display  = 'none';
+        hintEl.style.display   = 'inline';
+        hintEl.textContent     = step.hint || '';
+    } else {
+        nextBtn.style.display  = 'inline-block';
+        nextBtn.textContent    = step.last ? 'Done ✓' : 'Next →';
+        hintEl.style.display   = 'none';
+    }
+
+    overlay.classList.add('active');
+    callout.style.display = 'block';
+
+    if (step.center || !step.target) {
+        // Centred modal — no spotlight
+        spot.style.display  = 'none';
+        pulse.style.display = 'none';
+        callout.style.top   = '50%';
+        callout.style.left  = '50%';
+        callout.style.transform = 'translate(-50%, -50%)';
+        callout.className = 'tour-callout';
+    } else {
+        callout.style.transform = '';
+        var el = document.querySelector(step.target);
+        if (!el) { tourNext(); return; }
+
+        var r   = el.getBoundingClientRect();
+        var pad = 10;
+
+        // Position spotlight
+        spot.style.display  = 'block';
+        spot.style.top      = (r.top    - pad) + 'px';
+        spot.style.left     = (r.left   - pad) + 'px';
+        spot.style.width    = (r.width  + pad * 2) + 'px';
+        spot.style.height   = (r.height + pad * 2) + 'px';
+
+        // Pulsing ring
+        pulse.style.display  = 'block';
+        pulse.style.top      = (r.top    - pad) + 'px';
+        pulse.style.left     = (r.left   - pad) + 'px';
+        pulse.style.width    = (r.width  + pad * 2) + 'px';
+        pulse.style.height   = (r.height + pad * 2) + 'px';
+
+        // Position callout above or below
+        var calloutH = 200; // approx
+        if (step.above) {
+            // Place callout below the spotlight
+            callout.style.top    = (r.bottom + pad + 14) + 'px';
+            callout.style.left   = Math.min(Math.max(r.left + r.width/2 - 150, 10), window.innerWidth - 320) + 'px';
+            callout.style.bottom = 'auto';
+            callout.className    = 'tour-callout arrow-up';
+        } else {
+            // Place callout above the spotlight
+            var top = r.top - pad - calloutH - 20;
+            if (top < 10) top = r.bottom + pad + 14;
+            callout.style.top    = top + 'px';
+            callout.style.left   = Math.min(Math.max(r.left + r.width/2 - 150, 10), window.innerWidth - 320) + 'px';
+            callout.style.bottom = 'auto';
+            callout.className    = top < r.top ? 'tour-callout arrow-down' : 'tour-callout arrow-up';
+        }
+    }
+}
+
+// Hook into flipCard so tour auto-advances on flip
+var _origFlipCard = window.flipCard;
+function flipCard() {
+    if (typeof _origFlipCard === 'function') _origFlipCard();
+    if (_tourActive && TOUR_STEPS[_tourStep] && TOUR_STEPS[_tourStep].waitFor === 'flip') {
+        setTimeout(function() { _tourStep++; showTourStep(_tourStep); }, 450);
+    }
+}
+window.flipCard = flipCard;
+
+// Hook into answerCard so tour auto-advances on rate
+var _origAnswerCard = window.answerCard;
+function answerCard(d) {
+    if (typeof _origAnswerCard === 'function') _origAnswerCard(d);
+    if (_tourActive && TOUR_STEPS[_tourStep] && TOUR_STEPS[_tourStep].waitFor === 'rate') {
+        setTimeout(function() { _tourStep++; showTourStep(_tourStep); }, 300);
+    }
+}
+window.answerCard = answerCard;
 </script>
 </body>
 </html>
