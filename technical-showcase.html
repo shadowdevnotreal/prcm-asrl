@@ -79,6 +79,139 @@
             --footer-link: #a78bfa;
         }
 
+        /* ── Shared design-system tokens (match all other pages) ───── */
+        :root {
+            --sp-bg:        #131c2e;
+            --sp-bg2:       #1a2540;
+            --sp-border:    rgba(99,102,241,.18);
+            --sp-text:      #e2e8f0;
+            --sp-sub:       #94a3b8;
+            --sp-muted:     #64748b;
+            --sp-accent:    #6366f1;
+            --sp-accent-h:  #818cf8;
+            --sp-accent-dim:rgba(99,102,241,.12);
+            --sp-r:         8px;
+            --sp-ease:      0.15s ease;
+        }
+        [data-theme="light"] {
+            --sp-bg:        #ffffff;
+            --sp-bg2:       #f8fafc;
+            --sp-border:    #e2e8f0;
+            --sp-text:      #1e293b;
+            --sp-sub:       #475569;
+            --sp-muted:     #94a3b8;
+            --sp-accent-h:  #4f46e5;
+            --sp-accent-dim:rgba(99,102,241,.08);
+        }
+
+        /* ── App Topbar (matches all pages) ─────────────────────────── */
+        .app-topbar {
+            position: sticky; top: 0; z-index: 1000; height: 56px;
+            background: rgba(11,17,32,.88);
+            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--sp-border);
+            display: flex; align-items: center; padding: 0 1.25rem; gap: 1rem;
+        }
+        [data-theme="light"] .app-topbar { background: rgba(241,245,249,.92); }
+
+        .topbar-brand-ts {
+            font-size: 0.95rem; font-weight: 800; text-decoration: none;
+            background: linear-gradient(135deg, var(--sp-accent), var(--sp-accent-h));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; white-space: nowrap; flex-shrink: 0;
+        }
+        .topbar-sep-ts { color: var(--sp-muted); font-size: 0.85rem; flex-shrink: 0; }
+        .topbar-page-ts {
+            font-size: 0.82rem; font-weight: 600; color: var(--sp-sub); flex-shrink: 0;
+        }
+        .ts-nav-links-bar {
+            display: flex; gap: 0.25rem; align-items: center; flex: 1;
+            overflow-x: auto; scrollbar-width: none; padding: 0 0.5rem;
+        }
+        .ts-nav-links-bar::-webkit-scrollbar { display: none; }
+        .ts-tab {
+            background: transparent; border: none; color: var(--sp-muted);
+            font-size: 0.78rem; font-weight: 500; padding: 0.375rem 0.75rem;
+            border-radius: 6px; cursor: pointer; white-space: nowrap;
+            transition: color .15s, background .15s; text-decoration: none;
+            display: inline-flex; align-items: center;
+        }
+        .ts-tab:hover  { color: var(--sp-text); background: var(--sp-accent-dim); }
+        .ts-tab.active { color: var(--sp-accent-h); background: var(--sp-accent-dim); font-weight: 600; }
+        .topbar-actions-ts {
+            display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0;
+        }
+        .ts-icon-btn {
+            width: 34px; height: 34px; background: transparent;
+            border: 1px solid var(--sp-border); border-radius: 8px;
+            color: var(--sp-sub); font-size: 1rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background .15s, color .15s;
+        }
+        .ts-icon-btn:hover { background: var(--sp-accent-dim); color: var(--sp-accent-h); }
+        @media (max-width: 900px) { .ts-nav-links-bar .ts-tab:not(.active) { display: none; } }
+
+        /* ── Settings panel ───────────────────────────────────────── */
+        .settings-panel {
+            position: fixed; top: 0; right: -360px; width: 360px; height: 100vh;
+            background: var(--sp-bg); border-left: 1px solid var(--sp-border);
+            z-index: 1100; transition: right 0.25s ease; overflow-y: auto;
+        }
+        .settings-panel.open { right: 0; }
+        .sp-head {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 18px; border-bottom: 1px solid var(--sp-border);
+        }
+        .sp-title { font-size: 1rem; font-weight: 700; color: var(--sp-text); }
+        .sp-x {
+            background: none; border: 1px solid var(--sp-border); color: var(--sp-sub);
+            width: 28px; height: 28px; border-radius: var(--sp-r);
+            cursor: pointer; font-size: 1rem; display: flex; align-items: center;
+            justify-content: center; transition: all var(--sp-ease);
+        }
+        .sp-x:hover { background: var(--sp-accent-dim); color: var(--sp-accent-h); }
+        .sp-body { padding: 18px; }
+        .sp-grp { margin-bottom: 20px; }
+        .sp-grp-lbl {
+            font-size: 0.625rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .1em; color: var(--sp-muted); margin-bottom: 12px;
+            padding-bottom: 7px; border-bottom: 1px solid var(--sp-border);
+        }
+        .sp-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.03);
+        }
+        .sp-row:last-child { border-bottom: none; }
+        .sp-lbl { font-size: 0.8125rem; font-weight: 500; color: var(--sp-text); }
+        .sp-sel {
+            padding: 5px 7px; border: 1px solid var(--sp-border); border-radius: 6px;
+            background: var(--sp-bg2); color: var(--sp-text);
+            font-size: 0.8125rem; min-width: 110px;
+        }
+        .tog {
+            width: 40px; height: 20px; background: var(--sp-border); border-radius: 10px;
+            position: relative; cursor: pointer; transition: background var(--sp-ease);
+        }
+        .tog::after {
+            content: ''; position: absolute; top: 2px; left: 2px;
+            width: 16px; height: 16px; background: #fff; border-radius: 50%;
+            transition: left var(--sp-ease);
+        }
+        .tog.on { background: var(--sp-accent); }
+        .tog.on::after { left: 22px; }
+        .color-g { display: grid; grid-template-columns: repeat(6,1fr); gap: 7px; margin-top: 8px; }
+        .csw {
+            aspect-ratio: 1; border-radius: 5px; cursor: pointer;
+            border: 2px solid transparent; transition: all var(--sp-ease);
+        }
+        .csw:hover { transform: scale(1.12); }
+        .csw.active { border-color: var(--sp-text); }
+        .overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 1099;
+            opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s;
+        }
+        .overlay.show { opacity: 1; visibility: visible; }
+
         /* ── Consistent top-nav (matches other pages' purple bar) ────── */
         .ts-nav {
             position: sticky;
@@ -473,26 +606,90 @@
         }
     </style>
 </head>
-<body data-theme="dark">
-    <!-- Navigation -->
-    <header class="ts-nav">
-        <div class="ts-nav-inner">
-            <a href="START_HERE.html" class="ts-nav-brand">🧠 PRCM | ASRL</a>
-            <div class="ts-nav-links">
-                <a href="START_HERE.html">🏠 Home</a>
-                <a href="index.html">📊 Overview</a>
-                <a href="interactive-demo.html">🎮 Try Demo</a>
-                <a href="user-guide.html">📚 Guide</a>
-                <span class="ts-nav-active">⚙️ Technical</span>
+<body data-theme="dark" data-text-size="medium" data-font-family="system">
+
+<!-- Settings panel -->
+<div class="settings-panel" id="settingsPanel">
+    <div class="sp-head">
+        <span class="sp-title">⚙️ Settings</span>
+        <button class="sp-x" onclick="closeSettings()">✕</button>
+    </div>
+    <div class="sp-body">
+        <div class="sp-grp">
+            <div class="sp-grp-lbl">Appearance</div>
+            <div class="sp-row">
+                <span class="sp-lbl">Theme</span>
+                <select class="sp-sel" onchange="applyTheme(this.value)" id="theme-sel">
+                    <option value="dark" selected>Dark</option>
+                    <option value="light">Light</option>
+                    <option value="high-contrast">High Contrast</option>
+                </select>
             </div>
-            <div class="ts-nav-actions">
-                <button class="ts-btn" onclick="toggleTheme()" id="themeToggle">
-                    <span id="themeIcon">🌙</span><span id="themeText">Light</span>
-                </button>
-                <span class="ts-step-label">Step 3 of 4</span>
+            <div class="sp-row">
+                <span class="sp-lbl">Text Size</span>
+                <select class="sp-sel" onchange="applyTextSize(this.value)" id="size-sel">
+                    <option value="small">Small</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="large">Large</option>
+                    <option value="xl">XL</option>
+                </select>
+            </div>
+            <div class="sp-row">
+                <span class="sp-lbl">Font</span>
+                <select class="sp-sel" onchange="applyFont(this.value)">
+                    <option value="system" selected>System</option>
+                    <option value="inter">Inter</option>
+                    <option value="roboto">Roboto</option>
+                </select>
             </div>
         </div>
-    </header>
+        <div class="sp-grp">
+            <div class="sp-grp-lbl">Accessibility</div>
+            <div class="sp-row">
+                <span class="sp-lbl">Reduce Motion</span>
+                <div class="tog" id="rm-tog" onclick="this.classList.toggle('on'); document.body.setAttribute('data-reduce-motion',this.classList.contains('on'))"></div>
+            </div>
+        </div>
+        <div class="sp-grp">
+            <div class="sp-grp-lbl">Accent Color</div>
+            <div class="color-g">
+                <div class="csw active" style="background:#6366f1" onclick="setAccent('#6366f1','#818cf8',this)"></div>
+                <div class="csw" style="background:#3b82f6" onclick="setAccent('#3b82f6','#60a5fa',this)"></div>
+                <div class="csw" style="background:#8b5cf6" onclick="setAccent('#8b5cf6','#a78bfa',this)"></div>
+                <div class="csw" style="background:#ec4899" onclick="setAccent('#ec4899','#f472b6',this)"></div>
+                <div class="csw" style="background:#22c55e" onclick="setAccent('#22c55e','#4ade80',this)"></div>
+                <div class="csw" style="background:#f97316" onclick="setAccent('#f97316','#fb923c',this)"></div>
+                <div class="csw" style="background:#14b8a6" onclick="setAccent('#14b8a6','#2dd4bf',this)"></div>
+                <div class="csw" style="background:#ef4444" onclick="setAccent('#ef4444','#f87171',this)"></div>
+                <div class="csw" style="background:#eab308" onclick="setAccent('#eab308','#facc15',this)"></div>
+                <div class="csw" style="background:#06b6d4" onclick="setAccent('#06b6d4','#22d3ee',this)"></div>
+                <div class="csw" style="background:#10b981" onclick="setAccent('#10b981','#34d399',this)"></div>
+                <div class="csw" style="background:#84cc16" onclick="setAccent('#84cc16','#a3e635',this)"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="overlay" id="overlay" onclick="closeSettings()"></div>
+
+<!-- App Topbar -->
+<header class="app-topbar">
+    <a href="START_HERE.html" class="topbar-brand-ts">🧠 PRCM | ASRL</a>
+    <span class="topbar-sep-ts">/</span>
+    <span class="topbar-page-ts">⚙️ Technical</span>
+
+    <nav class="ts-nav-links-bar">
+        <a href="START_HERE.html" class="ts-tab">🏠 Home</a>
+        <a href="index.html" class="ts-tab">📊 Overview</a>
+        <a href="interactive-demo.html" class="ts-tab">🎴 Try Demo</a>
+        <a href="user-guide.html" class="ts-tab">📚 Guide</a>
+        <span class="ts-tab active">⚙️ Technical</span>
+    </nav>
+
+    <div class="topbar-actions-ts">
+        <button class="ts-icon-btn" onclick="toggleTheme()" id="themeToggle" title="Toggle theme">☀️</button>
+        <button class="ts-icon-btn" onclick="openSettings()" title="Settings">⚙️</button>
+    </div>
+</header>
 
     <div class="container">
         <header class="header animate-in">
@@ -658,6 +855,16 @@
                     <div class="metric-value">99.9%</div>
                     <div class="metric-label">Uptime Reliability</div>
                 </div>
+
+                <div class="metric-card animate-in">
+                    <div class="metric-value">87%</div>
+                    <div class="metric-label">User Accuracy Rate</div>
+                </div>
+
+                <div class="metric-card animate-in">
+                    <div class="metric-value">8,932</div>
+                    <div class="metric-label">Reviews Tracked</div>
+                </div>
             </div>
         </section>
 
@@ -770,7 +977,13 @@
                 <div class="feature-card">
                     <div class="feature-icon">🔄</div>
                     <h4 class="feature-title">CI/CD Pipeline</h4>
-                    <p class="feature-description">Automated testing and deployment with staged rollout. The KPI gate system requires explicit <code style="font-size:11px;background:var(--code-bg);padding:2px 5px;border-radius:4px;">--conformance-pass true</code> flags before any PROMOTE decision.</p>
+                    <p class="feature-description">Automated testing and deployment with staged rollout. The KPI gate system blocks any PROMOTE decision unless all four gates pass:</p>
+                    <ul style="margin:8px 0 8px 16px;font-size:0.82rem;line-height:1.8;color:var(--feat-desc)">
+                        <li>Accuracy ≥ <strong>75%</strong> (Good + Easy / total responses)</li>
+                        <li>Retention ≥ <strong>70%</strong> (cards recalled at review time)</li>
+                        <li>Avg Response ≤ <strong>6 000 ms</strong> (mean think-time per card)</li>
+                        <li>Fatigue Drop ≤ <strong>15%</strong> (accuracy decline 1st → 2nd half)</li>
+                    </ul>
                     <div class="tech-stack">
                         <span class="tech-tag">GitHub Actions</span>
                         <span class="tech-tag">KPI Gates</span>
@@ -819,50 +1032,68 @@
     </footer>
 
     <script>
-        // Theme Management - Persists across all demo pages
-        function toggleTheme() {
-            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            // Apply theme
-            document.body.setAttribute('data-theme', newTheme);
-            
-            // Update button
-            updateThemeButton(newTheme);
-            
-            // Save to localStorage for persistence across all pages
-            localStorage.setItem('anki-demo-theme', newTheme);
-            localStorage.setItem('anki-theme', newTheme);
+        // ── Settings panel ──────────────────────────────────────────
+        function openSettings()  { document.getElementById('settingsPanel').classList.add('open'); document.getElementById('overlay').classList.add('show'); }
+        function closeSettings() { document.getElementById('settingsPanel').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
+
+        function applyTheme(t) {
+            document.body.setAttribute('data-theme', t);
+            localStorage.setItem('anki-demo-theme', t);
+            localStorage.setItem('anki-theme', t);
+            const btn = document.getElementById('themeToggle');
+            if (btn) btn.textContent = t === 'dark' ? '☀️' : '🌙';
+            const sel = document.getElementById('theme-sel');
+            if (sel) sel.value = t;
         }
 
-        function updateThemeButton(theme) {
-            const icon = document.getElementById('themeIcon');
-            const text = document.getElementById('themeText');
-            
-            if (theme === 'dark') {
-                icon.textContent = '☀️';
-                text.textContent = 'Light';
-            } else {
-                icon.textContent = '🌙';
-                text.textContent = 'Dark';
+        function toggleTheme() {
+            const cur = document.body.getAttribute('data-theme') || 'dark';
+            applyTheme(cur === 'dark' ? 'light' : 'dark');
+        }
+
+        function applyTextSize(s) {
+            document.body.setAttribute('data-text-size', s);
+            localStorage.setItem('anki-text-size', s);
+        }
+
+        function applyFont(f) {
+            const map = { system: '-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif', inter: '"Inter",sans-serif', roboto: '"Roboto",sans-serif' };
+            document.body.style.fontFamily = map[f] || map.system;
+            localStorage.setItem('anki-font-family', f);
+        }
+
+        function setAccent(base, hover, el) {
+            document.documentElement.style.setProperty('--sp-accent', base);
+            document.documentElement.style.setProperty('--sp-accent-h', hover);
+            document.documentElement.style.setProperty('--primary', base);
+            document.documentElement.style.setProperty('--secondary', hover);
+            document.querySelectorAll('.csw').forEach(c => c.classList.remove('active'));
+            if (el) el.classList.add('active');
+            localStorage.setItem('anki-accent', base + '|' + hover);
+        }
+
+        // Load saved settings on page load
+        function loadSettings() {
+            const theme = localStorage.getItem('anki-demo-theme') || localStorage.getItem('anki-theme') || 'dark';
+            applyTheme(theme);
+            const size = localStorage.getItem('anki-text-size') || 'medium';
+            document.body.setAttribute('data-text-size', size);
+            const sel = document.getElementById('size-sel');
+            if (sel) sel.value = size;
+            const font = localStorage.getItem('anki-font-family') || 'system';
+            applyFont(font);
+            const accent = localStorage.getItem('anki-accent');
+            if (accent) {
+                const [b, h] = accent.split('|');
+                const match = document.querySelector(`.csw[style*="${b}"]`);
+                setAccent(b, h, match);
             }
         }
 
-        // Load saved theme on page load — default dark for this technical page
-        function loadTheme() {
-            const savedTheme = localStorage.getItem('anki-demo-theme') ||
-                               localStorage.getItem('anki-theme') ||
-                               'dark';
-
-            document.body.setAttribute('data-theme', savedTheme);
-            updateThemeButton(savedTheme);
-        }
-
-        // Make functions globally available
-        window.toggleTheme = toggleTheme;
-
-        // Initialize theme on page load
-        document.addEventListener('DOMContentLoaded', loadTheme);
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings();
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSettings(); if (e.ctrlKey && e.key === 'd') { e.preventDefault(); toggleTheme(); } });
+        });
 
         // Animate elements as they come into view
         const observerOptions = {

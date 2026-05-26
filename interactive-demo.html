@@ -48,6 +48,13 @@
             --accent-glow: rgba(99,102,241,0.08); --accent-border: rgba(99,102,241,0.2);
         }
 
+        body[data-theme="high-contrast"] {
+            --body-bg: #000000; --card-bg: #111111; --card-bg2: #1a1a1a;
+            --border: #555555; --text1: #ffffff; --text2: #dddddd; --text3: #aaaaaa;
+            --accent: #00ff88; --accent-h: #00cc66;
+            --accent-glow: rgba(0,255,136,0.15); --accent-border: rgba(0,255,136,0.4);
+        }
+
         body[data-text-size="small"]  { font-size: 0.9em; }
         body[data-text-size="large"]  { font-size: 1.1em; }
         body[data-text-size="xl"]     { font-size: 1.2em; }
@@ -496,6 +503,7 @@
                 <select class="sp-sel" onchange="setTheme(this.value)" id="theme-sel">
                     <option value="dark">Dark</option>
                     <option value="light">Light</option>
+                    <option value="high-contrast">High Contrast</option>
                 </select>
             </div>
             <div class="sp-row">
@@ -505,6 +513,14 @@
                     <option value="medium" selected>Medium</option>
                     <option value="large">Large</option>
                     <option value="xl">XL</option>
+                </select>
+            </div>
+            <div class="sp-row">
+                <span class="sp-lbl">Font</span>
+                <select class="sp-sel" onchange="setFont(this.value)" id="font-sel">
+                    <option value="system" selected>System</option>
+                    <option value="inter">Inter</option>
+                    <option value="roboto">Roboto</option>
                 </select>
             </div>
         </div>
@@ -914,6 +930,12 @@ function setTextSize(s) {
     localStorage.setItem('anki-text-size', s);
 }
 
+function setFont(f) {
+    var map = { system: '-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif', inter: '"Inter",sans-serif', roboto: '"Roboto",sans-serif' };
+    document.body.style.fontFamily = map[f] || map.system;
+    localStorage.setItem('anki-font-family', f);
+}
+
 function setAccent(base, hover) {
     document.body.style.setProperty('--accent', base);
     document.body.style.setProperty('--accent-h', hover);
@@ -940,7 +962,7 @@ function buildHeatmap() {
     if (heatmapBuilt) return;
     var grid = document.getElementById('heatmap');
     if (!grid) return;
-    for (var i = 0; i < 364; i++) {
+    for (var i = 0; i < 365; i++) {
         var d = document.createElement('div');
         d.className = 'hm-day';
         var r = Math.random();
@@ -970,13 +992,17 @@ document.addEventListener('DOMContentLoaded', function() {
     var t = localStorage.getItem('anki-demo-theme') || localStorage.getItem('anki-theme') || 'dark';
     setTheme(t);
     var sz = localStorage.getItem('anki-text-size');
-    if (sz) setTextSize(sz);
+    if (sz) { setTextSize(sz); var ss = document.getElementById('size-sel'); if (ss) ss.value = sz; }
+    var f = localStorage.getItem('anki-font-family');
+    if (f) { setFont(f); var fs = document.getElementById('font-sel'); if (fs) fs.value = f; }
     var acc = localStorage.getItem('anki-accent');
     if (acc) {
         var p = acc.split('|');
         if (p.length === 2) {
             document.body.style.setProperty('--accent', p[0]);
             document.body.style.setProperty('--accent-h', p[1]);
+            var m = document.querySelector('.csw[style*="' + p[0] + '"]');
+            if (m) { document.querySelectorAll('.csw').forEach(function(c){c.classList.remove('active');}); m.classList.add('active'); }
         }
     }
     console.log('🧠 PRCM | ASRL Study Session');
