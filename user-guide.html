@@ -976,6 +976,122 @@
                 </ol>
             </section>
 
+            <!-- Creating Your First Deck -->
+            <section id="first-deck" class="content-section">
+                <h1>Creating Your First Deck</h1>
+                <p>A deck is a collection of flashcards on a related topic. PRCM | ASRL organises your learning into decks so each subject has its own review schedule and analytics.</p>
+
+                <h2>📂 What Is a Deck?</h2>
+                <div class="enhanced-card">
+                    <p>Think of a deck like a subject folder. Each deck tracks its own:</p>
+                    <ul>
+                        <li>Card due dates (scheduled by SM-2, FSRS, or IRT)</li>
+                        <li>Per-card stability and ease values</li>
+                        <li>Session history and accuracy trends</li>
+                        <li>KPI gate performance (accuracy, retention, response time, fatigue)</li>
+                    </ul>
+                </div>
+
+                <h2>➕ How to Create a Deck</h2>
+                <ol>
+                    <li>Open the <strong>Decks</strong> tab from the top navigation or sidebar</li>
+                    <li>Click <strong>+ New Deck</strong> in the top-right corner</li>
+                    <li>Enter a name (e.g. "Japanese Vocabulary", "Organic Chemistry")</li>
+                    <li>Set a daily new-card limit (default: 10) and review cap (default: 100)</li>
+                    <li>Choose the scheduling algorithm: SM-2, FSRS, or IRT</li>
+                    <li>Click <strong>Create Deck</strong> — your deck appears in the list immediately</li>
+                </ol>
+
+                <h2>✏️ Adding Cards</h2>
+                <div class="feature-grid">
+                    <div class="enhanced-card">
+                        <h3>Manual Entry</h3>
+                        <p>Click <strong>Add Card</strong> inside a deck. Type the front (question) and back (answer). Supports plain text, code blocks, and LaTeX math notation.</p>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>Bulk Import</h3>
+                        <p>Import from a CSV file (columns: front, back, tags) or an Anki-format <code>.apkg</code> export. The importer detects duplicates automatically.</p>
+                    </div>
+                </div>
+
+                <h2>🏷️ Tags & Organisation</h2>
+                <div class="enhanced-card">
+                    <p>Tags let you cross-reference cards across decks. Use tags like <code>chapter-3</code>, <code>difficult</code>, or <code>exam-ready</code> to filter your review queue. Tagged searches work in the Statistics and Decks views.</p>
+                </div>
+
+                <div class="code-block">
+                    <strong>Example CSV format for bulk import:</strong><br>
+                    front,back,tags<br>
+                    "What is photosynthesis?","Conversion of light → glucose","biology,chapter-2"<br>
+                    "Mitochondria function?","ATP production via cellular respiration","biology,chapter-3"<br>
+                    "DNA replication enzyme?","DNA polymerase","biology,chapter-4"
+                </div>
+            </section>
+
+            <!-- Basic Study Session -->
+            <section id="basic-study" class="content-section">
+                <h1>Basic Study Session</h1>
+                <p>A study session in PRCM | ASRL presents due cards one at a time, measures your response, and feeds the result into the scheduling algorithm. Here's exactly what happens at each step.</p>
+
+                <h2>▶ Starting a Session</h2>
+                <div class="enhanced-card">
+                    <p>Click <strong>▶ Start Session</strong> in the top bar or open a specific deck and press <strong>Study Now</strong>. The session header shows:</p>
+                    <ul>
+                        <li>Deck name and algorithm badge (SM-2 · Ease 2.4 / FSRS · S=7d / IRT · θ=1.2)</li>
+                        <li>Cards remaining and a thin progress bar</li>
+                        <li>Session KPI gauges (accuracy, retention, response time, fatigue)</li>
+                    </ul>
+                </div>
+
+                <h2>🎴 The Card Lifecycle</h2>
+                <div class="feature-grid">
+                    <div class="enhanced-card">
+                        <h3>1. Front (Question)</h3>
+                        <p>Read the prompt. Press <strong>Space</strong> or tap the card to reveal the answer. Your think-time is measured from card display to flip.</p>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>2. Back (Answer)</h3>
+                        <p>Compare your mental answer to the revealed answer. Rate honestly — the algorithm only improves when ratings are accurate.</p>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>3. Rate Your Response</h3>
+                        <p>Four buttons appear with the next-review interval displayed under each:</p>
+                        <ul>
+                            <li><strong>Again (1)</strong> — wrong or blank · resets card · shown in ~10 min</li>
+                            <li><strong>Hard (2)</strong> — struggled · interval × 1.2</li>
+                            <li><strong>Good (3)</strong> — correct with effort · standard interval growth</li>
+                            <li><strong>Easy (4)</strong> — instant recall · fast-track interval × 1.3</li>
+                        </ul>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>4. Next Card</h3>
+                        <p>The scheduler queues the next card. Cards rated "Again" re-enter the queue within the same session. When the queue is empty, the session summary appears.</p>
+                    </div>
+                </div>
+
+                <h2>⌨️ Keyboard Shortcuts</h2>
+                <div class="enhanced-card">
+                    <ul>
+                        <li><strong>Space</strong> — flip card (front → back)</li>
+                        <li><strong>1</strong> — Again &nbsp;&nbsp; <strong>2</strong> — Hard &nbsp;&nbsp; <strong>3</strong> — Good &nbsp;&nbsp; <strong>4</strong> — Easy</li>
+                        <li><strong>Ctrl+D</strong> — toggle dark/light theme</li>
+                        <li><strong>Esc</strong> — close settings or dialogs</li>
+                    </ul>
+                </div>
+
+                <h2>📊 Session Summary</h2>
+                <div class="enhanced-card">
+                    <p>After the last card, a summary panel shows four KPI gates. Green = gate passed, amber = borderline, red = gate failed:</p>
+                    <ul>
+                        <li><strong>Accuracy</strong> ≥ 75% (Good + Easy) / total responses</li>
+                        <li><strong>Retention</strong> ≥ 70% reviews where recall was maintained</li>
+                        <li><strong>Avg Response</strong> ≤ 6 000 ms mean think-time per card</li>
+                        <li><strong>Fatigue Drop</strong> ≤ 15% accuracy decline from first-half to second-half</li>
+                    </ul>
+                    <p>Failing a gate adapts the next session's card count or difficulty distribution automatically.</p>
+                </div>
+            </section>
+
             <!-- Appearance Settings Section -->
             <section id="appearance" class="content-section">
                 <h1>Appearance & Accessibility</h1>
@@ -1230,6 +1346,46 @@
                 </div>
             </section>
 
+            <!-- Import & Export -->
+            <section id="export-import" class="content-section">
+                <h1>Import &amp; Export</h1>
+                <p>Move data in and out of PRCM | ASRL using standard formats. All imports are non-destructive — existing cards are never overwritten without confirmation.</p>
+
+                <h2>📥 Importing Decks</h2>
+                <div class="feature-grid">
+                    <div class="enhanced-card">
+                        <h3>CSV Import</h3>
+                        <p>Required columns: <code>front</code>, <code>back</code>. Optional: <code>tags</code>, <code>deck</code>. Max 50 000 rows per file. The importer shows a preview before committing.</p>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>Anki .apkg</h3>
+                        <p>Import Anki deck packages directly. Card content, media, and note types are preserved. Scheduling data is converted to FSRS stability estimates.</p>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>JSON Backup</h3>
+                        <p>Restore from a PRCM | ASRL full-export JSON file. This preserves all scheduling history, ease values, and session logs.</p>
+                    </div>
+                </div>
+
+                <h2>📤 Exporting Data</h2>
+                <div class="enhanced-card">
+                    <h3>What you can export</h3>
+                    <ul>
+                        <li><strong>JSON (full backup)</strong> — all decks, cards, scheduling history, session logs, settings</li>
+                        <li><strong>CSV</strong> — card content only (front, back, tags), compatible with any spreadsheet app</li>
+                        <li><strong>PDF Report</strong> — formatted study report with statistics charts, streak history, and KPI summaries</li>
+                        <li><strong>Anki .apkg</strong> — export to Anki-compatible format for use in the original Anki desktop app</li>
+                    </ul>
+                    <p>Access exports from <strong>Profile → Export Options</strong> or from the three-dot menu on any individual deck.</p>
+                </div>
+
+                <h2>☁️ Sync &amp; Backup</h2>
+                <div class="enhanced-card">
+                    <p>Study data is saved to <code>localStorage</code> in your browser. For cross-device access, export a JSON backup and import it on the second device. Auto-sync to cloud storage is on the roadmap.</p>
+                    <p><strong>Tip:</strong> Set a weekly reminder to export a JSON backup. The file is typically under 2 MB even for large decks.</p>
+                </div>
+            </section>
+
             <!-- Spaced Repetition Section -->
             <section id="spaced-repetition" class="content-section">
                 <h1>Understanding Spaced Repetition</h1>
@@ -1287,6 +1443,93 @@
                     Day 13: Review — Good → S = 23.4 d<br>
                     Day 36: Review — Good → S = 57.8 d<br>
                     (Intervals grow faster than SM-2 for well-retained cards)
+                </div>
+            </section>
+
+            <!-- Card Types -->
+            <section id="card-types" class="content-section">
+                <h1>Card Types</h1>
+                <p>PRCM | ASRL supports several card formats. Choose the type that best matches how you want to test your knowledge.</p>
+
+                <h2>📇 Basic (Front / Back)</h2>
+                <div class="enhanced-card">
+                    <p>The standard two-sided card. The front holds a question, prompt, or term; the back holds the answer, definition, or explanation. Works for vocabulary, facts, formulas, and concepts.</p>
+                    <p><strong>Example front:</strong> "What does the mitochondria do?"<br>
+                    <strong>Example back:</strong> "Produces ATP via cellular respiration (oxidative phosphorylation)."</p>
+                </div>
+
+                <h2>🔳 Cloze Deletion</h2>
+                <div class="enhanced-card">
+                    <p>Fill-in-the-blank format. Wrap the tested word or phrase in <code>{{c1:: }}</code> markers. The cloze is hidden on the front and revealed on the back.</p>
+                    <p><strong>Example:</strong> "The powerhouse of the cell is the <code>{{c1::mitochondria}}</code>."<br>
+                    Becomes: "The powerhouse of the cell is the <strong>_______</strong>."</p>
+                    <p>Use <code>c2</code>, <code>c3</code>… for multiple blanks in one card — each generates a separate review.</p>
+                </div>
+
+                <h2>🖼️ Image Occlusion</h2>
+                <div class="enhanced-card">
+                    <p>Overlay rectangles on a diagram or image to hide labels. Great for anatomy, maps, circuit diagrams, and labelled charts. Each occluded region becomes its own testable question.</p>
+                </div>
+
+                <h2>💻 Code Cards</h2>
+                <div class="enhanced-card">
+                    <p>Render syntax-highlighted code blocks on either side. Supports JavaScript, Python, Rust, SQL, and 50+ languages. Ideal for API signatures, algorithm snippets, and regex patterns.</p>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="enhanced-card">
+                        <h3>Reversible Cards</h3>
+                        <p>Mark a card as "bidirectional" to auto-generate the reverse. One card becomes two: the original and its mirror, each scheduled independently.</p>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>Rich Media</h3>
+                        <p>Embed audio pronunciations, images, or LaTeX math (via MathJax). Media is stored locally and survives offline sessions.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Deck Management -->
+            <section id="deck-management" class="content-section">
+                <h1>Deck Management</h1>
+                <p>Keep your knowledge base organised with deck hierarchies, sharing options, and maintenance tools.</p>
+
+                <h2>📁 Nested Decks</h2>
+                <div class="enhanced-card">
+                    <p>Use <code>::</code> in a deck name to create a hierarchy. For example, <code>Biology::Chapter 3::Cells</code> appears as a nested tree in the sidebar. Sub-decks inherit the parent's algorithm setting unless overridden.</p>
+                </div>
+
+                <h2>⚙️ Deck Options</h2>
+                <div class="enhanced-card">
+                    <p>Each deck has an Options panel:</p>
+                    <ul>
+                        <li><strong>New cards/day</strong> — throttle introduction rate (default 10)</li>
+                        <li><strong>Max reviews/day</strong> — cap the review queue to prevent overload</li>
+                        <li><strong>Algorithm</strong> — SM-2, FSRS, or IRT per deck</li>
+                        <li><strong>Retention target</strong> — FSRS uses this to compute next-review intervals (default 90%)</li>
+                        <li><strong>Leech threshold</strong> — cards rated "Again" more than N times get flagged for manual review</li>
+                    </ul>
+                </div>
+
+                <h2>🔀 Reordering & Filtering</h2>
+                <div class="feature-grid">
+                    <div class="enhanced-card">
+                        <h3>Custom Study</h3>
+                        <p>Build a filtered deck by tag, difficulty range, due date window, or IRT θ gap. Useful for exam cramming without disturbing your main review schedule.</p>
+                    </div>
+                    <div class="enhanced-card">
+                        <h3>Suspend / Bury</h3>
+                        <p>Suspend cards you want to skip indefinitely. Bury cards to defer them to tomorrow's queue (useful when you're tired or have already studied similar content today).</p>
+                    </div>
+                </div>
+
+                <h2>🗑️ Maintenance</h2>
+                <div class="enhanced-card">
+                    <ul>
+                        <li><strong>Empty cards:</strong> Scan and delete cards with missing front or back</li>
+                        <li><strong>Duplicate check:</strong> Find near-duplicate fronts across all decks</li>
+                        <li><strong>Reset progress:</strong> Clear scheduling data for a card or entire deck (useful after re-learning a topic from scratch)</li>
+                        <li><strong>Archive:</strong> Move inactive decks out of the main view without deleting them</li>
+                    </ul>
                 </div>
             </section>
 
