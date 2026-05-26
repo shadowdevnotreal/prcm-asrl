@@ -635,6 +635,72 @@
                 right: -320px;
             }
         }
+
+        /* ── Site Footer ──────────────────────────────────────────── */
+        .site-footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 2.5rem 2rem;
+            margin-top: 3rem;
+        }
+
+        .site-footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.125rem;
+            text-align: center;
+        }
+
+        .footer-brand-text {
+            font-size: 1.0625rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.125rem;
+        }
+
+        .footer-nav-links a {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            transition: color 0.15s, background 0.15s;
+        }
+
+        .footer-nav-links a:hover {
+            color: var(--primary-color);
+            background: rgba(102,126,234,0.08);
+        }
+
+        .footer-copyright {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* ── Scroll Reveal ────────────────────────────────────────── */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.55s ease, transform 0.55s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: none;
+        }
     </style>
 </head>
 <body data-theme="light" data-text-size="medium" data-font-family="inter">
@@ -648,11 +714,11 @@
                 
                 <!-- Navigation Buttons -->
                 <nav class="header-nav">
-                    <a href="#hero" class="header-nav-btn active" onclick="scrollToSection('hero')">🏠 Home</a>
+                    <a href="START_HERE.html" class="header-nav-btn">🧠 ASRL Home</a>
                     <a href="#features" class="header-nav-btn" onclick="scrollToSection('features')">✨ Features</a>
                     <a href="#experience" class="header-nav-btn" onclick="scrollToSection('experience')">🎯 Experience</a>
                     <a href="#analytics" class="header-nav-btn" onclick="scrollToSection('analytics')">📊 Analytics</a>
-                    <a href="#cta" class="header-nav-btn" onclick="scrollToSection('cta')">🚀 Get Started</a>
+                    <a href="interactive-demo.html" class="header-nav-btn">🎴 Try Demo</a>
                 </nav>
                 
                 <!-- Header Controls -->
@@ -1475,7 +1541,33 @@
             console.log('🧠 Welcome to the PRCM | ASRL DEMO!');
             console.log('🎮 Press Ctrl+Enter to launch the interactive demo');
             console.log('📚 Explore all four interconnected demo experiences');
+
+            // Scroll-reveal for sections
+            const scrollRevealObs = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('revealed');
+                        scrollRevealObs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.scroll-reveal').forEach(el => scrollRevealObs.observe(el));
         });
     </script>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <div class="footer-brand-text">🧠 PRCM | ASRL</div>
+            <nav class="footer-nav-links">
+                <a href="START_HERE.html">Home</a>
+                <a href="index.html">Overview</a>
+                <a href="interactive-demo.html">Try Demo</a>
+                <a href="user-guide.html">Guide</a>
+                <a href="technical-showcase.html">Technical</a>
+            </nav>
+            <p class="footer-copyright">PRCM | ASRL Demo — Adaptive Learning Platform Showcase</p>
+        </div>
+    </footer>
 </body>
 </html>

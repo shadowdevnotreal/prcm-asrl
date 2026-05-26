@@ -743,33 +743,138 @@
             max-width: 800px;
             margin: 0 auto;
         }
+
+        /* ── Cross-page nav topbar ───────────────────────────────── */
+        .demo-topbar {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.5rem 2rem;
+        }
+
+        .demo-topbar-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .demo-topbar-brand {
+            font-size: 0.875rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .demo-topbar-links {
+            display: flex;
+            gap: 0.125rem;
+            align-items: center;
+        }
+
+        .demo-topbar-links a {
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 0.3125rem 0.625rem;
+            border-radius: 6px;
+            transition: color 0.15s, background 0.15s;
+        }
+
+        .demo-topbar-links a:hover {
+            color: var(--primary-color);
+            background: rgba(102,126,234,0.08);
+        }
+
+        .demo-topbar-links a.current {
+            color: var(--primary-color);
+            background: rgba(102,126,234,0.1);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .demo-topbar-links { display: none; }
+        }
+
+        /* ── Site Footer ─────────────────────────────────────────── */
+        .site-footer-ug {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 2.5rem 2rem;
+            margin-top: 2rem;
+        }
+
+        .site-footer-ug-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.125rem;
+            text-align: center;
+        }
+
+        .footer-ug-brand {
+            font-size: 1rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-ug-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.125rem;
+        }
+
+        .footer-ug-links a {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            transition: color 0.15s, background 0.15s;
+        }
+
+        .footer-ug-links a:hover {
+            color: var(--primary-color);
+            background: rgba(102,126,234,0.08);
+        }
+
+        .footer-ug-copy { font-size: 0.75rem; color: var(--text-muted); }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body data-theme="light" data-text-size="medium" data-font-family="system">
-    <!-- Demo Navigation Header -->
-    <div style="background: var(--primary-color); color: white; padding: 0.75rem 2rem; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-        <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;">
-            <div style="display: flex; align-items: center; gap: 2rem;">
-                <h1 style="font-size: 1.25rem; font-weight: bold; margin: 0;">📚 User Guide</h1>
-                <div style="display: flex; gap: 1rem; align-items: center;">
-                    <a href="index.html" style="color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 6px; transition: all 0.2s; background: rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">🏠 Marketing</a>
-                    <a href="interactive-demo.html" style="color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 6px; transition: all 0.2s; background: rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">🎮 Interactive Demo</a>
-                    <span style="color: rgba(255,255,255,0.9); font-size: 0.9rem; background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 6px;">📚 User Guide</span>
-                    <a href="technical-showcase.html" style="color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 6px; transition: all 0.2s; background: rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">🔧 Technical</a>
-                </div>
-            </div>
-            <div style="font-size: 0.9rem; opacity: 0.8;">
-                Step 2 of 4: Learn the Features
+    <!-- Cross-page nav topbar -->
+    <div class="demo-topbar">
+        <div class="demo-topbar-inner">
+            <a href="START_HERE.html" class="demo-topbar-brand">🧠 PRCM | ASRL</a>
+            <div class="demo-topbar-links">
+                <a href="START_HERE.html">Home</a>
+                <a href="index.html">Overview</a>
+                <a href="interactive-demo.html">Try Demo</a>
+                <a href="user-guide.html" class="current">📚 Guide</a>
+                <a href="technical-showcase.html">Technical</a>
             </div>
         </div>
     </div>
-    <!-- Header -->
+
     <header class="header">
         <div class="header-container">
-            <div class="logo">Anki Documentation</div>
+            <div class="logo">🧠 PRCM | ASRL — User Guide</div>
             
             <!-- Navigation Buttons -->
             <nav class="header-nav">
@@ -1626,5 +1731,20 @@
             });
         });
     </script>
+
+    <!-- Site Footer -->
+    <footer class="site-footer-ug">
+        <div class="site-footer-ug-inner">
+            <div class="footer-ug-brand">🧠 PRCM | ASRL</div>
+            <nav class="footer-ug-links">
+                <a href="START_HERE.html">Home</a>
+                <a href="index.html">Overview</a>
+                <a href="interactive-demo.html">Try Demo</a>
+                <a href="user-guide.html">Guide</a>
+                <a href="technical-showcase.html">Technical</a>
+            </nav>
+            <p class="footer-ug-copy">PRCM | ASRL Demo — Adaptive Learning Platform Showcase</p>
+        </div>
+    </footer>
 </body>
 </html>
