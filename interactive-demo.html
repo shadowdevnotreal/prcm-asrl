@@ -33,6 +33,8 @@
             --blue-bg:       rgba(59,130,246,0.1);
             --r-sm: 6px; --r-md: 10px; --r-lg: 16px;
             --ease: 0.2s ease;
+            --transition-speed: 0.3s;
+            --shimmer-intensity: 0.3;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--body-bg);
             color: var(--text1);
@@ -58,6 +60,20 @@
         body[data-text-size="small"]  { font-size: 0.9em; }
         body[data-text-size="large"]  { font-size: 1.1em; }
         body[data-text-size="xl"]     { font-size: 1.2em; }
+
+        [data-font-family="inter"]  { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        [data-font-family="roboto"] { font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif; }
+
+        [data-reduce-motion="true"] *, [data-reduce-motion="true"] *::before, [data-reduce-motion="true"] *::after {
+            animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+
+        [data-focus-mode="true"] .app-topbar { opacity: 0.15; transition: opacity 0.3s; }
+        [data-focus-mode="true"] .app-topbar:hover { opacity: 1; }
+        [data-focus-mode="true"] .site-footer { opacity: 0.15; }
+
+        [data-shimmer="false"] .shimmer-effect::after { display: none !important; }
 
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
@@ -637,7 +653,32 @@
             <div class="sp-grp-lbl">Accessibility</div>
             <div class="sp-row">
                 <span class="sp-lbl">Reduce Motion</span>
-                <div class="tog" id="rm-tog" onclick="this.classList.toggle('on')"></div>
+                <div class="tog" id="rm-tog" onclick="toggleReduceMotion()"></div>
+            </div>
+            <div class="sp-row">
+                <span class="sp-lbl">Focus Mode</span>
+                <div class="tog" id="focus-tog" onclick="toggleFocusMode()"></div>
+            </div>
+        </div>
+        <div class="sp-grp">
+            <div class="sp-grp-lbl">✨ Animations</div>
+            <div class="sp-row">
+                <span class="sp-lbl">Shimmer Effects</span>
+                <div class="tog on" id="shimmer-tog" onclick="toggleShimmer()"></div>
+            </div>
+            <div class="sp-row">
+                <span class="sp-lbl">Shimmer Intensity</span>
+                <input type="range" id="shimmer-slider" min="0.1" max="0.8" step="0.1" value="0.3"
+                    oninput="setShimmerIntensity(this.value)"
+                    style="width:100px;accent-color:var(--accent);cursor:pointer">
+            </div>
+            <div class="sp-row">
+                <span class="sp-lbl">Transition Speed</span>
+                <select class="sp-sel" id="speed-sel" onchange="setTransitionSpeed(this.value)">
+                    <option value="0.5">Slow</option>
+                    <option value="0.3" selected>Normal</option>
+                    <option value="0.1">Fast</option>
+                </select>
             </div>
         </div>
         <div class="sp-grp">
@@ -1065,7 +1106,47 @@ function setTextSize(s) {
 function setFont(f) {
     var map = { system: '-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif', inter: '"Inter",sans-serif', roboto: '"Roboto",sans-serif' };
     document.body.style.fontFamily = map[f] || map.system;
+    document.body.setAttribute('data-font-family', f);
     localStorage.setItem('anki-font-family', f);
+    var fs = document.getElementById('font-sel'); if (fs) fs.value = f;
+}
+
+function toggleReduceMotion() {
+    var tog = document.getElementById('rm-tog');
+    if (!tog) return;
+    var on = tog.classList.toggle('on');
+    document.body.setAttribute('data-reduce-motion', on);
+    localStorage.setItem('anki-reduce-motion', on);
+}
+
+function toggleFocusMode() {
+    var tog = document.getElementById('focus-tog');
+    if (!tog) return;
+    var on = tog.classList.toggle('on');
+    document.body.setAttribute('data-focus-mode', on);
+    localStorage.setItem('anki-focus-mode', on);
+}
+
+function toggleShimmer() {
+    var tog = document.getElementById('shimmer-tog');
+    if (!tog) return;
+    var wasOn = tog.classList.contains('on');
+    tog.classList.toggle('on');
+    var nowOn = !wasOn;
+    document.body.setAttribute('data-shimmer', nowOn);
+    localStorage.setItem('anki-shimmer', nowOn);
+}
+
+function setShimmerIntensity(v) {
+    document.documentElement.style.setProperty('--shimmer-intensity', v);
+    localStorage.setItem('anki-shimmer-intensity', v);
+    var sl = document.getElementById('shimmer-slider'); if (sl) sl.value = v;
+}
+
+function setTransitionSpeed(v) {
+    document.documentElement.style.setProperty('--transition-speed', v + 's');
+    localStorage.setItem('anki-transition-speed', v);
+    var sel = document.getElementById('speed-sel'); if (sel) sel.value = v;
 }
 
 function setAccent(base, hover) {
@@ -1126,7 +1207,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var sz = localStorage.getItem('anki-text-size');
     if (sz) { setTextSize(sz); var ss = document.getElementById('size-sel'); if (ss) ss.value = sz; }
     var f = localStorage.getItem('anki-font-family');
-    if (f) { setFont(f); var fs = document.getElementById('font-sel'); if (fs) fs.value = f; }
+    if (f) { setFont(f); }
     var acc = localStorage.getItem('anki-accent');
     if (acc) {
         var p = acc.split('|');
@@ -1137,11 +1218,27 @@ document.addEventListener('DOMContentLoaded', function() {
             if (m) { document.querySelectorAll('.csw').forEach(function(c){c.classList.remove('active');}); m.classList.add('active'); }
         }
     }
+    // Focus mode
+    var focusMode = localStorage.getItem('anki-focus-mode') === 'true';
+    if (focusMode) { document.body.setAttribute('data-focus-mode', true); var ft = document.getElementById('focus-tog'); if (ft) ft.classList.add('on'); }
+    // Reduce motion
+    var rm = localStorage.getItem('anki-reduce-motion') === 'true';
+    if (rm) { document.body.setAttribute('data-reduce-motion', true); var rmt = document.getElementById('rm-tog'); if (rmt) rmt.classList.add('on'); }
+    // Shimmer
+    var shimmer = localStorage.getItem('anki-shimmer') !== 'false';
+    document.body.setAttribute('data-shimmer', shimmer);
+    var st = document.getElementById('shimmer-tog');
+    if (st) { if (shimmer) st.classList.add('on'); else st.classList.remove('on'); }
+    // Shimmer intensity
+    var shimInt = localStorage.getItem('anki-shimmer-intensity');
+    if (shimInt) setShimmerIntensity(shimInt);
+    // Transition speed
+    var transSpeed = localStorage.getItem('anki-transition-speed');
+    if (transSpeed) setTransitionSpeed(transSpeed);
     // Auto-start tour for first-time visitors
     if (!localStorage.getItem('prcm-tour-done')) {
         setTimeout(startTour, 600);
     } else {
-        // Show replay button for returning users
         var sb = document.getElementById('tour-start-btn');
         if (sb) sb.style.display = 'inline-flex';
     }

@@ -1750,10 +1750,15 @@
 
         // Theme Management
         function changeTheme(theme) {
-            document.body.setAttribute('data-theme', theme);
-            // Save to both storage keys for persistence across all pages
+            var resolved = theme;
+            if (theme === 'auto') {
+                resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.body.setAttribute('data-theme', resolved);
             localStorage.setItem('anki-demo-theme', theme);
             localStorage.setItem('anki-theme', theme);
+            var btn = document.getElementById('themeToggleBtn');
+            if (btn) btn.textContent = resolved === 'dark' ? '☀️' : '🌙';
         }
 
         function changeTextSize(size) {
@@ -1769,14 +1774,13 @@
         function changeAccentColor(color, name) {
             document.documentElement.style.setProperty('--primary-color', color);
             document.documentElement.style.setProperty('--secondary-color', color);
-            
-            // Update active color option
+            document.documentElement.style.setProperty('--accent', color);
             document.querySelectorAll('.color-option').forEach(option => {
                 option.classList.remove('active');
             });
-            event.target.classList.add('active');
-            
+            if (event && event.currentTarget) event.currentTarget.classList.add('active');
             localStorage.setItem('anki-accent-color', color);
+            localStorage.setItem('anki-accent', color + '|' + color);
         }
 
         function toggleReduceMotion() {
@@ -1800,10 +1804,9 @@
         function toggleShimmer() {
             const toggle = document.getElementById('shimmerToggle');
             const isActive = toggle.classList.contains('active');
-            
             toggle.classList.toggle('active');
-            document.body.setAttribute('data-shimmer', isActive);
-            localStorage.setItem('anki-shimmer', isActive);
+            document.body.setAttribute('data-shimmer', !isActive);
+            localStorage.setItem('anki-shimmer', !isActive);
         }
 
         function changeShimmerIntensity(intensity) {
@@ -1818,35 +1821,50 @@
 
         // Load saved settings
         function loadSettings() {
-            const theme = localStorage.getItem('anki-demo-theme') ||
-                          localStorage.getItem('anki-theme') ||
-                          'dark';
+            const rawTheme = localStorage.getItem('anki-demo-theme') ||
+                             localStorage.getItem('anki-theme') || 'dark';
             const textSize = localStorage.getItem('anki-text-size') || 'medium';
             const fontFamily = localStorage.getItem('anki-font-family') || 'system';
-            const accentColor = localStorage.getItem('anki-accent-color') || '#3b82f6';
+            const accentColor = localStorage.getItem('anki-accent-color') || '#6366f1';
             const reduceMotion = localStorage.getItem('anki-reduce-motion') === 'true';
             const focusMode = localStorage.getItem('anki-focus-mode') === 'true';
             const shimmer = localStorage.getItem('anki-shimmer') !== 'false';
             const shimmerIntensity = localStorage.getItem('anki-shimmer-intensity') || '0.3';
             const transitionSpeed = localStorage.getItem('anki-transition-speed') || '0.3';
 
-            changeTheme(theme);
+            changeTheme(rawTheme);
             changeTextSize(textSize);
             changeFontFamily(fontFamily);
-            
+
             document.documentElement.style.setProperty('--primary-color', accentColor);
             document.documentElement.style.setProperty('--secondary-color', accentColor);
+            document.documentElement.style.setProperty('--accent', accentColor);
             document.documentElement.style.setProperty('--shimmer-intensity', shimmerIntensity);
             document.documentElement.style.setProperty('--transition-speed', transitionSpeed + 's');
-            
+
             document.body.setAttribute('data-reduce-motion', reduceMotion);
             document.body.setAttribute('data-focus-mode', focusMode);
             document.body.setAttribute('data-shimmer', shimmer);
-            
-            // Update toggle states
-            if (reduceMotion) document.getElementById('reduceMotionToggle').classList.add('active');
-            if (focusMode) document.getElementById('focusModeToggle').classList.add('active');
-            if (shimmer) document.getElementById('shimmerToggle').classList.add('active');
+
+            // Sync dropdowns
+            var themeSelects = document.querySelectorAll('.setting-select');
+            themeSelects.forEach(function(sel) {
+                if (sel.onchange && sel.getAttribute('onchange') && sel.getAttribute('onchange').includes('changeTheme'))  sel.value = rawTheme;
+                if (sel.onchange && sel.getAttribute('onchange') && sel.getAttribute('onchange').includes('changeTextSize')) sel.value = textSize;
+                if (sel.onchange && sel.getAttribute('onchange') && sel.getAttribute('onchange').includes('changeFontFamily')) sel.value = fontFamily;
+                if (sel.onchange && sel.getAttribute('onchange') && sel.getAttribute('onchange').includes('changeTransitionSpeed')) sel.value = transitionSpeed;
+            });
+            // Sync shimmer slider
+            var shimSlider = document.querySelector('.setting-slider');
+            if (shimSlider) shimSlider.value = shimmerIntensity;
+
+            // Sync toggle states
+            var rmTog = document.getElementById('reduceMotionToggle');
+            var fmTog = document.getElementById('focusModeToggle');
+            var shimTog = document.getElementById('shimmerToggle');
+            if (rmTog)   { rmTog.classList.toggle('active', reduceMotion); }
+            if (fmTog)   { fmTog.classList.toggle('active', focusMode); }
+            if (shimTog) { shimTog.classList.toggle('active', shimmer); }
         }
 
         // Mobile responsiveness
