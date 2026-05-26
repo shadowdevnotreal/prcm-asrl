@@ -9,60 +9,58 @@
     <meta name="author" content="Anki Team">
     <style>
         :root {
-            /* Light Theme Colors */
-            --primary-color: #667eea;
-            --secondary-color: #764ba2;
-            --accent-blue: #3b82f6;
-            --accent-indigo: #6366f1;
-            --accent-purple: #8b5cf6;
-            --accent-pink: #ec4899;
-            --accent-red: #ef4444;
-            --accent-orange: #f97316;
-            --accent-yellow: #eab308;
-            --accent-green: #22c55e;
-            --accent-teal: #14b8a6;
-            --accent-cyan: #06b6d4;
-            --accent-emerald: #10b981;
-            --accent-lime: #84cc16;
-            
-            --bg-primary: #f8fafc;
-            --bg-secondary: #ffffff;
-            --bg-tertiary: #e2e8f0;
-            --text-primary: #1a202c;
-            --text-secondary: #4a5568;
-            --text-muted: #a0aec0;
-            --border-color: #e2e8f0;
-            --shadow-light: rgba(0, 0, 0, 0.1);
-            --shadow-medium: rgba(0, 0, 0, 0.15);
-            
-            /* Animation Settings */
+            /* Dark-first design system */
+            --body-bg:    #0b1120;
+            --card-bg:    #131c2e;
+            --card2-bg:   #1a2540;
+            --border:     rgba(99,102,241,.18);
+            --text:       #e2e8f0;
+            --text-sub:   #94a3b8;
+            --text-muted: #64748b;
+            --accent:     #6366f1;
+            --accent-h:   #818cf8;
+            --accent-dim: rgba(99,102,241,.12);
+            --green:      #22c55e;
+            --amber:      #f59e0b;
+            --red:        #ef4444;
             --transition-speed: 0.3s;
             --shimmer-intensity: 0.3;
             --animation-scale: 1;
+
+            /* legacy aliases used by existing CSS below */
+            --primary-color:   var(--accent);
+            --secondary-color: var(--accent-h);
+            --bg-primary:      var(--body-bg);
+            --bg-secondary:    var(--card-bg);
+            --bg-tertiary:     var(--card2-bg);
+            --text-primary:    var(--text);
+            --text-secondary:  var(--text-sub);
+            --border-color:    var(--border);
+            --shadow-light:    rgba(0,0,0,.35);
+            --shadow-medium:   rgba(0,0,0,.5);
         }
 
-        [data-theme="dark"] {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-tertiary: #334155;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --text-muted: #64748b;
-            --border-color: #475569;
-            --shadow-light: rgba(0, 0, 0, 0.3);
-            --shadow-medium: rgba(0, 0, 0, 0.4);
+        body[data-theme="light"] {
+            --body-bg:    #f1f5f9;
+            --card-bg:    #ffffff;
+            --card2-bg:   #f8fafc;
+            --border:     #e2e8f0;
+            --text:       #1e293b;
+            --text-sub:   #475569;
+            --text-muted: #94a3b8;
+            --shadow-light:  rgba(0,0,0,.08);
+            --shadow-medium: rgba(0,0,0,.14);
         }
 
         [data-theme="high-contrast"] {
-            --bg-primary: #000000;
-            --bg-secondary: #1a1a1a;
-            --bg-tertiary: #333333;
-            --text-primary: #ffffff;
-            --text-secondary: #e0e0e0;
-            --text-muted: #cccccc;
-            --border-color: #666666;
-            --primary-color: #00ff00;
-            --secondary-color: #ff00ff;
+            --body-bg:    #000000;
+            --card-bg:    #1a1a1a;
+            --card2-bg:   #333333;
+            --text:       #ffffff;
+            --text-sub:   #e0e0e0;
+            --border:     #666666;
+            --accent:     #00ff00;
+            --accent-h:   #ff00ff;
         }
 
         .text-xs { font-size: 0.75rem; }
@@ -102,122 +100,121 @@
 
         body {
             font-family: var(--font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif);
-            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-tertiary) 100%);
-            color: var(--text-primary);
+            background: var(--body-bg);
+            color: var(--text);
             line-height: 1.6;
-            transition: all var(--transition-speed) ease;
+            transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
         }
 
-        /* Header */
-        .header {
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 0;
+        /* ── App Topbar ─────────────────────────────────────────── */
+        .app-topbar {
             position: sticky;
             top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
+            z-index: 200;
+            height: 56px;
+            background: rgba(11,17,32,.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 0 2rem;
-            gap: 2rem;
+            padding: 0 1.25rem;
+            gap: 1rem;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        body[data-theme="light"] .app-topbar {
+            background: rgba(241,245,249,.92);
+        }
+
+        .topbar-brand {
+            font-size: 0.95rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-h) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-decoration: none;
+            white-space: nowrap;
             flex-shrink: 0;
         }
 
-        .header-nav {
+        .topbar-sep {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .topbar-current {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-sub);
+            flex-shrink: 0;
+        }
+
+        .section-tabs {
             display: flex;
+            gap: 0.25rem;
             align-items: center;
-            gap: 1rem;
             flex: 1;
-            justify-content: center;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 0 0.5rem;
         }
 
-        .header-nav-btn {
+        .section-tabs::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
             background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.78rem;
             font-weight: 500;
-            font-size: 0.9rem;
-            transition: all var(--transition-speed) ease;
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: color .15s, background .15s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .tab-btn:hover {
+            color: var(--text);
+            background: var(--accent-dim);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-h);
+            background: var(--accent-dim);
+            font-weight: 600;
+        }
+
+        .topbar-actions {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            text-decoration: none;
+            flex-shrink: 0;
         }
 
-        .header-nav-btn:hover,
-        .header-nav-btn.active {
-            background: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-            transform: translateY(-1px);
-        }
-
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .theme-toggle-btn {
-            background: var(--bg-tertiary);
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-            padding: 0.5rem;
+        .topbar-icon-btn {
+            width: 34px;
+            height: 34px;
+            background: transparent;
+            border: 1px solid var(--border);
             border-radius: 8px;
-            cursor: pointer;
+            color: var(--text-sub);
             font-size: 1rem;
-            transition: all var(--transition-speed) ease;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            transition: background .15s, color .15s;
         }
 
-        .theme-toggle-btn:hover {
-            background: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-            transform: translateY(-1px);
-        }
-
-        .settings-btn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all var(--transition-speed) ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .settings-btn:hover {
-            background: var(--secondary-color);
-            transform: translateY(-1px);
+        .topbar-icon-btn:hover {
+            background: var(--accent-dim);
+            color: var(--accent-h);
         }
 
         /* Enhanced Container Styles */
@@ -262,9 +259,9 @@
             box-shadow: 0 10px 30px var(--shadow-light);
             border: 1px solid var(--border-color);
             position: sticky;
-            top: 120px;
+            top: 72px;
             height: fit-content;
-            max-height: calc(100vh - 140px);
+            max-height: calc(100vh - 88px);
             overflow-y: auto;
         }
 
@@ -744,62 +741,8 @@
             margin: 0 auto;
         }
 
-        /* ── Cross-page nav topbar ───────────────────────────────── */
-        .demo-topbar {
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-            padding: 0.5rem 2rem;
-        }
-
-        .demo-topbar-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-
-        .demo-topbar-brand {
-            font-size: 0.875rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
-            white-space: nowrap;
-        }
-
-        .demo-topbar-links {
-            display: flex;
-            gap: 0.125rem;
-            align-items: center;
-        }
-
-        .demo-topbar-links a {
-            font-size: 0.78rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            text-decoration: none;
-            padding: 0.3125rem 0.625rem;
-            border-radius: 6px;
-            transition: color 0.15s, background 0.15s;
-        }
-
-        .demo-topbar-links a:hover {
-            color: var(--primary-color);
-            background: rgba(102,126,234,0.08);
-        }
-
-        .demo-topbar-links a.current {
-            color: var(--primary-color);
-            background: rgba(102,126,234,0.1);
-            font-weight: 600;
-        }
-
         @media (max-width: 768px) {
-            .demo-topbar-links { display: none; }
+            .section-tabs .tab-btn:not(.active) { display: none; }
         }
 
         /* ── Site Footer ─────────────────────────────────────────── */
@@ -857,45 +800,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
-<body data-theme="light" data-text-size="medium" data-font-family="system">
-    <!-- Cross-page nav topbar -->
-    <div class="demo-topbar">
-        <div class="demo-topbar-inner">
-            <a href="START_HERE.html" class="demo-topbar-brand">🧠 PRCM | ASRL</a>
-            <div class="demo-topbar-links">
-                <a href="START_HERE.html">Home</a>
-                <a href="index.html">Overview</a>
-                <a href="interactive-demo.html">Try Demo</a>
-                <a href="user-guide.html" class="current">📚 Guide</a>
-                <a href="technical-showcase.html">Technical</a>
-            </div>
-        </div>
-    </div>
+<body data-theme="dark" data-text-size="medium" data-font-family="system">
+    <!-- Single app topbar -->
+    <header class="app-topbar">
+        <a href="START_HERE.html" class="topbar-brand">🧠 PRCM | ASRL</a>
+        <span class="topbar-sep">/</span>
+        <span class="topbar-current">📚 User Guide</span>
 
-    <header class="header">
-        <div class="header-container">
-            <div class="logo">🧠 PRCM | ASRL — User Guide</div>
-            
-            <!-- Navigation Buttons -->
-            <nav class="header-nav">
-                <a href="#overview" class="header-nav-btn active" onclick="showSection('overview')">📖 Overview</a>
-                <a href="#installation" class="header-nav-btn" onclick="showSection('installation')">💻 Installation</a>
-                <a href="#appearance" class="header-nav-btn" onclick="showSection('appearance')">🎨 Appearance</a>
-                <a href="#animations" class="header-nav-btn" onclick="showSection('animations')">⚡ Animations</a>
-                <a href="#statistics" class="header-nav-btn" onclick="showSection('statistics')">📊 Statistics</a>
-                <a href="#profile" class="header-nav-btn" onclick="showSection('profile')">👤 Profile</a>
-                <a href="#troubleshooting" class="header-nav-btn" onclick="showSection('troubleshooting')">🔧 Help</a>
-            </nav>
-            
-            <!-- Header Controls -->
-            <div class="header-controls">
-                <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
-                    🌙
-                </button>
-                <button class="settings-btn" onclick="toggleSettings()">
-                    ⚙️ Settings
-                </button>
-            </div>
+        <nav class="section-tabs">
+            <a href="START_HERE.html" class="tab-btn">🏠 Home</a>
+            <a href="index.html" class="tab-btn">📊 Overview</a>
+            <a href="interactive-demo.html" class="tab-btn">🎴 Try Demo</a>
+            <button class="tab-btn active" onclick="showSection('overview')">📖 Guide</button>
+            <a href="technical-showcase.html" class="tab-btn">⚙️ Technical</a>
+        </nav>
+
+        <div class="topbar-actions">
+            <button class="topbar-icon-btn" onclick="toggleTheme()" title="Toggle theme" id="themeToggleBtn">☀️</button>
+            <button class="topbar-icon-btn" onclick="toggleSettings()" title="Settings">⚙️</button>
         </div>
     </header>
 
@@ -903,7 +825,7 @@
     <div class="container">
         <!-- Sidebar Navigation -->
         <nav class="sidebar">
-            <h2>User Guide</h2>
+            <h2>PRCM | ASRL</h2>
             <ul class="nav-menu">
                 <li class="nav-item">
                     <a href="#overview" class="nav-link active" onclick="showSection('overview')">Overview</a>
@@ -970,87 +892,87 @@
         <main class="main-content">
             <!-- Overview Section -->
             <section id="overview" class="content-section active">
-                <h1>Welcome to Anki</h1>
-                <p>Anki is a powerful, intelligent flashcard application that uses spaced repetition to help you learn and remember information more effectively. With our enhanced features, you now have more control over your learning experience than ever before.</p>
+                <h1>Welcome to PRCM | ASRL</h1>
+                <p>PRCM | ASRL is an adaptive learning platform powered by three scheduling algorithms — SM-2, FSRS, and IRT — working together to surface cards at the optimal moment for long-term retention. This guide covers everything from getting started to fine-tuning the platform to your study style.</p>
 
                 <div class="feature-grid">
                     <div class="feature-card shimmer-effect">
                         <div class="feature-icon">🧠</div>
-                        <div class="feature-title">Intelligent Spaced Repetition</div>
-                        <div class="feature-description">Our SM-2 algorithm adapts to your learning pace, showing cards at optimal intervals for maximum retention.</div>
+                        <div class="feature-title">Tri-Algorithm Scheduling</div>
+                        <div class="feature-description">SM-2, FSRS, and IRT work in concert — SM-2 sets intervals, FSRS models memory stability, and IRT estimates item difficulty for adaptive card selection.</div>
                     </div>
 
                     <div class="feature-card shimmer-effect">
                         <div class="feature-icon">🎨</div>
-                        <div class="feature-title">Enhanced Appearance</div>
-                        <div class="feature-description">Dark mode, high contrast, 12 accent colors, and comprehensive accessibility features for all users.</div>
+                        <div class="feature-title">Dark-First Design</div>
+                        <div class="feature-description">Built dark by default. Choose from 12 accent colors, three font sizes, and full accessibility controls including reduce-motion and high-contrast.</div>
                     </div>
 
                     <div class="feature-card shimmer-effect">
                         <div class="feature-icon">📊</div>
-                        <div class="feature-title">Interactive Analytics</div>
-                        <div class="feature-description">Activity heat maps, performance charts, and detailed statistics to track your learning progress.</div>
+                        <div class="feature-title">Live Analytics Dashboard</div>
+                        <div class="feature-description">Forgetting-curve SVG charts, stability histograms, 365-day heatmap, KPI gate indicators, and AI insights powered by Groq · LLAMA-3.</div>
                     </div>
 
                     <div class="feature-card shimmer-effect">
                         <div class="feature-icon">⚡</div>
-                        <div class="feature-title">Animation Controls</div>
-                        <div class="feature-description">Customize shimmer effects, card transitions, and loading animations to match your preferences.</div>
+                        <div class="feature-title">KPI-Gated Sessions</div>
+                        <div class="feature-description">Every session is measured against four gates: Accuracy ≥ 75%, Retention ≥ 70%, Avg Response ≤ 6 s, and Fatigue Drop ≤ 15%. Real-time feedback keeps you on track.</div>
                     </div>
                 </div>
 
                 <h2>What's New</h2>
                 <div class="enhanced-card">
-                    <h3>🌙 Enhanced Dark Mode</h3>
-                    <p>Experience a beautifully designed dark theme with proper contrast ratios and eye-comfortable colors. Perfect for late-night study sessions.</p>
+                    <h3>🌙 Dark-First Interface</h3>
+                    <p>The entire platform defaults to a deep-navy dark theme (#0b1120 base, #6366f1 accent). Light mode is available but dark is the primary design target.</p>
                 </div>
 
                 <div class="enhanced-card">
-                    <h3>♿ Accessibility First</h3>
-                    <p>WCAG AAA compliant high contrast mode, text size controls, reduce motion options, and keyboard navigation support.</p>
+                    <h3>🔬 FSRS + IRT Scheduling</h3>
+                    <p>Beyond classic SM-2, FSRS (Free Spaced Repetition Scheduler) models memory stability decay using R(t) = e^(-t/S). IRT (Item Response Theory) scores question difficulty and learner ability on the same logistic scale, enabling truly adaptive card selection.</p>
                 </div>
 
                 <div class="enhanced-card">
                     <h3>📈 Advanced Analytics</h3>
-                    <p>GitHub-style activity heat maps, performance trends, SM-2 analysis charts, and time-of-day performance insights.</p>
+                    <p>GitHub-style activity heatmap, per-session performance trend, SM-2/FSRS ease histograms, forgetting curves at four stability levels, and AI-generated insights from Groq · LLAMA-3.</p>
                 </div>
             </section>
 
             <!-- Installation Section -->
             <section id="installation" class="content-section">
-                <h1>Installation Guide</h1>
-                <p>Get started with Anki in just a few simple steps. Our app supports all major platforms and devices.</p>
+                <h1>Getting Started</h1>
+                <p>Get up and running with PRCM | ASRL in minutes. The platform runs fully in-browser — no install required for the demo.</p>
 
                 <h2>System Requirements</h2>
                 <ul>
-                    <li>iOS 13.0+ / Android 8.0+ / Windows 10+ / macOS 10.14+</li>
-                    <li>At least 100MB free storage space</li>
-                    <li>Internet connection for syncing (optional)</li>
+                    <li>Any modern browser — Chrome 100+, Firefox 100+, Safari 15+, Edge 100+</li>
+                    <li>JavaScript enabled (required for algorithm calculations)</li>
+                    <li>Internet connection for AI Insights (Groq · LLAMA-3); all other features work offline</li>
                 </ul>
 
-                <h2>Download Options</h2>
+                <h2>Platform Options</h2>
                 <div class="feature-grid">
                     <div class="enhanced-card">
-                        <h3>📱 Mobile Apps</h3>
-                        <p>Download from App Store or Google Play for the complete mobile experience with touch gestures and offline support.</p>
+                        <h3>🌐 Web App (Demo)</h3>
+                        <p>Access the full interactive demo at <strong>prcm-asrl.netlify.app</strong>. Try all three algorithms, analytics dashboard, and AI insights without creating an account.</p>
                     </div>
                     <div class="enhanced-card">
-                        <h3>💻 Desktop Apps</h3>
-                        <p>Full-featured desktop applications for Windows, macOS, and Linux with advanced deck editing capabilities.</p>
+                        <h3>💻 Self-Hosted</h3>
+                        <p>Clone the repository and serve locally. Pure static HTML/CSS/JS — no build step, no server required. <code>python -m http.server 8080</code> is all you need.</p>
                     </div>
                     <div class="enhanced-card">
-                        <h3>🌐 Web Version</h3>
-                        <p>Access your decks from any browser with our responsive web application. Perfect for quick reviews.</p>
+                        <h3>📱 PWA (Coming Soon)</h3>
+                        <p>Progressive Web App support will enable offline-first study sessions on mobile with background sync when connectivity returns.</p>
                     </div>
                 </div>
 
                 <h2>First-Time Setup</h2>
                 <ol>
-                    <li>Create your free Anki account</li>
-                    <li>Choose your preferred appearance settings</li>
-                    <li>Set up your study preferences</li>
-                    <li>Import your first deck or create new cards</li>
-                    <li>Start your first study session</li>
+                    <li>Open the demo and press <strong>▶ Start Session</strong></li>
+                    <li>Choose your preferred algorithm (SM-2, FSRS, or IRT) in Settings</li>
+                    <li>Set your daily review goal and retention target</li>
+                    <li>Import a deck or use the built-in sample cards</li>
+                    <li>Complete your first session — the KPI gates will calibrate to your baseline</li>
                 </ol>
             </section>
 
@@ -1207,16 +1129,16 @@
                     </div>
                 </div>
 
-                <h2>🧠 SM-2 Analysis</h2>
+                <h2>🧠 Algorithm Analysis</h2>
                 <div class="enhanced-card">
-                    <h3>Ease Factor Histograms</h3>
-                    <p>Visualize the distribution of ease factors across your cards to understand which materials are challenging or well-learned.</p>
-                    
-                    <h3>Retention Curves</h3>
-                    <p>See how well you retain information over different intervals and identify optimal review timing.</p>
-                    
-                    <h3>Algorithm Insights</h3>
-                    <p>Get detailed insights into how the spaced repetition algorithm is adapting to your learning patterns.</p>
+                    <h3>Ease Factor &amp; Stability Histograms</h3>
+                    <p>Visualize the distribution of SM-2 ease factors and FSRS stability values across your deck. Cards bunched at low stability indicate overdue reviews.</p>
+
+                    <h3>Forgetting Curves</h3>
+                    <p>Live SVG chart showing R(t) = e^(-t/S) at four stability levels (3 d, 7 d, 15 d, 30 d). See exactly when each cohort of cards crosses the 90% retention threshold.</p>
+
+                    <h3>IRT Ability Estimate</h3>
+                    <p>Track your θ (theta) ability score over time. A rising θ means cards are getting easier relative to your skill — the platform will introduce harder material automatically.</p>
                 </div>
 
                 <div class="code-block">
@@ -1311,51 +1233,67 @@
             <!-- Spaced Repetition Section -->
             <section id="spaced-repetition" class="content-section">
                 <h1>Understanding Spaced Repetition</h1>
-                <p>Learn how Anki's intelligent SM-2 algorithm optimizes your study sessions for maximum retention and minimal effort.</p>
+                <p>PRCM | ASRL runs three algorithms in parallel — SM-2, FSRS, and IRT — each contributing a different signal to produce the most accurate review schedule possible.</p>
 
-                <h2>🧠 How It Works</h2>
+                <h2>🧠 The Forgetting Curve</h2>
                 <div class="enhanced-card">
-                    <h3>The Science Behind Spaced Repetition</h3>
-                    <p>Spaced repetition is based on the forgetting curve - the idea that we forget information over time unless we actively review it. By spacing reviews at increasing intervals, we can efficiently move information from short-term to long-term memory.</p>
+                    <h3>Ebbinghaus Memory Model</h3>
+                    <p>Retention decays exponentially: <strong>R(t) = e^(-t/S)</strong> where <em>t</em> is time since last review and <em>S</em> is the card's stability (in days). FSRS estimates S from your response history; SM-2 approximates it via ease × interval multiplication.</p>
                 </div>
 
                 <h2>⚡ SM-2 Algorithm</h2>
                 <div class="enhanced-card">
-                    <h3>Adaptive Learning Intervals</h3>
-                    <p>The SM-2 algorithm adapts to your performance:</p>
+                    <h3>Interval Scheduling</h3>
+                    <p>SM-2 adapts intervals based on each response:</p>
                     <ul>
-                        <li><strong>Again (Red):</strong> Card is shown again within 1-10 minutes</li>
-                        <li><strong>Hard (Orange):</strong> Interval increased by 1.2x</li>
-                        <li><strong>Good (Green):</strong> Interval multiplied by the ease factor</li>
-                        <li><strong>Easy (Blue):</strong> Interval multiplied by ease factor × 1.3</li>
+                        <li><strong>Again (Red):</strong> Card resets — shown again in 1–10 minutes</li>
+                        <li><strong>Hard (Orange):</strong> Interval × 1.2 — slight increase, ease penalized</li>
+                        <li><strong>Good (Green):</strong> Interval × ease factor — standard progression</li>
+                        <li><strong>Easy (Blue):</strong> Interval × ease × 1.3 — fast-track for well-known cards</li>
                     </ul>
+                </div>
+
+                <h2>🔬 FSRS Scheduler</h2>
+                <div class="enhanced-card">
+                    <h3>Memory Stability Model</h3>
+                    <p>FSRS (Free Spaced Repetition Scheduler) treats memory stability S as a learnable parameter per card. It predicts the probability of recall at any future time using R(t) = e^(-t/S), then schedules the next review at the point where R(t) crosses your target retention threshold (default 90%).</p>
+                    <p>FSRS is more accurate than SM-2 at the extremes — very easy cards get longer gaps, very hard cards get shorter ones, without the ease "hell" problem.</p>
+                </div>
+
+                <h2>📐 IRT (Item Response Theory)</h2>
+                <div class="enhanced-card">
+                    <h3>Difficulty & Ability Estimation</h3>
+                    <p>IRT models both question difficulty (b) and learner ability (θ) on the same logistic scale. The probability of a correct response is:</p>
+                    <p><strong>P(correct) = 1 / (1 + e^(-(θ - b)))</strong></p>
+                    <p>This allows the platform to select cards that are appropriately challenging — not too easy (boring) and not too hard (discouraging) — by targeting items where P(correct) ≈ 0.7.</p>
                 </div>
 
                 <div class="feature-grid">
                     <div class="enhanced-card">
-                        <h3>Ease Factor</h3>
-                        <p>Each card has an ease factor that determines how quickly intervals increase. Cards you find easy will have longer intervals.</p>
+                        <h3>How They Work Together</h3>
+                        <p>SM-2 provides the base interval. FSRS refines it using stability decay. IRT selects which due cards to show first, prioritizing items near your current ability level.</p>
                     </div>
                     <div class="enhanced-card">
-                        <h3>Optimal Timing</h3>
-                        <p>Reviews are scheduled just before you're likely to forget, maximizing retention while minimizing study time.</p>
+                        <h3>KPI Gates</h3>
+                        <p>Every session is evaluated against four gates: Accuracy ≥ 75%, Retention ≥ 70%, Avg Response ≤ 6 s, Fatigue Drop ≤ 15%. Failing a gate triggers an adaptive adjustment to the next session's card selection.</p>
                     </div>
                 </div>
 
                 <div class="code-block">
-                    <strong>Example Learning Schedule:</strong><br>
-                    Day 1: Learn new card<br>
-                    Day 2: First review (if Good: next review in 4 days)<br>
-                    Day 6: Second review (if Good: next review in 13 days)<br>
-                    Day 19: Third review (if Good: next review in 34 days)<br>
-                    And so on...
+                    <strong>Example FSRS Schedule (S = 7 days, target R = 90%):</strong><br>
+                    Day 0:  Learn new card (S = 1.0 d)<br>
+                    Day 1:  Review — Good → S = 3.2 d<br>
+                    Day 4:  Review — Good → S = 9.1 d<br>
+                    Day 13: Review — Good → S = 23.4 d<br>
+                    Day 36: Review — Good → S = 57.8 d<br>
+                    (Intervals grow faster than SM-2 for well-retained cards)
                 </div>
             </section>
 
             <!-- Troubleshooting Section -->
             <section id="troubleshooting" class="content-section">
                 <h1>Troubleshooting</h1>
-                <p>Common issues and solutions to help you get the most out of your Anki experience.</p>
+                <p>Common issues and solutions to help you get the most out of PRCM | ASRL.</p>
 
                 <h2>🔧 Common Issues</h2>
                 <div class="enhanced-card">
@@ -1402,17 +1340,17 @@
 
                 <div class="enhanced-card">
                     <h3>Can I study without an internet connection?</h3>
-                    <p>Yes! Anki works offline. Your progress will sync automatically when you reconnect to the internet.</p>
+                    <p>Yes — all three scheduling algorithms (SM-2, FSRS, IRT) run entirely in your browser. Only the AI Insights panel requires a network call to Groq · LLAMA-3.</p>
                 </div>
 
                 <div class="enhanced-card">
                     <h3>How do I backup my data?</h3>
-                    <p>Your data is automatically synced to our servers. You can also export decks manually or use the full profile export feature.</p>
+                    <p>Study data is stored in localStorage. Use the Export feature (Profile → Export Options) to download a JSON backup. Import it on any browser to restore your history.</p>
                 </div>
 
                 <div class="enhanced-card">
-                    <h3>Is there a limit to how many cards I can create?</h3>
-                    <p>No limit! Create as many cards and decks as you need. Premium features include advanced statistics and unlimited cloud storage.</p>
+                    <h3>Which algorithm should I use?</h3>
+                    <p>Start with FSRS — it outperforms SM-2 for most users by modeling memory decay more accurately. Switch to IRT if you want fully adaptive difficulty selection. SM-2 is the most battle-tested if you prefer a proven baseline.</p>
                 </div>
             </section>
         </main>
@@ -1431,8 +1369,8 @@
                 <div class="setting-item">
                     <span class="setting-label">Theme Mode</span>
                     <select class="setting-select" onchange="changeTheme(this.value)">
+                        <option value="dark" selected>Dark</option>
                         <option value="light">Light</option>
-                        <option value="dark">Dark</option>
                         <option value="high-contrast">High Contrast</option>
                         <option value="auto">Auto</option>
                     </select>
@@ -1546,13 +1484,11 @@
         
         // Theme toggle function
         function toggleTheme() {
-            const currentTheme = document.body.getAttribute('data-theme') || 'light';
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             changeTheme(newTheme);
-            
-            // Update theme toggle icon
-            const themeBtn = document.querySelector('.theme-toggle-btn');
-            themeBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+            const themeBtn = document.getElementById('themeToggleBtn');
+            if (themeBtn) themeBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
         }
 
         // Settings Panel
@@ -1639,9 +1575,9 @@
 
         // Load saved settings
         function loadSettings() {
-            const theme = localStorage.getItem('anki-demo-theme') || 
-                          localStorage.getItem('anki-theme') || 
-                          'light';
+            const theme = localStorage.getItem('anki-demo-theme') ||
+                          localStorage.getItem('anki-theme') ||
+                          'dark';
             const textSize = localStorage.getItem('anki-text-size') || 'medium';
             const fontFamily = localStorage.getItem('anki-font-family') || 'system';
             const accentColor = localStorage.getItem('anki-accent-color') || '#3b82f6';
@@ -1696,19 +1632,18 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadSettings();
             window.addEventListener('resize', handleResize);
-            
+
             // Initialize theme toggle icon
-            const currentTheme = document.body.getAttribute('data-theme') || 'light';
-            const themeBtn = document.querySelector('.theme-toggle-btn');
+            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+            const themeBtn = document.getElementById('themeToggleBtn');
             if (themeBtn) {
                 themeBtn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
             }
-            
+
             // Keyboard navigation
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    closeSettings();
-                }
+                if (e.key === 'Escape') closeSettings();
+                if (e.ctrlKey && e.key === 'd') { e.preventDefault(); toggleTheme(); }
             });
         });
 
