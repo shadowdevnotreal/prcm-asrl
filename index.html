@@ -67,6 +67,28 @@
             --red-bg: rgba(239,68,68,0.08);
         }
 
+        body[data-theme="high-contrast"] {
+            --body-bg: #000000;
+            --card-bg: #111111;
+            --card-bg2: #1a1a1a;
+            --border: #555555;
+            --text1: #ffffff;
+            --text2: #dddddd;
+            --text3: #aaaaaa;
+            --accent: #00ff88;
+            --accent-h: #00cc66;
+            --accent-glow: rgba(0,255,136,0.15);
+            --accent-border: rgba(0,255,136,0.4);
+            --green-bg: rgba(0,255,136,0.1);
+            --green-border: rgba(0,255,136,0.3);
+            --yellow-bg: rgba(255,200,0,0.1);
+            --red-bg: rgba(255,80,80,0.1);
+        }
+
+        body[data-text-size="small"]  { font-size: 0.9em; }
+        body[data-text-size="large"]  { font-size: 1.1em; }
+        body[data-text-size="xl"]     { font-size: 1.2em; }
+
         /* ── App shell ────────────────────────────────────────────── */
         .app-shell {
             display: grid;
@@ -774,8 +796,9 @@
             <div class="sp-row">
                 <span class="sp-lbl">Theme</span>
                 <select class="sp-select" onchange="applyTheme(this.value)" id="theme-select">
-                    <option value="dark">Dark</option>
+                    <option value="dark" selected>Dark</option>
                     <option value="light">Light</option>
+                    <option value="high-contrast">High Contrast</option>
                 </select>
             </div>
             <div class="sp-row">
@@ -787,16 +810,20 @@
                     <button class="ts-btn" onclick="setTextSize('xl')">XL</button>
                 </div>
             </div>
+            <div class="sp-row">
+                <span class="sp-lbl">Font</span>
+                <select class="sp-select" onchange="setFont(this.value)" id="font-select">
+                    <option value="system" selected>System</option>
+                    <option value="inter">Inter</option>
+                    <option value="roboto">Roboto</option>
+                </select>
+            </div>
         </div>
         <div class="sp-group">
             <div class="sp-group-title">♿ Accessibility</div>
             <div class="sp-row">
                 <span class="sp-lbl">Reduce Motion</span>
                 <div class="toggle-sw" id="rm-toggle" onclick="toggleReduceMotion()"></div>
-            </div>
-            <div class="sp-row">
-                <span class="sp-lbl">High Contrast</span>
-                <div class="toggle-sw" id="hc-toggle" onclick="toggleHighContrast()"></div>
             </div>
         </div>
         <div class="sp-group">
@@ -1227,11 +1254,12 @@ function toggleReduceMotion() {
     localStorage.setItem('anki-reduce-motion', on);
 }
 
-function toggleHighContrast() {
-    const t = document.getElementById('hc-toggle');
-    t.classList.toggle('on');
-    const on = t.classList.contains('on');
-    applyTheme(on ? 'light' : (localStorage.getItem('anki-demo-theme') || 'dark'));
+function setFont(f) {
+    const map = { system: '-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif', inter: '"Inter",sans-serif', roboto: '"Roboto",sans-serif' };
+    document.body.style.fontFamily = map[f] || map.system;
+    localStorage.setItem('anki-font-family', f);
+    const sel = document.getElementById('font-select');
+    if (sel) sel.value = f;
 }
 
 function setAccent(base, hover) {
@@ -1437,6 +1465,14 @@ document.addEventListener('DOMContentLoaded', function() {
     var savedTheme = localStorage.getItem('anki-demo-theme') ||
                      localStorage.getItem('anki-theme') || 'dark';
     applyTheme(savedTheme);
+
+    // Load saved font
+    var savedFont = localStorage.getItem('anki-font-family');
+    if (savedFont) setFont(savedFont);
+
+    // Load saved text size
+    var savedSize = localStorage.getItem('anki-text-size');
+    if (savedSize) setTextSize(savedSize);
 
     // Load saved accent
     var savedAccent = localStorage.getItem('anki-accent');
