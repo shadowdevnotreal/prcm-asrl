@@ -3,859 +3,1077 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRCM | ASRL DEMO - Welcome</title>
+    <title>PRCM | ASRL — Adaptive Learning Platform Demo</title>
+    <meta name="description" content="Experience the future of adaptive learning. PRCM ASRL combines SM-2, FSRS, and IRT scheduling algorithms with AI-powered analytics for maximum knowledge retention.">
+    <meta property="og:title" content="PRCM | ASRL — Adaptive Learning Platform">
+    <meta property="og:description" content="AI-powered spaced repetition with SM-2, FSRS, and IRT. Try live flashcards, explore real analytics, and see the React 19 architecture.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PRCM | ASRL — Adaptive Learning Platform">
+    <meta name="twitter:description" content="AI-powered spaced repetition combining SM-2, FSRS, and IRT algorithms for maximum retention.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        /* ============================================================
+           CSS CUSTOM PROPERTIES
+           ============================================================ */
         :root {
-            /* Light Theme */
             --primary: #667eea;
             --secondary: #764ba2;
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --bg-tertiary: #e2e8f0;
-            --text-primary: #1a202c;
-            --text-secondary: #4a5568;
-            --text-muted: #718096;
-            --border: #e2e8f0;
-            --card-bg: #ffffff;
-            --shadow: rgba(0, 0, 0, 0.1);
-            --gradient-start: #f7fafc;
-            --gradient-end: #edf2f7;
+            --primary-light: rgba(102,126,234,0.1);
+            --primary-glow: rgba(102,126,234,0.25);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+            --bg:      #f8fafc;
+            --bg-2:    #ffffff;
+            --bg-3:    #f1f5f9;
+            --surface: #ffffff;
+            --text:    #0f172a;
+            --text-2:  #475569;
+            --text-3:  #94a3b8;
+            --border:  rgba(0,0,0,0.08);
+
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 14px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+            --shadow-lg: 0 16px 48px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.06);
         }
 
         [data-theme="dark"] {
-            --bg-primary: #1a202c;
-            --bg-secondary: #2d3748;
-            --bg-tertiary: #4a5568;
-            --text-primary: #f7fafc;
-            --text-secondary: #e2e8f0;
-            --text-muted: #a0aec0;
-            --border: #4a5568;
-            --card-bg: #2d3748;
-            --shadow: rgba(0, 0, 0, 0.3);
-            --gradient-start: #2d3748;
-            --gradient-end: #1a202c;
+            --bg:      #0f172a;
+            --bg-2:    #1e293b;
+            --bg-3:    #0f172a;
+            --surface: #1e293b;
+            --text:    #f1f5f9;
+            --text-2:  #94a3b8;
+            --text-3:  #475569;
+            --border:  rgba(255,255,255,0.08);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.35);
+            --shadow-md: 0 4px 14px rgba(0,0,0,0.45);
+            --shadow-lg: 0 16px 48px rgba(0,0,0,0.6);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* ============================================================
+           RESET & BASE
+           ============================================================ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
-            min-height: 100vh;
-            transition: all 0.3s ease;
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
-        /* Header */
-        .header {
-            background: var(--card-bg);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 0;
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .wrapper { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* ============================================================
+           NAVIGATION
+           ============================================================ */
+        .site-nav {
             position: sticky;
             top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 8px var(--shadow);
+            z-index: 200;
+            border-bottom: 1px solid var(--border);
+            background: rgba(248,250,252,0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: background 0.3s, border-color 0.3s;
         }
 
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-        }
+        [data-theme="dark"] .site-nav { background: rgba(15,23,42,0.88); }
 
-        .logo {
-            font-size: 1.75rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .theme-toggle {
-            background: var(--bg-secondary);
-            border: 2px solid var(--border);
-            color: var(--text-primary);
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .theme-toggle:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-        }
-
-        /* Main Content */
-        .main-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        .hero-section {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .hero-icon {
-            font-size: 5rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 4px 8px var(--shadow));
-        }
-
-        .hero-title {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.1;
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1.125rem, 2vw, 1.5rem);
-            color: var(--text-secondary);
-            margin-bottom: 2.5rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-cta {
-            display: flex;
-            flex-direction: column;
-            sm:flex-direction: row;
-            gap: 1.5rem;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 3rem;
-        }
-
-        .cta-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 16px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .cta-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
-        }
-
-        .cta-secondary {
-            background: transparent;
-            color: var(--text-primary);
-            padding: 1rem 2.5rem;
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .cta-secondary:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        /* Demo Path Section */
-        .demo-path {
-            margin-bottom: 4rem;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .demo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .demo-card {
-            background: var(--card-bg);
-            border: 2px solid var(--border);
-            border-radius: 20px;
-            padding: 2.5rem;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 16px var(--shadow);
-        }
-
-        .demo-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 6px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 20px 20px 0 0;
-        }
-
-        .demo-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 48px var(--shadow);
-            border-color: var(--primary);
-        }
-
-        .demo-card.featured {
-            border-color: var(--primary);
-            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
-        }
-
-        .demo-card.featured::before {
-            height: 8px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
-
-        .card-header {
+        .nav-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-icon {
-            font-size: 3.5rem;
-        }
-
-        .step-badge {
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-        .demo-card.featured .step-badge {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-        }
-
-        .card-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .card-description {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            line-height: 1.6;
-            font-size: 1.05rem;
-        }
-
-        .card-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-tag {
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            border: 1px solid var(--border);
-        }
-
-        .card-action {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            color: var(--primary);
-            font-weight: 600;
-            margin-top: auto;
-        }
-
-        /* Features Overview */
-        .features-overview {
-            margin-bottom: 4rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .feature-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            display: flex;
-            align-items: flex-start;
+            height: 60px;
             gap: 1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px var(--shadow);
         }
 
-        .feature-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px var(--shadow);
-            border-color: var(--primary);
-        }
-
-        .feature-emoji {
-            font-size: 2.5rem;
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-decoration: none;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            white-space: nowrap;
             flex-shrink: 0;
         }
 
-        .feature-content h4 {
-            font-size: 1.25rem;
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0.125rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: var(--text-2);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.4rem 0.75rem;
+            border-radius: 8px;
+            transition: color 0.15s, background 0.15s;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .nav-theme-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            background: var(--bg-3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-size: 0.8125rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
+            font-family: inherit;
+            padding: 0.4375rem 0.875rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s, border-color 0.15s;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
-        .feature-content p {
-            color: var(--text-secondary);
-            line-height: 1.5;
+        .nav-theme-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
         }
 
-        /* Quick Start Guide */
-        .quick-start {
-            background: var(--card-bg);
-            border: 2px solid var(--border);
-            border-radius: 24px;
-            padding: 3rem;
+        @media (max-width: 768px) { .nav-menu { display: none; } }
+
+        /* ============================================================
+           HERO
+           ============================================================ */
+        .hero {
+            position: relative;
+            padding: 6.5rem 1.5rem 5rem;
             text-align: center;
-            box-shadow: 0 8px 32px var(--shadow);
+            overflow: hidden;
         }
 
-        .quick-start h3 {
-            font-size: 2rem;
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.13;
+            pointer-events: none;
+            animation: orbDrift 11s ease-in-out infinite;
+        }
+
+        [data-theme="dark"] .orb { opacity: 0.2; }
+
+        .orb-a {
+            width: 680px; height: 680px;
+            background: radial-gradient(circle, var(--primary), transparent 70%);
+            top: -220px; left: -160px;
+            animation-delay: 0s;
+        }
+        .orb-b {
+            width: 520px; height: 520px;
+            background: radial-gradient(circle, var(--secondary), transparent 70%);
+            top: -120px; right: -120px;
+            animation-delay: 3.5s;
+            animation-direction: reverse;
+        }
+        .orb-c {
+            width: 460px; height: 460px;
+            background: radial-gradient(circle, #3b82f6, transparent 70%);
+            bottom: -60px; left: 36%;
+            animation-delay: 7s;
+        }
+
+        @keyframes orbDrift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33%       { transform: translate(28px, -20px) scale(1.04); }
+            66%       { transform: translate(-18px, 14px) scale(0.97); }
+        }
+
+        .hero-inner {
+            position: relative;
+            max-width: 840px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary-light);
+            border: 1px solid var(--primary-glow);
+            color: var(--primary);
+            font-size: 0.8125rem;
             font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
+            padding: 0.375rem 1.125rem;
+            border-radius: 9999px;
+            margin-bottom: 1.875rem;
+            letter-spacing: 0.01em;
+            animation: fadeSlideDown 0.55s ease-out both;
         }
 
-        .quick-start p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+        .hero-h1 {
+            font-size: clamp(2.75rem, 7vw, 5rem);
+            font-weight: 900;
+            line-height: 1.04;
+            letter-spacing: -0.038em;
+            margin-bottom: 1.5rem;
+            animation: fadeSlideUp 0.55s ease-out 0.08s both;
         }
 
-        .start-steps {
+        .grad-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 45%, #3b82f6 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradMove 5s ease-in-out infinite;
+        }
+
+        @keyframes gradMove {
+            0%, 100% { background-position: 0% 50%; }
+            50%       { background-position: 100% 50%; }
+        }
+
+        .hero-sub {
+            font-size: clamp(1rem, 2.2vw, 1.2rem);
+            color: var(--text-2);
+            max-width: 640px;
+            margin: 0 auto 2.875rem;
+            line-height: 1.74;
+            animation: fadeSlideUp 0.55s ease-out 0.16s both;
+        }
+
+        /* Stats pills */
+        .stats-row {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
             flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 2.75rem;
+            animation: fadeSlideUp 0.55s ease-out 0.24s both;
         }
 
-        .step {
+        .stat-chip {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1rem 1.5rem;
+            box-shadow: var(--shadow-sm);
+            min-width: 132px;
             text-align: center;
-            max-width: 150px;
         }
 
-        .step-number {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        .stat-num {
+            font-size: 1.75rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            line-height: 1.2;
+        }
+
+        .stat-lbl {
+            font-size: 0.73rem;
+            font-weight: 500;
+            color: var(--text-3);
+            margin-top: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        /* CTA buttons */
+        .hero-ctas {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.875rem;
+            animation: fadeSlideUp 0.55s ease-out 0.32s both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 2rem;
+            border-radius: 12px;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            font-family: inherit;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
             color: white;
-            border-radius: 50%;
+            box-shadow: 0 4px 16px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px var(--primary-glow);
+        }
+
+        .btn-outline {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-outline:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* ============================================================
+           ALGORITHM STRIP
+           ============================================================ */
+        .algo-strip {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.625rem;
+            padding: 2rem 1.5rem;
+            background: var(--bg-2);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .algo-chip {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text-2);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 9999px;
+            padding: 0.4375rem 1rem;
+            box-shadow: var(--shadow-sm);
+            transition: border-color 0.15s, color 0.15s, transform 0.15s;
+            cursor: default;
+        }
+
+        .algo-chip:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .algo-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+        /* ============================================================
+           SECTION LAYOUT
+           ============================================================ */
+        .section { padding: 5.5rem 1.5rem; }
+        .section-alt { background: var(--bg-2); }
+
+        .section-eyebrow {
+            text-align: center;
+            font-size: 0.73rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 0.625rem;
+        }
+
+        .section-h2 {
+            text-align: center;
+            font-size: clamp(1.875rem, 4.5vw, 2.875rem);
+            font-weight: 800;
+            letter-spacing: -0.028em;
+            line-height: 1.16;
+            margin-bottom: 0.875rem;
+        }
+
+        .section-lead {
+            text-align: center;
+            font-size: 1rem;
+            color: var(--text-2);
+            max-width: 550px;
+            margin: 0 auto 3.75rem;
+            line-height: 1.72;
+        }
+
+        /* ============================================================
+           DEMO CARDS
+           ============================================================ */
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .demo-card {
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.875rem;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: 0.875rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+        }
+
+        .demo-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.22s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(102,126,234,0.3);
+        }
+
+        .demo-card:hover::after, .demo-card.featured::after { opacity: 1; }
+
+        .demo-card.featured {
+            border-color: rgba(102,126,234,0.35);
+            box-shadow: var(--shadow-md);
+        }
+
+        .dc-head { display: flex; align-items: center; justify-content: space-between; }
+        .dc-icon { font-size: 2.375rem; }
+
+        .dc-badge {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.3125rem 0.75rem;
+            border-radius: 9999px;
+            background: var(--bg-3);
+            color: var(--text-3);
+        }
+
+        .demo-card.featured .dc-badge {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .dc-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.015em;
+            line-height: 1.3;
+        }
+
+        .dc-desc {
+            font-size: 0.875rem;
+            color: var(--text-2);
+            line-height: 1.62;
+            flex: 1;
+        }
+
+        .dc-tags { display: flex; flex-wrap: wrap; gap: 0.4375rem; }
+
+        .dc-tag {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.25rem 0.625rem;
+            border-radius: 9999px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid var(--primary-glow);
+        }
+
+        .dc-arrow {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.3125rem;
+            margin-top: auto;
+        }
+
+        .dc-arrow .arr { transition: transform 0.18s ease; }
+        .demo-card:hover .dc-arrow .arr { transform: translateX(4px); }
+
+        /* ============================================================
+           FEATURE CARDS
+           ============================================================ */
+        .feat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
+            gap: 1.125rem;
+        }
+
+        .feat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.625rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(102,126,234,0.2);
+        }
+
+        .feat-icon {
+            width: 46px; height: 46px;
+            border-radius: 11px;
+            background: var(--primary-light);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.375rem;
+            flex-shrink: 0;
+        }
+
+        .feat-body h4 {
+            font-size: 0.9375rem;
             font-weight: 700;
+            margin-bottom: 0.375rem;
+            letter-spacing: -0.01em;
+        }
+
+        .feat-body p {
+            font-size: 0.8125rem;
+            color: var(--text-2);
+            line-height: 1.62;
+        }
+
+        /* ============================================================
+           HOW IT WORKS — STEPS
+           ============================================================ */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .step-item { text-align: center; }
+
+        .step-circle {
+            width: 62px; height: 62px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            font-size: 1.375rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin: 0 auto 1rem;
+            box-shadow: 0 4px 16px var(--primary-glow);
         }
 
-        .step p {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            margin: 0;
+        .step-item h4 {
+            font-size: 0.9375rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1rem;
-            }
-
-            .main-container {
-                padding: 2rem 1rem;
-            }
-
-            .demo-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .hero-cta {
-                flex-direction: column;
-            }
-
-            .start-steps {
-                flex-direction: column;
-                align-items: center;
-                gap: 1.5rem;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
+        .step-item p {
+            font-size: 0.8125rem;
+            color: var(--text-2);
+            line-height: 1.62;
         }
 
-        /* Animation */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        .site-footer {
+            background: var(--bg-2);
+            border-top: 1px solid var(--border);
+            padding: 2.75rem 1.5rem;
         }
 
-        .animate-in {
-            animation: fadeInUp 0.6s ease-out forwards;
+        .footer-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            text-align: center;
         }
 
-        .stagger-children > * {
+        .footer-brand {
+            font-size: 1.0625rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.125rem;
+        }
+
+        .footer-links a {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-3);
+            text-decoration: none;
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            transition: color 0.15s, background 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .footer-copy { font-size: 0.75rem; color: var(--text-3); }
+
+        /* ============================================================
+           SCROLL REVEAL
+           ============================================================ */
+        .reveal {
             opacity: 0;
-            animation: fadeInUp 0.6s ease-out forwards;
+            transform: translateY(22px);
+            transition: opacity 0.58s ease, transform 0.58s ease;
         }
 
-        .stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
-        .stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
-        .stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
-        .stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
-        .stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
-        .stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+        .reveal.in-view {
+            opacity: 1;
+            transform: none;
+        }
+
+        .reveal-d1 { transition-delay: 0.07s; }
+        .reveal-d2 { transition-delay: 0.14s; }
+        .reveal-d3 { transition-delay: 0.21s; }
+        .reveal-d4 { transition-delay: 0.28s; }
+
+        /* ============================================================
+           KEYFRAMES
+           ============================================================ */
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        @keyframes fadeSlideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 640px) {
+            .hero { padding: 4rem 1rem 3rem; }
+            .stat-chip { min-width: 112px; padding: 0.75rem 1rem; }
+            .stat-num { font-size: 1.5rem; }
+            .section { padding: 3.75rem 1rem; }
+            .steps-grid { gap: 1.75rem; }
+        }
     </style>
 </head>
 <body data-theme="light">
-    <!-- Header -->
-    <header class="header">
-        <div class="header-container">
-            <div class="logo">
-                <span>🧠</span>
-                <span>PRCM | ASRL DEMO</span>
-            </div>
-            
-            <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
-                <span id="themeIcon">🌙</span>
-                <span id="themeText">Dark Mode</span>
-            </button>
+
+    <!-- ================================================================
+         NAVIGATION
+         ================================================================ -->
+    <header class="site-nav">
+        <div class="wrapper">
+            <nav class="nav-row">
+                <a href="START_HERE.html" class="nav-brand">🧠&nbsp;PRCM | ASRL</a>
+
+                <ul class="nav-menu">
+                    <li><a href="START_HERE.html" class="active">Home</a></li>
+                    <li><a href="index.html">Overview</a></li>
+                    <li><a href="interactive-demo.html">Try Demo</a></li>
+                    <li><a href="user-guide.html">Guide</a></li>
+                    <li><a href="technical-showcase.html">Technical</a></li>
+                </ul>
+
+                <button class="nav-theme-btn" id="themeBtn" onclick="toggleTheme()">
+                    <span id="themeIcon">🌙</span><span id="themeText">Dark</span>
+                </button>
+            </nav>
         </div>
     </header>
 
-    <main class="main-container">
-        <!-- Hero Section -->
-        <section class="hero-section animate-in">
-            <div class="hero-icon">🧠</div>
-            <h1 class="hero-title">Welcome to PRCM | ASRL DEMO</h1>
-            <p class="hero-subtitle">
-                Explore our comprehensive demo ecosystem featuring enhanced dark mode, interactive analytics, 
-                and accessibility-first design. Experience the future of intelligent flashcard learning.
+    <!-- ================================================================
+         HERO
+         ================================================================ -->
+    <section class="hero">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+        <div class="orb orb-c"></div>
+
+        <div class="hero-inner">
+            <div class="hero-badge">✨ Adaptive Testing Platform — Interactive Demo</div>
+
+            <h1 class="hero-h1">
+                Learn Smarter with<br>
+                <span class="grad-text">Adaptive Intelligence</span>
+            </h1>
+
+            <p class="hero-sub">
+                PRCM ASRL fuses SM‑2, FSRS, and IRT scheduling algorithms with Groq‑powered AI analytics
+                to maximize knowledge retention — built on React&nbsp;19 and TypeScript with zero type errors.
             </p>
-            
-            <div class="hero-cta">
-                <a href="index.html" class="cta-primary">
-                    <span>🚀</span>
-                    <span>Start Demo Experience</span>
+
+            <div class="stats-row">
+                <div class="stat-chip">
+                    <span class="stat-num" data-count="95" data-suffix="%">0%</span>
+                    <div class="stat-lbl">Retention Rate</div>
+                </div>
+                <div class="stat-chip">
+                    <span class="stat-num" data-count="8932" data-suffix="">0</span>
+                    <div class="stat-lbl">Cards Reviewed</div>
+                </div>
+                <div class="stat-chip">
+                    <span class="stat-num" data-count="3" data-suffix="">0</span>
+                    <div class="stat-lbl">Scheduling Engines</div>
+                </div>
+                <div class="stat-chip">
+                    <span class="stat-num" data-count="95" data-suffix="">0</span>
+                    <div class="stat-lbl">Conformance Tests</div>
+                </div>
+            </div>
+
+            <div class="hero-ctas">
+                <a href="index.html" class="btn btn-primary">🚀 Start Demo</a>
+                <a href="interactive-demo.html" class="btn btn-outline">🎴 Try Flashcards</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Algorithm strip -->
+    <div class="algo-strip">
+        <span class="algo-chip"><span class="algo-dot" style="background:#667eea"></span>SM‑2 Spaced Repetition</span>
+        <span class="algo-chip"><span class="algo-dot" style="background:#764ba2"></span>FSRS Scheduler</span>
+        <span class="algo-chip"><span class="algo-dot" style="background:#3b82f6"></span>IRT Adaptive Testing</span>
+        <span class="algo-chip"><span class="algo-dot" style="background:#10b981"></span>Ebbinghaus Forgetting Curve</span>
+        <span class="algo-chip"><span class="algo-dot" style="background:#f59e0b"></span>Groq AI Analytics</span>
+        <span class="algo-chip"><span class="algo-dot" style="background:#ef4444"></span>KPI Gate System</span>
+    </div>
+
+    <!-- ================================================================
+         DEMO EXPERIENCES
+         ================================================================ -->
+    <section class="section" id="demos">
+        <div class="wrapper">
+            <div class="reveal">
+                <p class="section-eyebrow">Explore the Platform</p>
+                <h2 class="section-h2">Four Demo Experiences</h2>
+                <p class="section-lead">Each page reveals a different layer of the platform. Follow the recommended path or jump to any section — your theme preference persists across all pages.</p>
+            </div>
+
+            <div class="demo-grid">
+                <a href="index.html" class="demo-card featured reveal reveal-d1">
+                    <div class="dc-head">
+                        <span class="dc-icon">🏠</span>
+                        <span class="dc-badge">Start Here</span>
+                    </div>
+                    <div class="dc-title">Marketing Overview</div>
+                    <p class="dc-desc">The full platform experience. Real user profile with a GitHub-style 365-day heatmap, weekly performance charts, and the complete settings panel.</p>
+                    <div class="dc-tags">
+                        <span class="dc-tag">📊 Analytics</span>
+                        <span class="dc-tag">👤 Profile</span>
+                        <span class="dc-tag">🔥 Live Data</span>
+                    </div>
+                    <div class="dc-arrow">Begin Experience <span class="arr">→</span></div>
                 </a>
-                <a href="#demo-path" class="cta-secondary">
-                    <span>🗺️</span>
-                    <span>Explore Demo Path</span>
+
+                <a href="interactive-demo.html" class="demo-card reveal reveal-d2">
+                    <div class="dc-head">
+                        <span class="dc-icon">🎮</span>
+                        <span class="dc-badge">Step 1</span>
+                    </div>
+                    <div class="dc-title">Interactive Flashcards</div>
+                    <p class="dc-desc">A fully working study session with real Japanese vocabulary cards, 3D flip animation, live stats, and the SM‑2 difficulty rating interface.</p>
+                    <div class="dc-tags">
+                        <span class="dc-tag">🎴 SM‑2 Rating</span>
+                        <span class="dc-tag">📈 Live Stats</span>
+                        <span class="dc-tag">🎯 Settings</span>
+                    </div>
+                    <div class="dc-arrow">Try the App <span class="arr">→</span></div>
+                </a>
+
+                <a href="user-guide.html" class="demo-card reveal reveal-d3">
+                    <div class="dc-head">
+                        <span class="dc-icon">📚</span>
+                        <span class="dc-badge">Step 2</span>
+                    </div>
+                    <div class="dc-title">User Guide</div>
+                    <p class="dc-desc">Comprehensive documentation covering every feature, accessibility option, animation control, and deep explanations of the spaced repetition algorithms.</p>
+                    <div class="dc-tags">
+                        <span class="dc-tag">📖 Docs</span>
+                        <span class="dc-tag">♿ A11y</span>
+                        <span class="dc-tag">🛠️ Troubleshooting</span>
+                    </div>
+                    <div class="dc-arrow">Learn Features <span class="arr">→</span></div>
+                </a>
+
+                <a href="technical-showcase.html" class="demo-card reveal reveal-d4">
+                    <div class="dc-head">
+                        <span class="dc-icon">⚙️</span>
+                        <span class="dc-badge">Step 3</span>
+                    </div>
+                    <div class="dc-title">Technical Architecture</div>
+                    <p class="dc-desc">React 19 + TypeScript internals. Performance benchmarks, algorithm conformance testing, KPI gate results, and the full engineering stack.</p>
+                    <div class="dc-tags">
+                        <span class="dc-tag">⚛️ React 19</span>
+                        <span class="dc-tag">🧪 95 Tests</span>
+                        <span class="dc-tag">📱 PWA</span>
+                    </div>
+                    <div class="dc-arrow">View Architecture <span class="arr">→</span></div>
                 </a>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Demo Path -->
-        <section class="demo-path" id="demo-path">
-            <h2 class="section-title">Choose Your Demo Path</h2>
-            <p class="section-subtitle">
-                Each demo showcases different aspects of our intelligent learning platform. 
-                Start anywhere or follow our recommended sequence.
-            </p>
-
-            <div class="demo-grid stagger-children">
-                <!-- Marketing Overview - Featured -->
-                <a href="index.html" class="demo-card featured">
-                    <div class="card-header">
-                        <span class="card-icon">🏠</span>
-                        <span class="step-badge">Start Here</span>
-                    </div>
-                    <h3 class="card-title">Marketing Overview</h3>
-                    <p class="card-description">
-                        Comprehensive marketing experience with user profiles, activity heat maps, 
-                        and feature showcases using real data from our power user Alex Chen.
-                    </p>
-                    <div class="card-features">
-                        <span class="feature-tag">🔥 Live Data</span>
-                        <span class="feature-tag">📊 Analytics Dashboard</span>
-                        <span class="feature-tag">👤 User Profiles</span>
-                        <span class="feature-tag">📈 Activity Heat Maps</span>
-                    </div>
-                    <div class="card-action">
-                        <span>Begin Experience</span>
-                        <span>→</span>
-                    </div>
-                </a>
-
-                <!-- Interactive Demo -->
-                <a href="interactive-demo.html" class="demo-card">
-                    <div class="card-header">
-                        <span class="card-icon">🎮</span>
-                        <span class="step-badge">Step 1</span>
-                    </div>
-                    <h3 class="card-title">Interactive Demo</h3>
-                    <p class="card-description">
-                        Experience the actual Anki interface with real Japanese flashcards, 
-                        live statistics tracking, and fully functional settings panel.
-                    </p>
-                    <div class="card-features">
-                        <span class="feature-tag">🎴 Real Flashcards</span>
-                        <span class="feature-tag">📈 Live Stats</span>
-                        <span class="feature-tag">⚙️ Full Settings</span>
-                        <span class="feature-tag">🎯 SM-2 Algorithm</span>
-                    </div>
-                    <div class="card-action">
-                        <span>Try the App</span>
-                        <span>→</span>
-                    </div>
-                </a>
-
-                <!-- User Guide -->
-                <a href="user-guide.html" class="demo-card">
-                    <div class="card-header">
-                        <span class="card-icon">📚</span>
-                        <span class="step-badge">Step 2</span>
-                    </div>
-                    <h3 class="card-title">Complete User Guide</h3>
-                    <p class="card-description">
-                        Comprehensive documentation covering all features, accessibility options, 
-                        animation controls, and advanced statistics explanations.
-                    </p>
-                    <div class="card-features">
-                        <span class="feature-tag">📖 Full Documentation</span>
-                        <span class="feature-tag">♿ Accessibility</span>
-                        <span class="feature-tag">🎨 Customization</span>
-                        <span class="feature-tag">🛠️ Troubleshooting</span>
-                    </div>
-                    <div class="card-action">
-                        <span>Learn Features</span>
-                        <span>→</span>
-                    </div>
-                </a>
-
-                <!-- Technical Showcase -->
-                <a href="technical-showcase.html" class="demo-card">
-                    <div class="card-header">
-                        <span class="card-icon">🔧</span>
-                        <span class="step-badge">Step 3</span>
-                    </div>
-                    <h3 class="card-title">Technical Architecture</h3>
-                    <p class="card-description">
-                        Deep dive into React 18 architecture, TypeScript implementation, 
-                        performance benchmarks, and engineering excellence.
-                    </p>
-                    <div class="card-features">
-                        <span class="feature-tag">⚛️ React 18</span>
-                        <span class="feature-tag">📱 PWA Ready</span>
-                        <span class="feature-tag">🚀 Performance</span>
-                        <span class="feature-tag">🧪 Testing</span>
-                    </div>
-                    <div class="card-action">
-                        <span>View Architecture</span>
-                        <span>→</span>
-                    </div>
-                </a>
+    <!-- ================================================================
+         PLATFORM HIGHLIGHTS
+         ================================================================ -->
+    <section class="section section-alt">
+        <div class="wrapper">
+            <div class="reveal">
+                <p class="section-eyebrow">What's Inside</p>
+                <h2 class="section-h2">Platform Highlights</h2>
+                <p class="section-lead">Every feature is production-grade — accessibility, performance, and pedagogical science baked in from day one.</p>
             </div>
-        </section>
 
-        <!-- Features Overview -->
-        <section class="features-overview">
-            <h2 class="section-title">Key Features Demonstrated</h2>
-            <p class="section-subtitle">
-                Discover the advanced capabilities that make our learning platform exceptional.
-            </p>
-
-            <div class="features-grid stagger-children">
-                <div class="feature-item">
-                    <span class="feature-emoji">🌙</span>
-                    <div class="feature-content">
-                        <h4>Enhanced Dark Mode</h4>
-                        <p>WCAG AAA compliant themes with perfect contrast ratios for comfortable studying in any environment.</p>
+            <div class="feat-grid">
+                <div class="feat-card reveal reveal-d1">
+                    <div class="feat-icon">🌙</div>
+                    <div class="feat-body">
+                        <h4>WCAG AAA Themes</h4>
+                        <p>Light, dark, and high-contrast modes — all meeting strict contrast requirements for comfortable long-form studying in any environment.</p>
                     </div>
                 </div>
 
-                <div class="feature-item">
-                    <span class="feature-emoji">📊</span>
-                    <div class="feature-content">
-                        <h4>Interactive Analytics</h4>
-                        <p>GitHub-style activity heat maps and real-time performance tracking with detailed insights.</p>
+                <div class="feat-card reveal reveal-d1">
+                    <div class="feat-icon">🧠</div>
+                    <div class="feat-body">
+                        <h4>Triple Algorithm Engine</h4>
+                        <p>SM‑2 and FSRS for study scheduling. IRT-based adaptive testing terminates early once ability stabilizes — fewer questions, same precision.</p>
                     </div>
                 </div>
 
-                <div class="feature-item">
-                    <span class="feature-emoji">♿</span>
-                    <div class="feature-content">
+                <div class="feat-card reveal reveal-d2">
+                    <div class="feat-icon">📊</div>
+                    <div class="feat-body">
+                        <h4>GitHub-Style Heatmap</h4>
+                        <p>365-day activity visualization alongside weekly performance charts, accuracy trends, forgetting curve analysis, and leech detection.</p>
+                    </div>
+                </div>
+
+                <div class="feat-card reveal reveal-d2">
+                    <div class="feat-icon">🤖</div>
+                    <div class="feat-body">
+                        <h4>Groq AI Insights</h4>
+                        <p>Natural-language performance summaries via Groq SDK. Understand weak spots without reading raw numbers — plain English diagnostics.</p>
+                    </div>
+                </div>
+
+                <div class="feat-card reveal reveal-d3">
+                    <div class="feat-icon">♿</div>
+                    <div class="feat-body">
                         <h4>Accessibility First</h4>
-                        <p>Text scaling, motion controls, keyboard navigation, and screen reader optimization.</p>
+                        <p>Four text-size levels, motion reduction, full keyboard navigation, screen reader optimization, and 12 selectable accent colors.</p>
                     </div>
                 </div>
 
-                <div class="feature-item">
-                    <span class="feature-emoji">🎨</span>
-                    <div class="feature-content">
-                        <h4>12 Accent Colors</h4>
-                        <p>Personalize your learning experience with beautiful color themes and customization options.</p>
-                    </div>
-                </div>
-
-                <div class="feature-item">
-                    <span class="feature-emoji">🧠</span>
-                    <div class="feature-content">
-                        <h4>SM-2 Spaced Repetition</h4>
-                        <p>Intelligent algorithm adapts to your learning pace for maximum retention efficiency.</p>
-                    </div>
-                </div>
-
-                <div class="feature-item">
-                    <span class="feature-emoji">⚡</span>
-                    <div class="feature-content">
-                        <h4>Lightning Performance</h4>
-                        <p>Sub-second load times, smooth animations, and optimized for all devices and browsers.</p>
+                <div class="feat-card reveal reveal-d3">
+                    <div class="feat-icon">🏫</div>
+                    <div class="feat-body">
+                        <h4>School Edition Ready</h4>
+                        <p>Class leaderboards, biometric integration toggles, teacher-dashboard privacy controls, and multi-user server deployment support.</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Quick Start Guide -->
-        <section class="quick-start">
-            <h3>🚀 Quick Start Guide</h3>
-            <p>
-                Ready to explore? Follow these simple steps to get the most out of your demo experience. 
-                Each section builds upon the previous one for a complete understanding.
-            </p>
-
-            <div class="start-steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <p>Start with Marketing Overview</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <p>Try Interactive Demo</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <p>Read User Guide</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <p>Explore Technical Details</p>
-                </div>
+    <!-- ================================================================
+         HOW IT WORKS
+         ================================================================ -->
+    <section class="section">
+        <div class="wrapper">
+            <div class="reveal">
+                <p class="section-eyebrow">The Flow</p>
+                <h2 class="section-h2">Study. Test. Understand. Ship.</h2>
+                <p class="section-lead">Four interconnected layers — from raw study sessions to AI-powered insight, gated by measurable KPIs before every release.</p>
             </div>
 
-            <a href="index.html" class="cta-primary">
-                <span>🎯</span>
-                <span>Begin Demo Journey</span>
-            </a>
-        </section>
-    </main>
+            <div class="steps-grid">
+                <div class="step-item reveal reveal-d1">
+                    <div class="step-circle">1</div>
+                    <h4>Study</h4>
+                    <p>SM‑2 and FSRS schedulers queue cards at the optimal moment based on measured stability and difficulty parameters.</p>
+                </div>
+                <div class="step-item reveal reveal-d2">
+                    <div class="step-circle">2</div>
+                    <h4>Test</h4>
+                    <p>IRT adaptive engine estimates learner ability and terminates early — fewer questions than fixed-length tests, same precision.</p>
+                </div>
+                <div class="step-item reveal reveal-d3">
+                    <div class="step-circle">3</div>
+                    <h4>Understand</h4>
+                    <p>Groq AI explains performance in plain language and surfaces the underlying scheduler curves and forgetting patterns.</p>
+                </div>
+                <div class="step-item reveal reveal-d4">
+                    <div class="step-circle">4</div>
+                    <h4>Ship Safely</h4>
+                    <p>KPI gates evaluate accuracy ≥ 75%, retention ≥ 70%, and response time ≤ 6000 ms before any rollout promotion.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================================
+         FOOTER
+         ================================================================ -->
+    <footer class="site-footer">
+        <div class="wrapper">
+            <div class="footer-row">
+                <div class="footer-brand">🧠 PRCM | ASRL</div>
+                <nav class="footer-links">
+                    <a href="START_HERE.html">Home</a>
+                    <a href="index.html">Overview</a>
+                    <a href="interactive-demo.html">Try Demo</a>
+                    <a href="user-guide.html">Guide</a>
+                    <a href="technical-showcase.html">Technical</a>
+                </nav>
+                <p class="footer-copy">PRCM | ASRL Demo — Adaptive Learning Platform Showcase</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // Theme Management - Persists across all demo pages
-        function toggleTheme() {
-            const currentTheme = document.body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            // Apply theme
-            document.body.setAttribute('data-theme', newTheme);
-            
-            // Update button
-            updateThemeButton(newTheme);
-            
-            // Save to localStorage for persistence across all pages
-            localStorage.setItem('anki-demo-theme', newTheme);
-            
-            // Also save with individual page keys for compatibility
-            localStorage.setItem('anki-theme', newTheme);
-            
-            console.log(`Theme changed to: ${newTheme}`);
+        /* ============================================================
+           THEME
+           ============================================================ */
+        function applyTheme(t) {
+            document.body.setAttribute('data-theme', t);
+            document.getElementById('themeIcon').textContent = t === 'dark' ? '☀️' : '🌙';
+            document.getElementById('themeText').textContent = t === 'dark' ? 'Light' : 'Dark';
         }
-        
-        // Make functions globally available
+
+        function toggleTheme() {
+            const next = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+            localStorage.setItem('anki-demo-theme', next);
+            localStorage.setItem('anki-theme', next);
+        }
+
         window.toggleTheme = toggleTheme;
 
-        function updateThemeButton(theme) {
-            const icon = document.getElementById('themeIcon');
-            const text = document.getElementById('themeText');
-            
-            if (theme === 'dark') {
-                icon.textContent = '☀️';
-                text.textContent = 'Light Mode';
-            } else {
-                icon.textContent = '🌙';
-                text.textContent = 'Dark Mode';
+        /* ============================================================
+           ANIMATED COUNTERS
+           ============================================================ */
+        function runCounter(el) {
+            const target = parseInt(el.dataset.count, 10);
+            const suffix = el.dataset.suffix || '';
+            const dur = 1400;
+            const t0 = performance.now();
+            (function tick(now) {
+                const p = Math.min((now - t0) / dur, 1);
+                const eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.round(eased * target).toLocaleString() + suffix;
+                if (p < 1) requestAnimationFrame(tick);
+            })(t0);
+        }
+
+        /* ============================================================
+           INTERSECTION OBSERVERS
+           ============================================================ */
+        function initObservers() {
+            const revealObs = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('in-view');
+                        revealObs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+
+            document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+            const countObs = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        runCounter(e.target);
+                        countObs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
+        }
+
+        /* ============================================================
+           KEYBOARD SHORTCUTS
+           ============================================================ */
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                e.preventDefault();
+                toggleTheme();
             }
-        }
+            if (!e.ctrlKey && !e.metaKey && !e.altKey && e.key >= '1' && e.key <= '4') {
+                const pages = ['index.html', 'interactive-demo.html', 'user-guide.html', 'technical-showcase.html'];
+                window.location.href = pages[+e.key - 1];
+            }
+        });
 
-        // Load saved theme on page load
-        function loadTheme() {
-            const savedTheme = localStorage.getItem('anki-demo-theme') || 
-                               localStorage.getItem('anki-theme') || 
-                               'light';
-            
-            document.body.setAttribute('data-theme', savedTheme);
-            updateThemeButton(savedTheme);
-        }
-
-        // Smooth scroll for anchor links
-        function initSmoothScroll() {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-        }
-
-        // Add demo card interactions
-        function initCardInteractions() {
-            document.querySelectorAll('.demo-card').forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'translateY(-8px) scale(1.02)';
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'translateY(0) scale(1)';
-                });
-            });
-        }
-
-        // Keyboard shortcuts
-        function initKeyboardShortcuts() {
-            document.addEventListener('keydown', (e) => {
-                // Toggle theme with Ctrl/Cmd + D
-                if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
-                    e.preventDefault();
-                    toggleTheme();
-                }
-                
-                // Quick start with Enter
-                if (e.key === 'Enter' && e.ctrlKey) {
-                    window.location.href = 'index.html';
-                }
-                
-                // Navigate demos with number keys
-                if (e.key >= '1' && e.key <= '4' && !e.ctrlKey && !e.metaKey) {
-                    const demos = ['index.html', 'interactive-demo.html', 'user-guide.html', 'technical-showcase.html'];
-                    const index = parseInt(e.key) - 1;
-                    if (demos[index]) {
-                        window.location.href = demos[index];
-                    }
-                }
-            });
-        }
-
-        // Initialize everything when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            loadTheme();
-            initSmoothScroll();
-            initCardInteractions();
-            initKeyboardShortcuts();
-            
-            // Add staggered animation to elements
-            const staggerElements = document.querySelectorAll('.stagger-children > *');
-            staggerElements.forEach((el, index) => {
-                el.style.animationDelay = `${index * 0.1}s`;
-            });
-            
-            console.log('🧠 PRCM | ASRL DEMO - Start Page Loaded');
-            console.log('💡 Keyboard shortcuts:');
-            console.log('  - Ctrl/Cmd + D: Toggle theme');
-            console.log('  - Ctrl + Enter: Quick start');
-            console.log('  - 1-4: Navigate to demos');
+        /* ============================================================
+           INIT
+           ============================================================ */
+        document.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('anki-demo-theme') || localStorage.getItem('anki-theme') || 'light';
+            applyTheme(saved);
+            initObservers();
+            console.log('🧠 PRCM | ASRL — Shortcuts: Ctrl+D = theme, 1-4 = navigate demos');
         });
     </script>
 </body>

@@ -5,6 +5,210 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRCM | ASRL DEMO - Technical Showcase</title>
     <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --gradient: linear-gradient(135deg, #667eea, #764ba2);
+            --primary-light: rgba(102,126,234,0.1);
+            --primary-glow: rgba(102,126,234,0.25);
+            --nav-bg: #667eea;
+        }
+
+        /* Light theme overrides (dark is default for this technical page) */
+        [data-theme="light"] {
+            --body-bg-start: #f8fafc;
+            --body-bg-end: #e2e8f0;
+            --body-color: #1a202c;
+            --card-bg: rgba(0,0,0,0.04);
+            --card-border: rgba(0,0,0,0.1);
+            --card-hover-border: rgba(102,126,234,0.4);
+            --arch-bg: rgba(0,0,0,0.04);
+            --metric-bg-start: rgba(102,126,234,0.08);
+            --metric-bg-end: rgba(118,75,162,0.08);
+            --metric-border: rgba(102,126,234,0.2);
+            --metric-value-color: #667eea;
+            --code-bg: #f1f5f9;
+            --code-border: #e2e8f0;
+            --code-text: #1a202c;
+            --layer-bg: rgba(0,0,0,0.03);
+            --layer-border: rgba(0,0,0,0.06);
+            --layer-title: #1a202c;
+            --layer-desc: #4a5568;
+            --section-border: rgba(102,126,234,0.3);
+            --feat-title: #1a202c;
+            --feat-desc: #4a5568;
+            --feat-tag-bg: rgba(102,126,234,0.12);
+            --feat-tag-color: #6366f1;
+            --feat-tag-border: rgba(102,126,234,0.25);
+            --arch-title: #1a202c;
+            --footer-bg: rgba(0,0,0,0.04);
+            --footer-border: rgba(0,0,0,0.1);
+            --footer-text: #4a5568;
+            --footer-link: #667eea;
+        }
+
+        [data-theme="dark"], body:not([data-theme="light"]) {
+            --body-bg-start: #1a202c;
+            --body-bg-end: #2d3748;
+            --body-color: #e2e8f0;
+            --card-bg: rgba(255,255,255,0.05);
+            --card-border: rgba(255,255,255,0.1);
+            --card-hover-border: rgba(102,126,234,0.3);
+            --arch-bg: rgba(255,255,255,0.05);
+            --metric-bg-start: rgba(102,126,234,0.1);
+            --metric-bg-end: rgba(118,75,162,0.1);
+            --metric-border: rgba(102,126,234,0.2);
+            --metric-value-color: #667eea;
+            --code-bg: #1a202c;
+            --code-border: #2d3748;
+            --code-text: #e2e8f0;
+            --layer-bg: rgba(255,255,255,0.03);
+            --layer-border: rgba(255,255,255,0.08);
+            --layer-title: #e2e8f0;
+            --layer-desc: #a0aec0;
+            --section-border: rgba(102,126,234,0.5);
+            --feat-title: #f7fafc;
+            --feat-desc: #cbd5e1;
+            --feat-tag-bg: rgba(102,126,234,0.2);
+            --feat-tag-color: #a78bfa;
+            --feat-tag-border: rgba(102,126,234,0.3);
+            --arch-title: #f7fafc;
+            --footer-bg: rgba(255,255,255,0.03);
+            --footer-border: rgba(255,255,255,0.1);
+            --footer-text: #a0aec0;
+            --footer-link: #a78bfa;
+        }
+
+        /* ── Consistent top-nav (matches other pages' purple bar) ────── */
+        .ts-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--nav-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+        }
+
+        .ts-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .ts-nav-brand {
+            color: white;
+            font-weight: 800;
+            font-size: 1.05rem;
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .ts-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            flex-wrap: nowrap;
+        }
+
+        .ts-nav-links a, .ts-nav-active {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.4375rem 0.875rem;
+            border-radius: 7px;
+            background: rgba(255,255,255,0.12);
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+
+        .ts-nav-links a:hover { background: rgba(255,255,255,0.22); }
+
+        .ts-nav-active {
+            background: rgba(255,255,255,0.25);
+            font-weight: 700;
+        }
+
+        .ts-nav-actions { display: flex; align-items: center; gap: 0.625rem; }
+
+        .ts-btn {
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.28);
+            color: white;
+            font-family: inherit;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            padding: 0.4375rem 0.875rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .ts-btn:hover { background: rgba(255,255,255,0.3); }
+
+        .ts-step-label {
+            font-size: 0.8125rem;
+            color: rgba(255,255,255,0.8);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 900px) {
+            .ts-nav-links { display: none; }
+            .ts-step-label { display: none; }
+        }
+
+        /* ── Page footer ─────────────────────────────────────────────── */
+        .ts-footer {
+            background: var(--footer-bg);
+            border-top: 1px solid var(--footer-border);
+            padding: 2.5rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .ts-footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.125rem;
+            text-align: center;
+        }
+
+        .ts-footer-brand {
+            font-size: 1.0625rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .ts-footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.25rem; }
+
+        .ts-footer-links a {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--footer-text);
+            text-decoration: none;
+            padding: 0.375rem 0.625rem;
+            border-radius: 6px;
+            transition: color 0.15s;
+        }
+
+        .ts-footer-links a:hover { color: var(--footer-link); }
+
+        .ts-footer-copy { font-size: 0.75rem; color: var(--footer-text); opacity: 0.7; }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,10 +217,11 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
-            color: #e2e8f0;
+            background: linear-gradient(135deg, var(--body-bg-start, #1a202c) 0%, var(--body-bg-end, #2d3748) 100%);
+            color: var(--body-color, #e2e8f0);
             line-height: 1.6;
             min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
         }
 
         .container {
@@ -55,9 +260,9 @@
         }
 
         .feature-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--card-bg);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--card-border);
             border-radius: 20px;
             padding: 32px;
             transition: all 0.3s ease;
@@ -68,7 +273,7 @@
         .feature-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border-color: rgba(102, 126, 234, 0.3);
+            border-color: var(--card-hover-border);
         }
 
         .feature-card::before {
@@ -91,11 +296,11 @@
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 16px;
-            color: #f7fafc;
+            color: var(--feat-title);
         }
 
         .feature-description {
-            color: #cbd5e1;
+            color: var(--feat-desc);
             margin-bottom: 20px;
             line-height: 1.6;
         }
@@ -108,19 +313,19 @@
         }
 
         .tech-tag {
-            background: rgba(102, 126, 234, 0.2);
-            color: #a78bfa;
+            background: var(--feat-tag-bg);
+            color: var(--feat-tag-color);
             padding: 6px 12px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 600;
-            border: 1px solid rgba(102, 126, 234, 0.3);
+            border: 1px solid var(--feat-tag-border);
         }
 
         .architecture-section {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--arch-bg);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--card-border);
             border-radius: 20px;
             padding: 40px;
             margin-bottom: 50px;
@@ -131,7 +336,7 @@
             font-weight: 700;
             text-align: center;
             margin-bottom: 30px;
-            color: #f7fafc;
+            color: var(--arch-title);
         }
 
         .architecture-grid {
@@ -141,8 +346,8 @@
         }
 
         .layer-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--layer-bg);
+            border: 1px solid var(--layer-border);
             border-radius: 16px;
             padding: 24px;
             text-align: center;
@@ -152,12 +357,12 @@
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 12px;
-            color: #e2e8f0;
+            color: var(--layer-title);
         }
 
         .layer-description {
             font-size: 14px;
-            color: #a0aec0;
+            color: var(--layer-desc);
             margin-bottom: 16px;
         }
 
@@ -176,8 +381,8 @@
         }
 
         .metric-card {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-            border: 1px solid rgba(102, 126, 234, 0.2);
+            background: linear-gradient(135deg, var(--metric-bg-start), var(--metric-bg-end));
+            border: 1px solid var(--metric-border);
             border-radius: 16px;
             padding: 24px;
             text-align: center;
@@ -186,20 +391,20 @@
         .metric-value {
             font-size: 32px;
             font-weight: 700;
-            color: #667eea;
+            color: var(--metric-value-color);
             margin-bottom: 8px;
         }
 
         .metric-label {
             font-size: 14px;
-            color: #a0aec0;
+            color: var(--layer-desc);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .code-example {
-            background: #1a202c;
-            border: 1px solid #2d3748;
+            background: var(--code-bg);
+            border: 1px solid var(--code-border);
             border-radius: 12px;
             padding: 20px;
             font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
@@ -209,7 +414,7 @@
         }
 
         .code-example pre {
-            color: #e2e8f0;
+            color: var(--code-text);
             white-space: pre-wrap;
         }
 
@@ -228,7 +433,7 @@
 
         .section-divider {
             height: 2px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.5), rgba(118, 75, 162, 0.5));
+            background: linear-gradient(135deg, var(--section-border), rgba(118, 75, 162, 0.5));
             margin: 60px 0;
             border-radius: 1px;
         }
@@ -268,32 +473,26 @@
         }
     </style>
 </head>
-<body>
-    <!-- Demo Navigation Header -->
-    <div style="background: #667eea; color: white; padding: 0.75rem 2rem; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-        <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;">
-            <div style="display: flex; align-items: center; gap: 2rem;">
-                <h1 style="font-size: 1.25rem; font-weight: bold; margin: 0;">🔧 Technical Showcase</h1>
-                <div style="display: flex; gap: 1rem; align-items: center;">
-                    <a href="index.html" style="color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 6px; transition: all 0.2s; background: rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">🏠 Marketing</a>
-                    <a href="interactive-demo.html" style="color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 6px; transition: all 0.2s; background: rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">🎮 Interactive Demo</a>
-                    <a href="user-guide.html" style="color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 6px; transition: all 0.2s; background: rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">📚 User Guide</a>
-                    <span style="color: rgba(255,255,255,0.9); font-size: 0.9rem; background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 6px;">🔧 Technical Showcase</span>
-                </div>
+<body data-theme="dark">
+    <!-- Navigation -->
+    <header class="ts-nav">
+        <div class="ts-nav-inner">
+            <a href="START_HERE.html" class="ts-nav-brand">🧠 PRCM | ASRL</a>
+            <div class="ts-nav-links">
+                <a href="START_HERE.html">🏠 Home</a>
+                <a href="index.html">📊 Overview</a>
+                <a href="interactive-demo.html">🎮 Try Demo</a>
+                <a href="user-guide.html">📚 Guide</a>
+                <span class="ts-nav-active">⚙️ Technical</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 1rem;">
-                <button style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 500; transition: all 0.2s;" onclick="toggleTheme()" id="themeToggle">
-                    <span id="themeIcon">🌙</span> <span id="themeText">Dark</span>
+            <div class="ts-nav-actions">
+                <button class="ts-btn" onclick="toggleTheme()" id="themeToggle">
+                    <span id="themeIcon">🌙</span><span id="themeText">Light</span>
                 </button>
-                <button style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 500; transition: all 0.2s;" onclick="toggleSettings()" title="Settings">
-                    ⚙️ Settings
-                </button>
-                <div style="font-size: 0.9rem; opacity: 0.8;">
-                    Step 3 of 4: Technical Deep Dive
-                </div>
+                <span class="ts-step-label">Step 3 of 4</span>
             </div>
         </div>
-    </div>
+    </header>
 
     <div class="container">
         <header class="header animate-in">
@@ -307,10 +506,10 @@
                 <div class="feature-icon">⚡</div>
                 <h3 class="feature-title">Lightning-Fast Performance</h3>
                 <p class="feature-description">
-                    Built with React 18 and Vite for instant hot module reloading. TypeScript ensures type safety and developer productivity. Advanced caching strategies minimize load times.
+                    Built with React 19 and Vite 7 for instant hot module reloading. TypeScript ensures type safety across the entire codebase — resolved from 502 errors to zero. Advanced caching strategies minimize load times.
                 </p>
                 <div class="tech-stack">
-                    <span class="tech-tag">React 18</span>
+                    <span class="tech-tag">React 19</span>
                     <span class="tech-tag">Vite</span>
                     <span class="tech-tag">TypeScript</span>
                     <span class="tech-tag">ESBuild</span>
@@ -333,15 +532,15 @@
 
             <div class="feature-card animate-in">
                 <div class="feature-icon">🧠</div>
-                <h3 class="feature-title">Smart Learning Algorithm</h3>
+                <h3 class="feature-title">Triple Algorithm Engine</h3>
                 <p class="feature-description">
-                    Implements the SM-2 spaced repetition algorithm with custom optimizations. Machine learning adapts to individual learning patterns for maximum retention efficiency.
+                    Implements SM-2, FSRS, and IRT scheduling algorithms with full conformance testing. An IRT-based adaptive engine terminates sessions early once learner ability stabilizes — confirmed by 95 tests across 19 test files.
                 </p>
                 <div class="tech-stack">
                     <span class="tech-tag">SM-2 Algorithm</span>
-                    <span class="tech-tag">ML Optimization</span>
-                    <span class="tech-tag">Statistical Models</span>
-                    <span class="tech-tag">Retention Analytics</span>
+                    <span class="tech-tag">FSRS Scheduler</span>
+                    <span class="tech-tag">IRT Engine</span>
+                    <span class="tech-tag">Groq AI Analytics</span>
                 </div>
             </div>
 
@@ -571,11 +770,11 @@
                 <div class="feature-card">
                     <div class="feature-icon">🔄</div>
                     <h4 class="feature-title">CI/CD Pipeline</h4>
-                    <p class="feature-description">Automated testing, building, and deployment with GitHub Actions. Zero-downtime deployments with rollback capabilities.</p>
+                    <p class="feature-description">Automated testing and deployment with staged rollout. The KPI gate system requires explicit <code style="font-size:11px;background:var(--code-bg);padding:2px 5px;border-radius:4px;">--conformance-pass true</code> flags before any PROMOTE decision.</p>
                     <div class="tech-stack">
                         <span class="tech-tag">GitHub Actions</span>
-                        <span class="tech-tag">Docker</span>
-                        <span class="tech-tag">Automated Tests</span>
+                        <span class="tech-tag">KPI Gates</span>
+                        <span class="tech-tag">Staged Rollout</span>
                     </div>
                 </div>
 
@@ -604,10 +803,25 @@
         </section>
     </div>
 
+    <!-- Footer -->
+    <footer class="ts-footer">
+        <div class="ts-footer-inner">
+            <div class="ts-footer-brand">🧠 PRCM | ASRL</div>
+            <nav class="ts-footer-links">
+                <a href="START_HERE.html">Home</a>
+                <a href="index.html">Overview</a>
+                <a href="interactive-demo.html">Try Demo</a>
+                <a href="user-guide.html">Guide</a>
+                <a href="technical-showcase.html">Technical</a>
+            </nav>
+            <p class="ts-footer-copy">PRCM | ASRL Demo — Adaptive Learning Platform Showcase</p>
+        </div>
+    </footer>
+
     <script>
         // Theme Management - Persists across all demo pages
         function toggleTheme() {
-            const currentTheme = document.body.getAttribute('data-theme') || 'light';
+            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
             // Apply theme
@@ -634,24 +848,18 @@
             }
         }
 
-        // Load saved theme on page load
+        // Load saved theme on page load — default dark for this technical page
         function loadTheme() {
-            const savedTheme = localStorage.getItem('anki-demo-theme') || 
-                               localStorage.getItem('anki-theme') || 
-                               'light';
-            
+            const savedTheme = localStorage.getItem('anki-demo-theme') ||
+                               localStorage.getItem('anki-theme') ||
+                               'dark';
+
             document.body.setAttribute('data-theme', savedTheme);
             updateThemeButton(savedTheme);
         }
 
-        // Settings Functions
-        function toggleSettings() {
-            alert('⚙️ Settings panel - For full settings functionality, try the Interactive Demo!\n\n🎮 This page focuses on technical architecture.\n\n🎨 Use the theme toggle button for light/dark mode.');
-        }
-        
         // Make functions globally available
         window.toggleTheme = toggleTheme;
-        window.toggleSettings = toggleSettings;
 
         // Initialize theme on page load
         document.addEventListener('DOMContentLoaded', loadTheme);
