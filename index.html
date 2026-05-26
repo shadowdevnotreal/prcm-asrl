@@ -3,1571 +3,1481 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRCM | ASRL DEMO - Marketing Overview</title>
-    <meta name="description" content="Comprehensive marketing campaign package for Anki flashcard app featuring enhanced dark mode, interactive analytics, and accessibility controls">
-    <meta name="keywords" content="Anki, flashcards, marketing, spaced repetition, learning app, educational technology">
-    <meta name="author" content="Anki Marketing Team">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <title>PRCM | ASRL — Dashboard</title>
+    <meta name="description" content="PRCM Adaptive Spaced Repetition Learning — SM-2, FSRS, IRT algorithm dashboard">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-        
-        :root {
-            /* Light Theme Colors */
-            --primary-color: #667eea;
-            --secondary-color: #764ba2;
-            --accent-blue: #3b82f6;
-            --accent-indigo: #6366f1;
-            --accent-purple: #8b5cf6;
-            --accent-pink: #ec4899;
-            --accent-red: #ef4444;
-            --accent-orange: #f97316;
-            --accent-yellow: #eab308;
-            --accent-green: #22c55e;
-            --accent-teal: #14b8a6;
-            --accent-cyan: #06b6d4;
-            --accent-emerald: #10b981;
-            --accent-lime: #84cc16;
-            
-            --bg-primary: #f8fafc;
-            --bg-secondary: #ffffff;
-            --bg-tertiary: #e2e8f0;
-            --text-primary: #1a202c;
-            --text-secondary: #4a5568;
-            --text-muted: #a0aec0;
-            --border-color: #e2e8f0;
-            --shadow-light: rgba(0, 0, 0, 0.1);
-            --shadow-medium: rgba(0, 0, 0, 0.15);
-            
-            /* Animation Settings */
-            --transition-speed: 0.3s;
-            --shimmer-intensity: 0.3;
-            --animation-scale: 1;
-        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        [data-theme="dark"] {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-tertiary: #334155;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --text-muted: #64748b;
-            --border-color: #475569;
-            --shadow-light: rgba(0, 0, 0, 0.3);
-            --shadow-medium: rgba(0, 0, 0, 0.4);
-        }
-
-        [data-theme="high-contrast"] {
-            --bg-primary: #000000;
-            --bg-secondary: #1a1a1a;
-            --bg-tertiary: #333333;
-            --text-primary: #ffffff;
-            --text-secondary: #e0e0e0;
-            --text-muted: #cccccc;
-            --border-color: #666666;
-            --primary-color: #00ff00;
-            --secondary-color: #ff00ff;
-        }
-
-        [data-text-size="small"] { font-size: 0.9em; }
-        [data-text-size="medium"] { font-size: 1em; }
-        [data-text-size="large"] { font-size: 1.1em; }
-        [data-text-size="xl"] { font-size: 1.2em; }
-
-        [data-font-family="system"] { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
-        [data-font-family="inter"] { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
-        [data-font-family="roboto"] { font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif; }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        [data-reduce-motion="true"] * {
-            animation: none !important;
-            transition: none !important;
-        }
-        
+        /* ── Design tokens ────────────────────────────────────────── */
         body {
+            --sidebar-w: 220px;
+            --topbar-h: 60px;
+            --r-sm: 6px;
+            --r-md: 10px;
+            --r-lg: 16px;
+            --ease: 0.2s ease;
+            /* dark defaults */
+            --body-bg: #0b1120;
+            --card-bg: #131c2e;
+            --card-bg2: #1a2540;
+            --border: #1e2e48;
+            --sidebar-bg: #0d1526;
+            --text1: #e8edf5;
+            --text2: #8a99b4;
+            --text3: #4e5d78;
+            --accent: #6366f1;
+            --accent-h: #818cf8;
+            --accent-glow: rgba(99,102,241,0.14);
+            --accent-border: rgba(99,102,241,0.28);
+            --green: #22c55e;
+            --green-bg: rgba(34,197,94,0.1);
+            --green-border: rgba(34,197,94,0.25);
+            --yellow: #f59e0b;
+            --yellow-bg: rgba(245,158,11,0.1);
+            --yellow-border: rgba(245,158,11,0.25);
+            --red: #ef4444;
+            --red-bg: rgba(239,68,68,0.1);
+            --red-border: rgba(239,68,68,0.25);
+            --blue: #3b82f6;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-tertiary) 100%);
-            color: var(--text-primary);
-            transition: all var(--transition-speed) ease;
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-        }
-        
-        .gradient-text {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .glass-effect {
-            backdrop-filter: blur(16px);
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px var(--shadow-light);
-        }
-        
-        .dark .glass-effect {
-            background: rgba(15, 23, 42, 0.90);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px var(--shadow-medium);
-        }
-        
-        .enhanced-container {
-            background: var(--bg-secondary);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px var(--shadow-light);
-            border: 1px solid var(--border-color);
-            transition: all var(--transition-speed) ease;
+            background: var(--body-bg);
+            color: var(--text1);
+            font-size: 14px;
+            line-height: 1.5;
         }
 
-        .enhanced-card {
-            background: var(--bg-secondary);
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px var(--shadow-light);
-            border: 1px solid var(--border-color);
-            transition: all var(--transition-speed) ease;
-            margin-bottom: 1.5rem;
+        body[data-theme="light"] {
+            --body-bg: #f0f4fa;
+            --card-bg: #ffffff;
+            --card-bg2: #f8fafc;
+            --border: #e2e8f0;
+            --sidebar-bg: #1e293b;
+            --text1: #0f172a;
+            --text2: #475569;
+            --text3: #94a3b8;
+            --accent: #6366f1;
+            --accent-h: #4f46e5;
+            --accent-glow: rgba(99,102,241,0.08);
+            --accent-border: rgba(99,102,241,0.2);
+            --green-bg: rgba(34,197,94,0.08);
+            --green-border: rgba(34,197,94,0.2);
+            --yellow-bg: rgba(245,158,11,0.08);
+            --red-bg: rgba(239,68,68,0.08);
         }
 
-        .enhanced-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 36px var(--shadow-medium);
+        /* ── App shell ────────────────────────────────────────────── */
+        .app-shell {
+            display: grid;
+            grid-template-columns: var(--sidebar-w) 1fr;
+            min-height: 100vh;
         }
 
-        .demo-flow-card {
-            background: var(--bg-secondary);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 8px 24px var(--shadow-light);
-            border: 1px solid var(--border-color);
-            transition: all var(--transition-speed) ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .demo-flow-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        }
-
-        .demo-flow-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 48px var(--shadow-medium);
-            border-color: var(--primary-color);
-        }
-
-        .flow-icon {
-            width: 64px;
-            height: 64px;
-            background: var(--primary-color);
-            border-radius: 16px;
+        /* ── Sidebar ──────────────────────────────────────────────── */
+        .sidebar {
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .progress-indicator {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(102, 126, 234, 0.2);
-            color: var(--primary-color);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-        /* Header */
-        .header {
-            background: var(--bg-secondary);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
+            flex-direction: column;
             position: sticky;
             top: 0;
+            height: 100vh;
+            overflow-y: auto;
             z-index: 50;
         }
 
-        .header-container {
+        .sidebar-logo {
+            padding: 18px 16px 16px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            gap: 2rem;
-            padding: 0 2rem;
+            gap: 9px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
         }
 
-        .header-nav {
+        .logo-mark {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 7px;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            flex: 1;
             justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
         }
 
-        .header-nav-btn {
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all var(--transition-speed) ease;
+        .logo-text { font-size: 0.8125rem; font-weight: 800; color: #e8edf5; letter-spacing: 0.03em; line-height: 1.2; }
+        .logo-sub  { font-size: 0.625rem; font-weight: 500; color: #4e5d78; letter-spacing: 0.08em; text-transform: uppercase; }
+
+        .sidebar-section {
+            padding: 18px 16px 4px;
+            font-size: 0.625rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #4e5d78;
+        }
+
+        .sidebar-nav { flex: 1; padding: 4px 8px 8px; }
+
+        .nav-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 9px;
+            padding: 8px 10px;
+            border-radius: var(--r-sm);
+            color: #8a99b4;
             text-decoration: none;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            transition: background var(--ease), color var(--ease);
+            cursor: pointer;
+            margin-bottom: 1px;
+            border: 1px solid transparent;
+            position: relative;
         }
 
-        .header-nav-btn:hover,
-        .header-nav-btn.active {
-            background: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-            transform: translateY(-1px);
+        .nav-item:hover { background: rgba(255,255,255,0.05); color: #e8edf5; }
+
+        .nav-item.active {
+            background: var(--accent-glow);
+            color: var(--accent-h);
+            border-color: var(--accent-border);
         }
 
-        .header-controls {
+        .nav-icon { width: 18px; text-align: center; font-size: 0.9rem; flex-shrink: 0; }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.625rem;
+            font-weight: 700;
+            padding: 2px 5px;
+            border-radius: 8px;
+            min-width: 18px;
+            text-align: center;
+        }
+        .nav-badge.warn  { background: var(--yellow); color: #0f172a; }
+        .nav-badge.green { background: var(--green); }
+
+        .user-card {
+            padding: 12px 14px;
+            border-top: 1px solid var(--border);
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 9px;
+            flex-shrink: 0;
         }
 
-        .theme-toggle-btn {
-            background: var(--bg-tertiary);
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-            padding: 0.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all var(--transition-speed) ease;
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
         }
 
-        .theme-toggle-btn:hover {
-            background: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-            transform: translateY(-1px);
-        }
+        .user-name { font-size: 0.8125rem; font-weight: 600; color: #e8edf5; }
+        .user-role { font-size: 0.625rem; color: #4e5d78; }
 
-        .settings-btn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all var(--transition-speed) ease;
+        /* ── Main area ────────────────────────────────────────────── */
+        .main-area { display: flex; flex-direction: column; min-height: 100vh; overflow: hidden; }
+
+        /* ── Topbar ───────────────────────────────────────────────── */
+        .topbar {
+            height: var(--topbar-h);
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            gap: 12px;
+            flex-shrink: 0;
         }
 
-        .settings-btn:hover {
-            background: var(--secondary-color);
-            transform: translateY(-1px);
+        .topbar-left { display: flex; align-items: center; gap: 6px; min-width: 0; }
+
+        .breadcrumb {
+            font-size: 0.8125rem;
+            color: var(--text2);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .breadcrumb strong { color: var(--text1); font-weight: 600; }
+        .breadcrumb a { color: var(--text2); text-decoration: none; }
+        .breadcrumb a:hover { color: var(--accent-h); }
+
+        .topbar-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+        .streak-pill {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--yellow-bg);
+            border: 1px solid var(--yellow-border);
+            color: var(--yellow);
+            padding: 5px 11px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
         }
 
-        /* Activity Heat Map */
-        .activity-heatmap {
+        .topbar-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text2);
+            width: 32px;
+            height: 32px;
+            border-radius: var(--r-sm);
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all var(--ease);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .topbar-btn:hover { background: var(--accent-glow); color: var(--accent-h); border-color: var(--accent-border); }
+
+        .cta-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 7px 14px;
+            border-radius: var(--r-sm);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background var(--ease);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+        .cta-btn:hover { background: var(--accent-h); }
+
+        /* ── Dashboard ────────────────────────────────────────────── */
+        .dashboard { padding: 20px 20px 32px; flex: 1; overflow-y: auto; }
+
+        .welcome-bar {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .welcome-heading { font-size: 1.3125rem; font-weight: 700; color: var(--text1); }
+        .welcome-sub { font-size: 0.8125rem; color: var(--text2); margin-top: 3px; }
+
+        .kpi-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--green-bg);
+            border: 1px solid var(--green-border);
+            color: var(--green);
+            padding: 6px 13px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* ── KPI Grid ─────────────────────────────────────────────── */
+        .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(53, 1fr);
-            gap: 3px;
-            max-width: 800px;
-            margin: 20px 0;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 18px;
         }
 
-        .heatmap-day {
-            width: 12px;
-            height: 12px;
-            border-radius: 2px;
-            background: var(--bg-tertiary);
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .heatmap-day[data-level="1"] { background: rgba(34, 197, 94, 0.3); }
-        .heatmap-day[data-level="2"] { background: rgba(34, 197, 94, 0.5); }
-        .heatmap-day[data-level="3"] { background: rgba(34, 197, 94, 0.7); }
-        .heatmap-day[data-level="4"] { background: rgba(34, 197, 94, 0.9); }
-
-        /* Chart Styles */
-        .chart-container {
+        .kpi-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 18px 18px 16px;
             position: relative;
-            height: 300px;
-            margin: 20px 0;
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: transform var(--ease), box-shadow var(--ease);
+        }
+        .kpi-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+        .kpi-card.c-accent::before  { background: var(--accent); }
+        .kpi-card.c-green::before   { background: var(--green); }
+        .kpi-card.c-blue::before    { background: var(--blue); }
+        .kpi-card.c-yellow::before  { background: var(--yellow); }
+
+        .kpi-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
         }
 
-        .chart-bar {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        .kpi-label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text3);
+        }
+
+        .kpi-icon { font-size: 1rem; }
+
+        .kpi-value {
+            font-size: 1.875rem;
+            font-weight: 800;
+            color: var(--text1);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .kpi-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .kpi-meta { font-size: 0.6875rem; color: var(--text3); }
+
+        .kpi-trend {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            padding: 2px 6px;
             border-radius: 4px;
-            transition: all var(--transition-speed) ease;
+        }
+        .kpi-trend.up   { background: var(--green-bg);  color: var(--green); }
+        .kpi-trend.warn { background: var(--yellow-bg); color: var(--yellow); }
+
+        .kpi-gate {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.6875rem;
+            color: var(--text3);
+        }
+
+        .gate-bar-bg {
+            flex: 1;
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .gate-bar { height: 100%; border-radius: 2px; transition: width 1.2s ease-out; }
+        .gate-bar.green  { background: var(--green); }
+        .gate-bar.yellow { background: var(--yellow); }
+        .gate-bar.blue   { background: var(--blue); }
+        .gate-bar.accent { background: var(--accent); }
+
+        .gate-check { font-size: 0.75rem; }
+
+        .kpi-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 10px;
+            padding: 5px 10px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: var(--r-sm);
+            font-size: 0.6875rem;
+            font-weight: 600;
             cursor: pointer;
+            text-decoration: none;
+            transition: background var(--ease);
+        }
+        .kpi-action:hover { background: var(--accent-h); }
+
+        /* ── Charts row ───────────────────────────────────────────── */
+        .charts-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 18px;
         }
 
-        .chart-bar:hover {
-            transform: scaleY(1.05);
-            opacity: 0.8;
-        }
-
-        /* Shimmer Animation */
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .shimmer-effect {
-            position: relative;
+        .chart-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 18px;
             overflow: hidden;
         }
 
-        .shimmer-effect::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .card-title { font-size: 0.9375rem; font-weight: 600; color: var(--text1); }
+        .card-sub   { font-size: 0.6875rem; color: var(--text3); margin-top: 2px; }
+
+        .card-badge {
+            font-size: 0.625rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: var(--accent-glow);
+            color: var(--accent-h);
+            border: 1px solid var(--accent-border);
+            white-space: nowrap;
+        }
+
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .leg { display: flex; align-items: center; gap: 5px; font-size: 0.6875rem; color: var(--text2); }
+        .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+        svg.chart-svg { width: 100%; height: auto; display: block; overflow: visible; }
+
+        /* ── Bottom row ───────────────────────────────────────────── */
+        .bottom-row {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 14px;
+        }
+
+        /* Sessions card */
+        .sessions-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 18px;
+            overflow: hidden;
+        }
+
+        table.sessions-tbl {
             width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, var(--shimmer-intensity)),
-                transparent
-            );
-            animation: shimmer 2s infinite;
+            border-collapse: collapse;
+            margin-top: 6px;
         }
 
-        [data-shimmer="false"] .shimmer-effect::after {
-            display: none;
+        .sessions-tbl th {
+            text-align: left;
+            font-size: 0.625rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text3);
+            padding: 6px 10px;
+            border-bottom: 1px solid var(--border);
         }
 
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .header-nav {
-                gap: 0.5rem;
-            }
-            
-            .header-nav-btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.85rem;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .header-nav {
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 0.5rem;
-            }
-            
-            .header-nav-btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.85rem;
-            }
-
-            .activity-heatmap {
-                grid-template-columns: repeat(26, 1fr);
-            }
-
-            .heatmap-day {
-                width: 10px;
-                height: 10px;
-            }
-
-        }
-        
-        @media (max-width: 480px) {
-            .header-nav-btn {
-                padding: 0.3rem 0.6rem;
-                font-size: 0.8rem;
-            }
+        .sessions-tbl td {
+            padding: 11px 10px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.8125rem;
+            color: var(--text1);
+            vertical-align: middle;
         }
 
-        /* Enhanced animations */
-        @keyframes bounceIn {
-            0% {
-                opacity: 0;
-                transform: translateY(30px) scale(0.9);
-            }
-            50% {
-                opacity: 0.8;
-                transform: translateY(-10px) scale(1.05);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+        .sessions-tbl tr:last-child td { border-bottom: none; }
+        .sessions-tbl tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+        .algo-tag {
+            display: inline-flex;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 0.625rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+        .algo-tag.sm2  { background: rgba(99,102,241,0.12); color: #a5b4fc; }
+        .algo-tag.fsrs { background: rgba(34,197,94,0.12);  color: #86efac; }
+        .algo-tag.irt  { background: rgba(245,158,11,0.12); color: #fcd34d; }
+
+        .acc-cell { display: flex; align-items: center; gap: 7px; }
+        .acc-num  { min-width: 30px; font-size: 0.75rem; font-weight: 600; color: var(--text1); }
+        .acc-bg   { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+        .acc-fill { height: 100%; border-radius: 2px; transition: width 1.2s ease-out; }
+        .acc-fill.good { background: var(--green); }
+        .acc-fill.warn { background: var(--yellow); }
+        .acc-fill.bad  { background: var(--red); }
+
+        .time-ago { font-size: 0.6875rem; color: var(--text3); }
+
+        /* Side column */
+        .side-col { display: flex; flex-direction: column; gap: 14px; }
+
+        /* Heatmap */
+        .heatmap-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 16px 18px;
         }
 
-        .animate-bounce-in {
-            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        .hm-grid {
+            display: grid;
+            grid-template-columns: repeat(53, 1fr);
+            gap: 2px;
+            margin: 10px 0 8px;
         }
 
-        .stagger-children > * {
-            animation-delay: calc(var(--stagger-delay, 0) * 150ms);
+        .hm-day {
+            aspect-ratio: 1;
+            border-radius: 2px;
+            background: var(--border);
+            transition: opacity 0.1s;
+            cursor: default;
+        }
+        .hm-day[data-l="1"] { background: rgba(99,102,241,0.25); }
+        .hm-day[data-l="2"] { background: rgba(99,102,241,0.50); }
+        .hm-day[data-l="3"] { background: rgba(99,102,241,0.75); }
+        .hm-day[data-l="4"] { background: rgba(99,102,241,1.00); }
+
+        .hm-legend {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 3px;
+            font-size: 0.625rem;
+            color: var(--text3);
+        }
+        .hm-lg { width: 9px; height: 9px; border-radius: 2px; background: var(--border); }
+
+        /* Insights */
+        .insights-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 16px 18px;
+            flex: 1;
         }
 
-        /* Settings Panel */
+        .insight-list { margin-top: 8px; }
+
+        .insight-item {
+            display: flex;
+            gap: 9px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.75rem;
+            color: var(--text2);
+            line-height: 1.45;
+        }
+        .insight-item:last-child { border-bottom: none; }
+        .insight-ic { font-size: 0.9375rem; flex-shrink: 0; margin-top: 1px; }
+        .insight-item strong { color: var(--text1); font-weight: 600; }
+
+        /* ── Settings panel ───────────────────────────────────────── */
         .settings-panel {
             position: fixed;
-            top: 0;
-            right: -400px;
-            width: 400px;
+            top: 0; right: -380px;
+            width: 380px;
             height: 100vh;
-            background: var(--bg-secondary);
-            box-shadow: -4px 0 20px var(--shadow-medium);
-            z-index: 1000;
-            transition: right var(--transition-speed) ease;
+            background: var(--card-bg);
+            border-left: 1px solid var(--border);
+            z-index: 200;
+            transition: right 0.25s ease;
             overflow-y: auto;
-        }
-
-        .settings-panel.open {
-            right: 0;
-        }
-
-        .settings-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+        }
+        .settings-panel.open { right: 0; }
+
+        .sp-header {
+            display: flex;
             align-items: center;
-            background: var(--bg-primary);
+            justify-content: space-between;
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
         }
-
-        .settings-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin: 0;
-        }
-
-        .close-settings {
+        .sp-title { font-size: 1.0625rem; font-weight: 700; color: var(--text1); }
+        .sp-close {
             background: none;
-            border: none;
-            font-size: 1.5rem;
+            border: 1px solid var(--border);
+            color: var(--text2);
+            width: 30px; height: 30px;
+            border-radius: var(--r-sm);
             cursor: pointer;
-            color: var(--text-secondary);
-            padding: 0.5rem;
-            border-radius: 6px;
-            transition: all var(--transition-speed) ease;
-            width: 2.5rem;
-            height: 2.5rem;
+            font-size: 1rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: all var(--ease);
+        }
+        .sp-close:hover { background: var(--accent-glow); color: var(--accent-h); border-color: var(--accent-border); }
+
+        .sp-body { padding: 20px; flex: 1; }
+
+        .sp-group { margin-bottom: 24px; }
+        .sp-group-title {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text3);
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sp-row {
             display: flex;
             align-items: center;
-            justify-content: center;
-        }
-
-        .close-settings:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-
-        .settings-content {
-            padding: 1.5rem;
-        }
-
-        .setting-group {
-            margin-bottom: 2rem;
-        }
-
-        .setting-group-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .setting-item {
-            display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(var(--border-color), 0.5);
+            padding: 9px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .sp-row:last-child { border-bottom: none; }
+        .sp-lbl { font-size: 0.8125rem; font-weight: 500; color: var(--text1); }
+
+        .sp-select {
+            padding: 5px 8px;
+            border: 1px solid var(--border);
+            border-radius: var(--r-sm);
+            background: var(--card-bg2);
+            color: var(--text1);
+            font-size: 0.8125rem;
+            min-width: 110px;
         }
 
-        .setting-item:last-child {
-            border-bottom: none;
-        }
-
-        .setting-label {
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-
-        .setting-select {
-            padding: 0.5rem;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            min-width: 120px;
-        }
-
-        .toggle-switch {
-            width: 50px;
-            height: 26px;
-            background: var(--bg-tertiary);
-            border-radius: 13px;
+        .toggle-sw {
+            width: 44px; height: 22px;
+            background: var(--border);
+            border-radius: 11px;
             position: relative;
             cursor: pointer;
-            transition: all var(--transition-speed) ease;
+            transition: background var(--ease);
         }
-
-        .toggle-switch::after {
+        .toggle-sw::after {
             content: '';
             position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 20px;
-            height: 20px;
-            background: white;
+            top: 3px; left: 3px;
+            width: 16px; height: 16px;
+            background: #fff;
             border-radius: 50%;
-            transition: all var(--transition-speed) ease;
+            transition: left var(--ease);
         }
-
-        .toggle-switch.active {
-            background: var(--primary-color);
-        }
-
-        .toggle-switch.active::after {
-            left: 27px;
-        }
+        .toggle-sw.on { background: var(--accent); }
+        .toggle-sw.on::after { left: 25px; }
 
         .color-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            gap: 0.75rem;
-            margin-top: 0.75rem;
+            gap: 8px;
+            margin-top: 10px;
         }
-
-        .color-option {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
+        .color-sw {
+            aspect-ratio: 1;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all var(--transition-speed) ease;
             border: 2px solid transparent;
-            position: relative;
+            transition: all var(--ease);
         }
+        .color-sw:hover { transform: scale(1.12); }
+        .color-sw.active { border-color: var(--text1); }
 
-        .color-option:hover {
-            transform: scale(1.1);
+        .text-size-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-top: 10px;
         }
-
-        .color-option.active {
-            border-color: var(--text-primary);
+        .ts-btn {
+            padding: 7px 4px;
+            border: 1px solid var(--border);
+            border-radius: var(--r-sm);
+            background: var(--card-bg2);
+            color: var(--text2);
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: all var(--ease);
         }
-
-        .color-option.active::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-weight: bold;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-        }
+        .ts-btn:hover { border-color: var(--accent-border); color: var(--accent-h); }
+        .ts-btn.active { background: var(--accent-glow); color: var(--accent-h); border-color: var(--accent-border); }
 
         .overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 199;
             opacity: 0;
             visibility: hidden;
-            transition: all var(--transition-speed) ease;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
         }
+        .overlay.show { opacity: 1; visibility: visible; }
 
-        .overlay.show {
-            opacity: 1;
-            visibility: visible;
+        /* ── Responsive ───────────────────────────────────────────── */
+        @media (max-width: 1280px) {
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
         }
-
+        @media (max-width: 1100px) {
+            .bottom-row { grid-template-columns: 1fr; }
+            .side-col { display: grid; grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 900px) {
+            .charts-row { grid-template-columns: 1fr; }
+        }
         @media (max-width: 768px) {
-            .settings-panel {
-                width: 320px;
-                right: -320px;
-            }
+            .app-shell { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+        }
+        @media (max-width: 480px) {
+            .kpi-grid { grid-template-columns: 1fr; }
+            .side-col { display: flex; flex-direction: column; }
+            .settings-panel { width: 100%; right: -100%; }
         }
 
-        /* ── Site Footer ──────────────────────────────────────────── */
-        .site-footer {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-            padding: 2.5rem 2rem;
-            margin-top: 3rem;
-        }
-
-        .site-footer-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.125rem;
-            text-align: center;
-        }
-
-        .footer-brand-text {
-            font-size: 1.0625rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .footer-nav-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.125rem;
-        }
-
-        .footer-nav-links a {
-            font-size: 0.8125rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            text-decoration: none;
-            padding: 0.375rem 0.75rem;
-            border-radius: 6px;
-            transition: color 0.15s, background 0.15s;
-        }
-
-        .footer-nav-links a:hover {
-            color: var(--primary-color);
-            background: rgba(102,126,234,0.08);
-        }
-
-        .footer-copyright {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        /* ── Scroll Reveal ────────────────────────────────────────── */
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.55s ease, transform 0.55s ease;
-        }
-
-        .scroll-reveal.revealed {
-            opacity: 1;
-            transform: none;
+        /* ── Reduced motion ───────────────────────────────────────── */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
         }
     </style>
 </head>
-<body data-theme="light" data-text-size="medium" data-font-family="inter">
-    <!-- Header -->
-    <header class="header">
-        <div class="container mx-auto px-6 py-4">
-            <div class="header-container">
-                <div class="text-2xl font-bold gradient-text">
-                    🧠 PRCM | ASRL DEMO
-                </div>
-                
-                <!-- Navigation Buttons -->
-                <nav class="header-nav">
-                    <a href="START_HERE.html" class="header-nav-btn">🧠 ASRL Home</a>
-                    <a href="#features" class="header-nav-btn" onclick="scrollToSection('features')">✨ Features</a>
-                    <a href="#experience" class="header-nav-btn" onclick="scrollToSection('experience')">🎯 Experience</a>
-                    <a href="#analytics" class="header-nav-btn" onclick="scrollToSection('analytics')">📊 Analytics</a>
-                    <a href="interactive-demo.html" class="header-nav-btn">🎴 Try Demo</a>
-                </nav>
-                
-                <!-- Header Controls -->
-                <div class="header-controls">
-                    <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
-                        🌙
-                    </button>
-                    <button class="settings-btn" onclick="toggleSettings()">
-                        ⚙️ Settings
-                    </button>
+<body data-theme="dark">
+
+<!-- ── Settings panel ────────────────────────────────────────── -->
+<div class="settings-panel" id="settings-panel">
+    <div class="sp-header">
+        <span class="sp-title">⚙️ Settings</span>
+        <button class="sp-close" onclick="closeSettings()" aria-label="Close">✕</button>
+    </div>
+    <div class="sp-body">
+        <div class="sp-group">
+            <div class="sp-group-title">🎨 Appearance</div>
+            <div class="sp-row">
+                <span class="sp-lbl">Theme</span>
+                <select class="sp-select" onchange="applyTheme(this.value)" id="theme-select">
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                </select>
+            </div>
+            <div class="sp-row">
+                <span class="sp-lbl">Text Size</span>
+                <div class="text-size-grid" style="max-width:200px">
+                    <button class="ts-btn" onclick="setTextSize('small')">S</button>
+                    <button class="ts-btn active" onclick="setTextSize('medium')">M</button>
+                    <button class="ts-btn" onclick="setTextSize('large')">L</button>
+                    <button class="ts-btn" onclick="setTextSize('xl')">XL</button>
                 </div>
             </div>
         </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section id="hero" class="gradient-bg text-white py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16 animate-bounce-in">
-                <h1 class="text-3xl md:text-4xl font-black mb-6 leading-tight">
-                    Master Any Subject with
-                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-pink-300">
-                        Intelligent Flashcards
-                    </span>
-                </h1>
-                <p class="text-lg md:text-xl mb-8 text-blue-100 max-w-3xl mx-auto leading-relaxed">
-                    Experience the power of spaced repetition with our enhanced dark mode, interactive analytics, and accessibility-first design. Transform how you learn and retain information.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                    <button class="bg-white text-indigo-600 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-blue-50 transform hover:scale-105 transition-all duration-300 shadow-xl shimmer-effect" onclick="startDemoExperience()">
-                        🚀 Start Full Demo Experience
-                    </button>
-                    <button class="border-2 border-white text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-white hover:text-indigo-600 transform hover:scale-105 transition-all duration-300" onclick="openInteractiveDemo()">
-                        🎮 Try Interactive Demo
-                    </button>
-                </div>
+        <div class="sp-group">
+            <div class="sp-group-title">♿ Accessibility</div>
+            <div class="sp-row">
+                <span class="sp-lbl">Reduce Motion</span>
+                <div class="toggle-sw" id="rm-toggle" onclick="toggleReduceMotion()"></div>
             </div>
-
-            <!-- Feature Highlights -->
-            <div class="grid md:grid-cols-4 gap-8 mt-20 stagger-children">
-                <div class="glass-effect rounded-2xl p-6 text-center shimmer-effect animate-bounce-in" style="--stagger-delay: 0;">
-                    <div class="text-4xl mb-4">🌙</div>
-                    <h3 class="text-xl font-bold mb-2 text-indigo-900 dark:text-white">Enhanced Dark Mode</h3>
-                    <p class="text-indigo-700 dark:text-indigo-200">WCAG AAA compliant with perfect contrast ratios</p>
-                </div>
-                <div class="glass-effect rounded-2xl p-6 text-center shimmer-effect animate-bounce-in" style="--stagger-delay: 1;">
-                    <div class="text-4xl mb-4">📊</div>
-                    <h3 class="text-xl font-bold mb-2 text-indigo-900 dark:text-white">Interactive Analytics</h3>
-                    <p class="text-indigo-700 dark:text-indigo-200">GitHub-style heat maps and performance insights</p>
-                </div>
-                <div class="glass-effect rounded-2xl p-6 text-center shimmer-effect animate-bounce-in" style="--stagger-delay: 2;">
-                    <div class="text-4xl mb-4">♿</div>
-                    <h3 class="text-xl font-bold mb-2 text-indigo-900 dark:text-white">Accessibility First</h3>
-                    <p class="text-indigo-700 dark:text-indigo-200">Text scaling, motion controls, and keyboard navigation</p>
-                </div>
-                <div class="glass-effect rounded-2xl p-6 text-center shimmer-effect animate-bounce-in" style="--stagger-delay: 3;">
-                    <div class="text-4xl mb-4">🎨</div>
-                    <h3 class="text-xl font-bold mb-2 text-indigo-900 dark:text-white">12 Accent Colors</h3>
-                    <p class="text-indigo-700 dark:text-indigo-200">Personalize your learning experience</p>
-                </div>
+            <div class="sp-row">
+                <span class="sp-lbl">High Contrast</span>
+                <div class="toggle-sw" id="hc-toggle" onclick="toggleHighContrast()"></div>
             </div>
         </div>
-    </section>
-
-    <!-- Demo Experience Flow -->
-    <section id="experience" class="py-20" style="background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-tertiary) 100%);">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-2xl md:text-3xl font-bold mb-6 gradient-text">
-                    🎯 Complete Demo Experience
-                </h2>
-                <p class="text-xl max-w-3xl mx-auto" style="color: var(--text-secondary);">
-                    Explore our full-featured demo ecosystem. Start with marketing, experience the interactive demo, learn from documentation, and discover the technical architecture.
-                </p>
-            </div>
-
-            <div class="grid lg:grid-cols-2 gap-8">
-                <!-- Interactive Demo -->
-                <div class="demo-flow-card shimmer-effect" onclick="openInteractiveDemo()">
-                    <div class="progress-indicator">Step 1</div>
-                    <div class="flow-icon">🎮</div>
-                    <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary);">Interactive Study Demo</h3>
-                    <p class="text-lg mb-6" style="color: var(--text-secondary);">
-                        Experience the full Anki study interface with real flashcards, progress tracking, and all enhanced features. Study Japanese vocabulary, track your accuracy, and see your stats update in real-time.
-                    </p>
-                    <div class="flex items-center gap-4">
-                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">✅ Fully Functional</span>
-                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">🎴 Real Cards</span>
-                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">📊 Live Stats</span>
-                    </div>
-                </div>
-
-                <!-- User Documentation -->
-                <div class="demo-flow-card shimmer-effect" onclick="openDocumentation()">
-                    <div class="progress-indicator">Step 2</div>
-                    <div class="flow-icon">📚</div>
-                    <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary);">Complete User Guide</h3>
-                    <p class="text-lg mb-6" style="color: var(--text-secondary);">
-                        Comprehensive documentation covering all features, accessibility options, animation controls, and advanced statistics. Learn how to maximize your learning efficiency.
-                    </p>
-                    <div class="flex items-center gap-4">
-                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium">📖 Complete Guide</span>
-                        <span class="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm font-medium">♿ Accessibility</span>
-                        <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">⚡ Features</span>
-                    </div>
-                </div>
-
-                <!-- Technical Showcase -->
-                <div class="demo-flow-card shimmer-effect" onclick="openTechnicalShowcase()">
-                    <div class="progress-indicator">Step 3</div>
-                    <div class="flow-icon">🔧</div>
-                    <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary);">Technical Architecture</h3>
-                    <p class="text-lg mb-6" style="color: var(--text-secondary);">
-                        Deep dive into the technical implementation featuring React 18, TypeScript, advanced algorithms, PWA capabilities, and comprehensive testing strategies.
-                    </p>
-                    <div class="flex items-center gap-4">
-                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">⚛️ React 18</span>
-                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">📱 PWA</span>
-                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">🧪 Testing</span>
-                    </div>
-                </div>
-
-                <!-- Marketing Overview -->
-                <div class="demo-flow-card shimmer-effect" onclick="scrollToSection('features')">
-                    <div class="progress-indicator">Current</div>
-                    <div class="flow-icon">🏠</div>
-                    <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary);">Marketing Overview</h3>
-                    <p class="text-lg mb-6" style="color: var(--text-secondary);">
-                        You're currently viewing the marketing experience! Explore user profiles, activity heat maps, and comprehensive feature showcases with live data.
-                    </p>
-                    <div class="flex items-center gap-4">
-                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">📍 Current Page</span>
-                        <span class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm font-medium">👤 User Profile</span>
-                        <span class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">🔥 Heat Maps</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Actions -->
-            <div class="mt-16 text-center">
-                <div class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-8 text-white">
-                    <h3 class="text-2xl font-bold mb-4">🚀 Ready to Explore?</h3>
-                    <p class="text-lg mb-6 opacity-90">
-                        Each demo is fully functional and showcases different aspects of the Anki experience. Start with any section that interests you most!
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button class="bg-white text-purple-600 px-6 py-3 rounded-xl font-bold hover:bg-gray-100 transition-colors" onclick="startGuidedTour()">
-                            🎯 Start Guided Tour
-                        </button>
-                        <button class="border-2 border-white text-white px-6 py-3 rounded-xl font-bold hover:bg-white hover:text-purple-600 transition-colors" onclick="openRandomDemo()">
-                            🎲 Surprise Me!
-                        </button>
-                    </div>
-                </div>
+        <div class="sp-group">
+            <div class="sp-group-title">🎨 Accent Color</div>
+            <div class="color-grid">
+                <div class="color-sw active" style="background:#6366f1" onclick="setAccent('#6366f1','#818cf8')" title="Indigo"></div>
+                <div class="color-sw" style="background:#3b82f6" onclick="setAccent('#3b82f6','#60a5fa')" title="Blue"></div>
+                <div class="color-sw" style="background:#8b5cf6" onclick="setAccent('#8b5cf6','#a78bfa')" title="Purple"></div>
+                <div class="color-sw" style="background:#ec4899" onclick="setAccent('#ec4899','#f472b6')" title="Pink"></div>
+                <div class="color-sw" style="background:#22c55e" onclick="setAccent('#22c55e','#4ade80')" title="Green"></div>
+                <div class="color-sw" style="background:#f97316" onclick="setAccent('#f97316','#fb923c')" title="Orange"></div>
+                <div class="color-sw" style="background:#14b8a6" onclick="setAccent('#14b8a6','#2dd4bf')" title="Teal"></div>
+                <div class="color-sw" style="background:#ef4444" onclick="setAccent('#ef4444','#f87171')" title="Red"></div>
+                <div class="color-sw" style="background:#eab308" onclick="setAccent('#eab308','#facc15')" title="Yellow"></div>
+                <div class="color-sw" style="background:#06b6d4" onclick="setAccent('#06b6d4','#22d3ee')" title="Cyan"></div>
+                <div class="color-sw" style="background:#10b981" onclick="setAccent('#10b981','#34d399')" title="Emerald"></div>
+                <div class="color-sw" style="background:#84cc16" onclick="setAccent('#84cc16','#a3e635')" title="Lime"></div>
             </div>
         </div>
-    </section>
-
-    <!-- Enhanced User Profile Section -->
-    <section id="features" class="py-20 bg-gradient-to-br from-slate-50 to-blue-50" style="background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-tertiary) 100%);">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-2xl md:text-3xl font-bold mb-6 gradient-text">
-                    Meet Alex Chen - Power User
-                </h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto" style="color: var(--text-secondary);">
-                    See how our enhanced features help real users achieve their learning goals with comprehensive tracking and personalized insights.
-                </p>
-            </div>
-
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- User Profile Card -->
-                <div class="enhanced-container shimmer-effect">
-                    <div class="flex items-center mb-6">
-                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold mr-6">
-                            AC
-                        </div>
-                        <div>
-                            <h3 class="text-2xl font-bold mb-1" style="color: var(--text-primary);">Alex Chen</h3>
-                            <p class="text-gray-600" style="color: var(--text-secondary);">Medical Student • Member since Jan 2023</p>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-6 mb-8">
-                        <div class="enhanced-card text-center">
-                            <div class="text-3xl font-bold text-indigo-600 mb-1 animate-counter" data-target="8932" style="color: var(--primary-color);">0</div>
-                            <div class="text-sm text-gray-500" style="color: var(--text-muted);">Total Reviews</div>
-                        </div>
-                        <div class="enhanced-card text-center">
-                            <div class="text-3xl font-bold text-green-600 mb-1 animate-counter" data-target="87">0</div>
-                            <div class="text-sm text-gray-500" style="color: var(--text-muted);">Accuracy Rate</div>
-                        </div>
-                        <div class="enhanced-card text-center">
-                            <div class="text-3xl font-bold text-orange-600 mb-1 animate-counter" data-target="23">0</div>
-                            <div class="text-sm text-gray-500" style="color: var(--text-muted);">Current Streak</div>
-                        </div>
-                        <div class="enhanced-card text-center">
-                            <div class="text-3xl font-bold text-purple-600 mb-1 animate-counter" data-target="45">0</div>
-                            <div class="text-sm text-gray-500" style="color: var(--text-muted);">Best Streak</div>
-                        </div>
-                    </div>
-
-                    <!-- Achievement Badges -->
-                    <div class="mb-8">
-                        <h4 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">Recent Achievements</h4>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium animate-bounce-in" style="animation-delay: 0.2s;">🔥 Streak Master</span>
-                            <span class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-3 py-1 rounded-full text-sm font-medium animate-bounce-in" style="animation-delay: 0.4s;">📚 Knowledge Seeker</span>
-                            <span class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-1 rounded-full text-sm font-medium animate-bounce-in" style="animation-delay: 0.6s;">⏰ Early Bird</span>
-                        </div>
-                    </div>
-
-                    <!-- Study Preferences -->
-                    <div class="enhanced-card">
-                        <h4 class="text-lg font-semibold mb-3" style="color: var(--text-primary);">Study Preferences</h4>
-                        <div class="space-y-2 text-sm" style="color: var(--text-secondary);">
-                            <div class="flex justify-between">
-                                <span>Daily Goal:</span>
-                                <span class="font-medium">50 cards</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Best Study Time:</span>
-                                <span class="font-medium">7-9 PM</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Favorite Deck:</span>
-                                <span class="font-medium">Japanese Vocabulary</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Activity Heat Map -->
-                <div class="enhanced-container">
-                    <h3 class="text-2xl font-bold mb-6" style="color: var(--text-primary);">365-Day Activity Heat Map</h3>
-                    <p class="text-gray-600 mb-6" style="color: var(--text-secondary);">
-                        Track daily study consistency with our GitHub-style activity visualization. Darker squares indicate more intensive study sessions.
-                    </p>
-                    
-                    <!-- Heat Map Grid -->
-                    <div class="activity-heatmap" id="activityHeatmap">
-                        <!-- Generated by JavaScript -->
-                    </div>
-                    
-                    <div class="flex items-center justify-between mt-4 text-sm" style="color: var(--text-muted);">
-                        <span>Less</span>
-                        <div class="flex gap-1">
-                            <div class="heatmap-day"></div>
-                            <div class="heatmap-day" data-level="1"></div>
-                            <div class="heatmap-day" data-level="2"></div>
-                            <div class="heatmap-day" data-level="3"></div>
-                            <div class="heatmap-day" data-level="4"></div>
-                        </div>
-                        <span>More</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Interactive Analytics Section -->
-    <section id="analytics" class="py-20" style="background: var(--bg-secondary);">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-2xl md:text-3xl font-bold mb-6 gradient-text">
-                    Interactive Analytics Dashboard
-                </h2>
-                <p class="text-xl max-w-3xl mx-auto" style="color: var(--text-secondary);">
-                    Gain deep insights into your learning patterns with comprehensive charts, performance trends, and SM-2 algorithm analysis.
-                </p>
-            </div>
-
-            <!-- Analytics Content -->
-            <div class="grid lg:grid-cols-2 gap-12">
-                <!-- Performance Chart -->
-                <div class="enhanced-container">
-                    <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary);">Weekly Performance</h3>
-                    <div class="chart-container">
-                        <div style="display: flex; align-items: end; justify-content: space-around; height: 80%; gap: 8px;">
-                            <div class="chart-bar animate-grow" style="height: 60%; width: 40px;" data-value="45" title="Monday: 45 cards"></div>
-                            <div class="chart-bar animate-grow" style="height: 80%; width: 40px; animation-delay: 0.1s;" data-value="62" title="Tuesday: 62 cards"></div>
-                            <div class="chart-bar animate-grow" style="height: 45%; width: 40px; animation-delay: 0.2s;" data-value="34" title="Wednesday: 34 cards"></div>
-                            <div class="chart-bar animate-grow" style="height: 90%; width: 40px; animation-delay: 0.3s;" data-value="78" title="Thursday: 78 cards"></div>
-                            <div class="chart-bar animate-grow" style="height: 75%; width: 40px; animation-delay: 0.4s;" data-value="58" title="Friday: 58 cards"></div>
-                            <div class="chart-bar animate-grow" style="height: 85%; width: 40px; animation-delay: 0.5s;" data-value="67" title="Saturday: 67 cards"></div>
-                            <div class="chart-bar animate-grow" style="height: 70%; width: 40px; animation-delay: 0.6s;" data-value="52" title="Sunday: 52 cards"></div>
-                        </div>
-                    </div>
-                    <p class="text-sm mt-4" style="color: var(--text-secondary);">
-                        Your weekly performance shows consistent improvement with peak activity on Thursday.
-                    </p>
-                </div>
-
-                <!-- Weekly Performance Summary -->
-                <div class="enhanced-container">
-                    <h3 class="text-2xl font-bold mb-6" style="color: var(--text-primary);">Weekly Summary</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between p-4 rounded-lg animate-bounce-in" style="background: var(--bg-tertiary); animation-delay: 0.1s;">
-                            <div class="flex items-center">
-                                <div class="w-12 h-12 rounded-lg bg-blue-500 flex items-center justify-center text-white font-bold mr-4">
-                                    347
-                                </div>
-                                <div>
-                                    <div class="font-semibold" style="color: var(--text-primary);">Cards Reviewed</div>
-                                    <div class="text-sm" style="color: var(--text-secondary);">This week</div>
-                                </div>
-                            </div>
-                            <div class="text-green-600 text-sm font-medium">+12%</div>
-                        </div>
-
-                        <div class="flex items-center justify-between p-4 rounded-lg animate-bounce-in" style="background: var(--bg-tertiary); animation-delay: 0.2s;">
-                            <div class="flex items-center">
-                                <div class="w-12 h-12 rounded-lg bg-green-500 flex items-center justify-center text-white font-bold mr-4">
-                                    42
-                                </div>
-                                <div>
-                                    <div class="font-semibold" style="color: var(--text-primary);">New Cards</div>
-                                    <div class="text-sm" style="color: var(--text-secondary);">Learned this week</div>
-                                </div>
-                            </div>
-                            <div class="text-green-600 text-sm font-medium">+8%</div>
-                        </div>
-
-                        <div class="flex items-center justify-between p-4 rounded-lg animate-bounce-in" style="background: var(--bg-tertiary); animation-delay: 0.3s;">
-                            <div class="flex items-center">
-                                <div class="w-12 h-12 rounded-lg bg-purple-500 flex items-center justify-center text-white font-bold mr-4">
-                                    18
-                                </div>
-                                <div>
-                                    <div class="font-semibold" style="color: var(--text-primary);">Avg Session</div>
-                                    <div class="text-sm" style="color: var(--text-secondary);">Minutes per session</div>
-                                </div>
-                            </div>
-                            <div class="text-green-600 text-sm font-medium">+3 min</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SM-2 Algorithm Insights -->
-                <div class="enhanced-container lg:col-span-2">
-                    <h3 class="text-2xl font-bold mb-6" style="color: var(--text-primary);">SM-2 Algorithm Insights</h3>
-                    <div class="grid md:grid-cols-3 gap-6">
-                        <div class="text-center enhanced-card animate-bounce-in" style="animation-delay: 0.1s;">
-                            <div class="text-3xl font-bold text-indigo-600 mb-2 animate-counter" data-target="2.4" style="color: var(--primary-color);">0</div>
-                            <div class="text-sm font-medium mb-1" style="color: var(--text-primary);">Average Ease Factor</div>
-                            <div class="text-xs" style="color: var(--text-secondary);">Cards adapt to your learning pace</div>
-                        </div>
-                        <div class="text-center enhanced-card animate-bounce-in" style="animation-delay: 0.2s;">
-                            <div class="text-3xl font-bold text-green-600 mb-2 animate-counter" data-target="89">0</div>
-                            <div class="text-sm font-medium mb-1" style="color: var(--text-primary);">Retention Rate</div>
-                            <div class="text-xs" style="color: var(--text-secondary);">Information successfully retained</div>
-                        </div>
-                        <div class="text-center enhanced-card animate-bounce-in" style="animation-delay: 0.3s;">
-                            <div class="text-3xl font-bold text-orange-600 mb-2 animate-counter" data-target="13">0</div>
-                            <div class="text-sm font-medium mb-1" style="color: var(--text-primary);">Avg Interval (days)</div>
-                            <div class="text-xs" style="color: var(--text-secondary);">Optimal review scheduling</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Call to Action -->
-    <section id="cta" class="py-20 gradient-bg text-white">
-        <div class="container mx-auto px-6 text-center">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="text-2xl md:text-3xl font-bold mb-6">
-                    Ready to Transform Your Learning?
-                </h2>
-                <p class="text-xl mb-12 max-w-2xl mx-auto opacity-90">
-                    Experience the complete Anki demo ecosystem. Each section showcases different aspects of our intelligent learning platform.
-                </p>
-                
-                <div class="grid md:grid-cols-3 gap-8 mb-12">
-                    <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-6 shimmer-effect animate-bounce-in" style="animation-delay: 0.1s;">
-                        <div class="text-3xl font-bold mb-2">5M+</div>
-                        <div class="text-sm opacity-80">Active Users</div>
-                    </div>
-                    <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-6 shimmer-effect animate-bounce-in" style="animation-delay: 0.2s;">
-                        <div class="text-3xl font-bold mb-2">98%</div>
-                        <div class="text-sm opacity-80">User Satisfaction</div>
-                    </div>
-                    <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-6 shimmer-effect animate-bounce-in" style="animation-delay: 0.3s;">
-                        <div class="text-3xl font-bold mb-2">50+</div>
-                        <div class="text-sm opacity-80">Languages Supported</div>
-                    </div>
-                </div>
-
-                <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                    <button class="bg-white text-purple-600 px-12 py-4 rounded-2xl font-bold text-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-xl shimmer-effect" onclick="openInteractiveDemo()">
-                        🎮 Try Interactive Demo
-                    </button>
-                    <button class="border-2 border-white text-white px-12 py-4 rounded-2xl font-bold text-lg hover:bg-white hover:text-purple-600 transform hover:scale-105 transition-all duration-300" onclick="openDocumentation()">
-                        📚 View Documentation
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Settings Panel -->
-    <div class="settings-panel" id="settingsPanel">
-        <div class="settings-header">
-            <h3 class="settings-title">⚙️ Settings</h3>
-            <button class="close-settings" onclick="toggleSettings()">×</button>
-        </div>
-        
-        <div class="settings-content">
-            <div class="setting-group">
-                <h4 class="setting-group-title">🎨 Appearance</h4>
-                
-                <div class="setting-item">
-                    <span class="setting-label">Theme Mode</span>
-                    <select class="setting-select" onchange="changeTheme(this.value)">
-                        <option value="light">Light</option>
-                        <option value="dark">Dark</option>
-                        <option value="high-contrast">High Contrast</option>
-                    </select>
-                </div>
-                
-                <div class="setting-item">
-                    <span class="setting-label">Text Size</span>
-                    <select class="setting-select" onchange="changeTextSize(this.value)">
-                        <option value="small">Small</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="large">Large</option>
-                        <option value="xl">Extra Large</option>
-                    </select>
-                </div>
-                
-                <div class="setting-item">
-                    <span class="setting-label">Font Family</span>
-                    <select class="setting-select" onchange="changeFontFamily(this.value)">
-                        <option value="system" selected>System</option>
-                        <option value="inter">Inter</option>
-                        <option value="roboto">Roboto</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="setting-group">
-                <h4 class="setting-group-title">♿ Accessibility</h4>
-                
-                <div class="setting-item">
-                    <span class="setting-label">Reduce Motion</span>
-                    <div class="toggle-switch" onclick="toggleReduceMotion()" id="reduceMotionToggle"></div>
-                </div>
-                
-                <div class="setting-item">
-                    <span class="setting-label">High Contrast</span>
-                    <div class="toggle-switch" onclick="toggleHighContrast()" id="highContrastToggle"></div>
-                </div>
-            </div>
-            
-            <div class="setting-group">
-                <h4 class="setting-group-title">🎨 Accent Colors</h4>
-                <div class="color-grid">
-                    <div class="color-option active" style="background-color: #667eea;" onclick="changeAccentColor('#667eea', 'indigo')" title="Indigo"></div>
-                    <div class="color-option" style="background-color: #3b82f6;" onclick="changeAccentColor('#3b82f6', 'blue')" title="Blue"></div>
-                    <div class="color-option" style="background-color: #8b5cf6;" onclick="changeAccentColor('#8b5cf6', 'purple')" title="Purple"></div>
-                    <div class="color-option" style="background-color: #ec4899;" onclick="changeAccentColor('#ec4899', 'pink')" title="Pink"></div>
-                    <div class="color-option" style="background-color: #ef4444;" onclick="changeAccentColor('#ef4444', 'red')" title="Red"></div>
-                    <div class="color-option" style="background-color: #f97316;" onclick="changeAccentColor('#f97316', 'orange')" title="Orange"></div>
-                    <div class="color-option" style="background-color: #eab308;" onclick="changeAccentColor('#eab308', 'yellow')" title="Yellow"></div>
-                    <div class="color-option" style="background-color: #22c55e;" onclick="changeAccentColor('#22c55e', 'green')" title="Green"></div>
-                    <div class="color-option" style="background-color: #14b8a6;" onclick="changeAccentColor('#14b8a6', 'teal')" title="Teal"></div>
-                    <div class="color-option" style="background-color: #06b6d4;" onclick="changeAccentColor('#06b6d4', 'cyan')" title="Cyan"></div>
-                    <div class="color-option" style="background-color: #10b981;" onclick="changeAccentColor('#10b981', 'emerald')" title="Emerald"></div>
-                    <div class="color-option" style="background-color: #84cc16;" onclick="changeAccentColor('#84cc16', 'lime')" title="Lime"></div>
-                </div>
+        <div class="sp-group">
+            <div class="sp-group-title">🔗 Navigation</div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">
+                <a href="START_HERE.html" style="font-size:0.8125rem;color:var(--accent-h);text-decoration:none;padding:7px 0;border-bottom:1px solid var(--border)">🚀 Landing Page</a>
+                <a href="interactive-demo.html" style="font-size:0.8125rem;color:var(--accent-h);text-decoration:none;padding:7px 0;border-bottom:1px solid var(--border)">🎴 Interactive Demo</a>
+                <a href="user-guide.html" style="font-size:0.8125rem;color:var(--accent-h);text-decoration:none;padding:7px 0;border-bottom:1px solid var(--border)">📖 User Guide</a>
+                <a href="technical-showcase.html" style="font-size:0.8125rem;color:var(--accent-h);text-decoration:none;padding:7px 0">⚙️ Technical Showcase</a>
             </div>
         </div>
     </div>
-    
-    <!-- Settings Overlay -->
-    <div class="overlay" id="overlay" onclick="toggleSettings()"></div>
+</div>
+<div class="overlay" id="overlay" onclick="closeSettings()"></div>
 
+<!-- ── App shell ──────────────────────────────────────────────── -->
+<div class="app-shell">
 
-    <script>
-        // Demo Navigation Functions
-        function startDemoExperience() {
-            // Start with a guided tour through all sections
-            startGuidedTour();
-        }
+    <!-- Sidebar -->
+    <aside class="sidebar" role="navigation" aria-label="Main navigation">
+        <div class="sidebar-logo">
+            <div class="logo-mark">🧠</div>
+            <div>
+                <div class="logo-text">PRCM | ASRL</div>
+                <div class="logo-sub">Adaptive Learning</div>
+            </div>
+        </div>
 
-        function openInteractiveDemo() {
-            console.log('Opening interactive demo...');
-            window.location.href = 'interactive-demo.html';
-        }
+        <nav class="sidebar-nav">
+            <div class="sidebar-section">Learn</div>
+            <a href="index.html" class="nav-item active">
+                <span class="nav-icon">🏠</span> Dashboard
+                <span class="nav-badge warn">47</span>
+            </a>
+            <a href="interactive-demo.html" class="nav-item">
+                <span class="nav-icon">🎴</span> Study Session
+            </a>
+            <a href="interactive-demo.html" class="nav-item">
+                <span class="nav-icon">📂</span> Decks
+                <span class="nav-badge green">5</span>
+            </a>
 
-        function openDocumentation() {
-            console.log('Opening user guide...');
-            window.location.href = 'user-guide.html';
-        }
+            <div class="sidebar-section">Insights</div>
+            <a href="technical-showcase.html" class="nav-item">
+                <span class="nav-icon">📊</span> Statistics
+            </a>
+            <a href="user-guide.html" class="nav-item">
+                <span class="nav-icon">📖</span> User Guide
+            </a>
 
-        function openTechnicalShowcase() {
-            console.log('Opening technical showcase...');
-            window.location.href = 'technical-showcase.html';
-        }
-        
-        // Make navigation functions globally available
-        window.openInteractiveDemo = openInteractiveDemo;
-        window.openDocumentation = openDocumentation;
-        window.openTechnicalShowcase = openTechnicalShowcase;
-        window.startDemoExperience = startDemoExperience;
-        window.startGuidedTour = startGuidedTour;
-        window.openRandomDemo = openRandomDemo;
-        window.toggleTheme = toggleTheme;
+            <div class="sidebar-section">Platform</div>
+            <a href="START_HERE.html" class="nav-item">
+                <span class="nav-icon">🚀</span> Landing
+            </a>
+        </nav>
 
-        function startGuidedTour() {
-            // Create a guided tour overlay
-            const tour = document.createElement('div');
-            tour.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0, 0, 0, 0.8);
-                z-index: 10000;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: white;
-                text-align: center;
-                padding: 2rem;
-            `;
-            
-            tour.innerHTML = `
-                <div style="max-width: 500px;">
-                    <h2 style="font-size: 2rem; margin-bottom: 1rem;">🎯 Welcome to the PRCM | ASRL DEMO!</h2>
-                    <p style="font-size: 1.2rem; margin-bottom: 2rem;">
-                        You're about to explore four interconnected demonstrations:
-                        <br><br>
-                        1️⃣ <strong>Interactive Demo</strong> - Try the actual app<br>
-                        2️⃣ <strong>User Guide</strong> - Learn all features<br>
-                        3️⃣ <strong>Technical Showcase</strong> - See the engineering<br>
-                        4️⃣ <strong>Marketing Overview</strong> - This page!
-                    </p>
-                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                        <button onclick="closeTour(); openInteractiveDemo();" 
-                                style="background: #667eea; color: white; border: none; padding: 1rem 2rem; border-radius: 1rem; cursor: pointer; font-weight: bold;">
-                            🎮 Start with Interactive Demo
-                        </button>
-                        <button onclick="closeTour();" 
-                                style="background: transparent; color: white; border: 2px solid white; padding: 1rem 2rem; border-radius: 1rem; cursor: pointer; font-weight: bold;">
-                            ❌ Close & Explore
-                        </button>
+        <div class="user-card">
+            <div class="user-avatar">AC</div>
+            <div class="user-info">
+                <div class="user-name">Alex Chen</div>
+                <div class="user-role">Medical Student</div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main area -->
+    <div class="main-area">
+
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <span class="breadcrumb">
+                    <a href="START_HERE.html">PRCM | ASRL</a>
+                    &nbsp;/&nbsp;<strong>Dashboard</strong>
+                </span>
+            </div>
+            <div class="topbar-right">
+                <div class="streak-pill">🔥 23-day streak</div>
+                <button class="topbar-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle theme">🌙</button>
+                <button class="topbar-btn" onclick="openSettings()" title="Settings">⚙️</button>
+                <a href="interactive-demo.html" class="cta-btn">▶ Start Session</a>
+            </div>
+        </header>
+
+        <!-- Dashboard -->
+        <main class="dashboard">
+
+            <!-- Welcome bar -->
+            <div class="welcome-bar">
+                <div>
+                    <div class="welcome-heading">Good evening, Alex 👋</div>
+                    <div class="welcome-sub">You have <strong>47 cards</strong> due today · Last session 2h ago</div>
+                </div>
+                <div class="kpi-status">✅ All 4 KPI gates passing</div>
+            </div>
+
+            <!-- KPI cards -->
+            <div class="kpi-grid">
+
+                <!-- Cards Due -->
+                <div class="kpi-card c-accent">
+                    <div class="kpi-top">
+                        <span class="kpi-label">Cards Due</span>
+                        <span class="kpi-icon">🃏</span>
+                    </div>
+                    <div class="kpi-value" id="kv-due">47</div>
+                    <div class="kpi-bottom">
+                        <span class="kpi-meta">Today's queue</span>
+                        <span class="kpi-trend warn">+8 new</span>
+                    </div>
+                    <div class="kpi-gate">
+                        <div class="gate-bar-bg"><div class="gate-bar accent" style="width:0%" data-target="78"></div></div>
+                        <span class="gate-check">✓</span>
+                    </div>
+                    <a href="interactive-demo.html" class="kpi-action">▶ Review Now</a>
+                </div>
+
+                <!-- Accuracy -->
+                <div class="kpi-card c-green">
+                    <div class="kpi-top">
+                        <span class="kpi-label">Accuracy Rate</span>
+                        <span class="kpi-icon">🎯</span>
+                    </div>
+                    <div class="kpi-value"><span id="kv-acc">0</span>%</div>
+                    <div class="kpi-bottom">
+                        <span class="kpi-meta">Gate ≥ 75%</span>
+                        <span class="kpi-trend up">+3.2%</span>
+                    </div>
+                    <div class="kpi-gate">
+                        <div class="gate-bar-bg"><div class="gate-bar green" style="width:0%" data-target="87"></div></div>
+                        <span class="gate-check" style="color:var(--green)">✓</span>
                     </div>
                 </div>
-            `;
-            
-            document.body.appendChild(tour);
-            
-            window.closeTour = function() {
-                document.body.removeChild(tour);
-            };
-        }
 
-        function openRandomDemo() {
-            const demos = [
-                () => openInteractiveDemo(),
-                () => openDocumentation(),
-                () => openTechnicalShowcase(),
-                () => scrollToSection('features')
-            ];
-            
-            const randomDemo = demos[Math.floor(Math.random() * demos.length)];
-            randomDemo();
-        }
+                <!-- Total Reviews -->
+                <div class="kpi-card c-blue">
+                    <div class="kpi-top">
+                        <span class="kpi-label">Total Reviews</span>
+                        <span class="kpi-icon">📚</span>
+                    </div>
+                    <div class="kpi-value" id="kv-rev">0</div>
+                    <div class="kpi-bottom">
+                        <span class="kpi-meta">All time</span>
+                        <span class="kpi-trend up">+347 this week</span>
+                    </div>
+                    <div class="kpi-gate">
+                        <div class="gate-bar-bg"><div class="gate-bar blue" style="width:0%" data-target="100"></div></div>
+                        <span class="gate-check" style="color:var(--blue)">✓</span>
+                    </div>
+                </div>
 
-        // Generate activity heat map
-        function generateHeatMap() {
-            const heatmapContainer = document.getElementById('activityHeatmap');
-            if (!heatmapContainer) return;
-            
-            const days = 365;
-            const today = new Date();
-            
-            for (let i = days - 1; i >= 0; i--) {
-                const day = document.createElement('div');
-                day.className = 'heatmap-day';
-                
-                // Simulate activity levels (0-4)
-                const activityLevel = Math.random() > 0.7 ? Math.floor(Math.random() * 5) : 0;
-                if (activityLevel > 0) {
-                    day.setAttribute('data-level', activityLevel);
-                }
-                
-                // Add date for tooltips
-                const date = new Date(today);
-                date.setDate(date.getDate() - i);
-                day.setAttribute('title', date.toDateString() + ': ' + (activityLevel * 10 + 5) + ' cards reviewed');
-                
-                heatmapContainer.appendChild(day);
+                <!-- Retention -->
+                <div class="kpi-card c-yellow">
+                    <div class="kpi-top">
+                        <span class="kpi-label">Retention Rate</span>
+                        <span class="kpi-icon">🧠</span>
+                    </div>
+                    <div class="kpi-value"><span id="kv-ret">0</span>%</div>
+                    <div class="kpi-bottom">
+                        <span class="kpi-meta">Gate ≥ 70%</span>
+                        <span class="kpi-trend up">+1.8%</span>
+                    </div>
+                    <div class="kpi-gate">
+                        <div class="gate-bar-bg"><div class="gate-bar yellow" style="width:0%" data-target="95"></div></div>
+                        <span class="gate-check" style="color:var(--yellow)">✓</span>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end kpi-grid -->
+
+            <!-- Charts row -->
+            <div class="charts-row">
+
+                <!-- Forgetting curve -->
+                <div class="chart-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Ebbinghaus Forgetting Curve</div>
+                            <div class="card-sub">R(t) = e^(−t/S) · retention by stability level</div>
+                        </div>
+                        <span class="card-badge">SM-2 + FSRS</span>
+                    </div>
+                    <svg class="chart-svg" id="fc-svg" viewBox="0 0 480 200" aria-label="Forgetting curve chart"></svg>
+                    <div class="chart-legend">
+                        <div class="leg"><div class="leg-dot" style="background:#ef4444"></div>S=3d</div>
+                        <div class="leg"><div class="leg-dot" style="background:#f59e0b"></div>S=7d</div>
+                        <div class="leg"><div class="leg-dot" style="background:#22c55e"></div>S=15d</div>
+                        <div class="leg"><div class="leg-dot" style="background:#6366f1"></div>S=30d</div>
+                    </div>
+                </div>
+
+                <!-- Stability distribution -->
+                <div class="chart-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Stability Distribution</div>
+                            <div class="card-sub">Card count per FSRS stability bin</div>
+                        </div>
+                        <span class="card-badge">272 cards</span>
+                    </div>
+                    <svg class="chart-svg" id="sd-svg" viewBox="0 0 480 200" aria-label="Stability distribution chart"></svg>
+                    <div class="chart-legend">
+                        <div class="leg"><div class="leg-dot" style="background:#ef4444"></div>&lt;3d</div>
+                        <div class="leg"><div class="leg-dot" style="background:#f59e0b"></div>3-7d</div>
+                        <div class="leg"><div class="leg-dot" style="background:#eab308"></div>7-14d</div>
+                        <div class="leg"><div class="leg-dot" style="background:#22c55e"></div>14-30d</div>
+                        <div class="leg"><div class="leg-dot" style="background:#6366f1"></div>30-60d</div>
+                        <div class="leg"><div class="leg-dot" style="background:#8b5cf6"></div>60+d</div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end charts-row -->
+
+            <!-- Bottom row -->
+            <div class="bottom-row">
+
+                <!-- Sessions table -->
+                <div class="sessions-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Recent Study Sessions</div>
+                            <div class="card-sub">Last 5 sessions across all decks</div>
+                        </div>
+                        <a href="interactive-demo.html" class="kpi-action" style="margin-top:0">+ New Session</a>
+                    </div>
+                    <table class="sessions-tbl">
+                        <thead>
+                            <tr>
+                                <th>Deck</th>
+                                <th>Cards</th>
+                                <th>Accuracy</th>
+                                <th>Algorithm</th>
+                                <th>When</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>🇯🇵 Japanese Vocab</td>
+                                <td>45</td>
+                                <td>
+                                    <div class="acc-cell">
+                                        <span class="acc-num">89%</span>
+                                        <div class="acc-bg"><div class="acc-fill good" style="width:0%" data-target="89"></div></div>
+                                    </div>
+                                </td>
+                                <td><span class="algo-tag sm2">SM-2</span></td>
+                                <td><span class="time-ago">18m ago</span></td>
+                            </tr>
+                            <tr>
+                                <td>🩺 Medical Terms</td>
+                                <td>28</td>
+                                <td>
+                                    <div class="acc-cell">
+                                        <span class="acc-num">76%</span>
+                                        <div class="acc-bg"><div class="acc-fill warn" style="width:0%" data-target="76"></div></div>
+                                    </div>
+                                </td>
+                                <td><span class="algo-tag fsrs">FSRS</span></td>
+                                <td><span class="time-ago">1h ago</span></td>
+                            </tr>
+                            <tr>
+                                <td>🇪🇸 Spanish Phrases</td>
+                                <td>62</td>
+                                <td>
+                                    <div class="acc-cell">
+                                        <span class="acc-num">91%</span>
+                                        <div class="acc-bg"><div class="acc-fill good" style="width:0%" data-target="91"></div></div>
+                                    </div>
+                                </td>
+                                <td><span class="algo-tag irt">IRT</span></td>
+                                <td><span class="time-ago">3h ago</span></td>
+                            </tr>
+                            <tr>
+                                <td>📐 Math Formulas</td>
+                                <td>15</td>
+                                <td>
+                                    <div class="acc-cell">
+                                        <span class="acc-num">67%</span>
+                                        <div class="acc-bg"><div class="acc-fill bad" style="width:0%" data-target="67"></div></div>
+                                    </div>
+                                </td>
+                                <td><span class="algo-tag sm2">SM-2</span></td>
+                                <td><span class="time-ago">Yesterday</span></td>
+                            </tr>
+                            <tr>
+                                <td>🏛️ History Dates</td>
+                                <td>33</td>
+                                <td>
+                                    <div class="acc-cell">
+                                        <span class="acc-num">83%</span>
+                                        <div class="acc-bg"><div class="acc-fill good" style="width:0%" data-target="83"></div></div>
+                                    </div>
+                                </td>
+                                <td><span class="algo-tag fsrs">FSRS</span></td>
+                                <td><span class="time-ago">Yesterday</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Side column -->
+                <div class="side-col">
+
+                    <!-- Heatmap -->
+                    <div class="heatmap-card">
+                        <div class="card-header" style="margin-bottom:0">
+                            <div>
+                                <div class="card-title" style="font-size:0.875rem">Study Activity</div>
+                                <div class="card-sub">365-day streak map</div>
+                            </div>
+                        </div>
+                        <div class="hm-grid" id="hm-grid"></div>
+                        <div class="hm-legend">
+                            <span>Less</span>
+                            <div class="hm-lg"></div>
+                            <div class="hm-lg" style="background:rgba(99,102,241,0.25)"></div>
+                            <div class="hm-lg" style="background:rgba(99,102,241,0.5)"></div>
+                            <div class="hm-lg" style="background:rgba(99,102,241,0.75)"></div>
+                            <div class="hm-lg" style="background:rgba(99,102,241,1)"></div>
+                            <span>More</span>
+                        </div>
+                    </div>
+
+                    <!-- AI Insights -->
+                    <div class="insights-card">
+                        <div class="card-header" style="margin-bottom:0">
+                            <div>
+                                <div class="card-title" style="font-size:0.875rem">✨ AI Insights</div>
+                                <div class="card-sub">Powered by Groq · LLAMA-3</div>
+                            </div>
+                        </div>
+                        <div class="insight-list">
+                            <div class="insight-item">
+                                <span class="insight-ic">📈</span>
+                                <span><strong>Japanese Vocab</strong> retention is 12% above target — interval optimizer is working well</span>
+                            </div>
+                            <div class="insight-item">
+                                <span class="insight-ic">⚠️</span>
+                                <span><strong>Math Formulas</strong> accuracy (67%) is below the 75% KPI gate — intervals shortened automatically</span>
+                            </div>
+                            <div class="insight-item">
+                                <span class="insight-ic">🧠</span>
+                                <span>Peak performance window: <strong>7–9 PM</strong> based on 30-day session history</span>
+                            </div>
+                            <div class="insight-item">
+                                <span class="insight-ic">✅</span>
+                                <span>FSRS predicts <strong>94% retention</strong> for today's scheduled reviews across all decks</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- end side-col -->
+
+            </div>
+            <!-- end bottom-row -->
+
+        </main>
+    </div>
+    <!-- end main-area -->
+
+</div>
+<!-- end app-shell -->
+
+<script>
+/* ── Theme ────────────────────────────────────────────────────── */
+function applyTheme(t) {
+    document.body.setAttribute('data-theme', t);
+    const btn = document.getElementById('theme-btn');
+    if (btn) btn.textContent = t === 'dark' ? '☀️' : '🌙';
+    const sel = document.getElementById('theme-select');
+    if (sel) sel.value = t;
+    localStorage.setItem('anki-demo-theme', t);
+    localStorage.setItem('anki-theme', t);
+    drawForgettingCurve();
+    drawStabilityChart();
+}
+
+function toggleTheme() {
+    const cur = document.body.getAttribute('data-theme') || 'dark';
+    applyTheme(cur === 'dark' ? 'light' : 'dark');
+}
+
+/* ── Settings panel ───────────────────────────────────────────── */
+function openSettings() {
+    document.getElementById('settings-panel').classList.add('open');
+    document.getElementById('overlay').classList.add('show');
+}
+function closeSettings() {
+    document.getElementById('settings-panel').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+}
+
+function setTextSize(s) {
+    document.body.setAttribute('data-text-size', s);
+    localStorage.setItem('anki-text-size', s);
+    document.querySelectorAll('.ts-btn').forEach(b => b.classList.remove('active'));
+    const sizes = ['small','medium','large','xl'];
+    const idx = sizes.indexOf(s);
+    const btns = document.querySelectorAll('.ts-btn');
+    if (btns[idx]) btns[idx].classList.add('active');
+}
+
+function toggleReduceMotion() {
+    const t = document.getElementById('rm-toggle');
+    t.classList.toggle('on');
+    const on = t.classList.contains('on');
+    document.body.setAttribute('data-reduce-motion', on);
+    localStorage.setItem('anki-reduce-motion', on);
+}
+
+function toggleHighContrast() {
+    const t = document.getElementById('hc-toggle');
+    t.classList.toggle('on');
+    const on = t.classList.contains('on');
+    applyTheme(on ? 'light' : (localStorage.getItem('anki-demo-theme') || 'dark'));
+}
+
+function setAccent(base, hover) {
+    document.body.style.setProperty('--accent', base);
+    document.body.style.setProperty('--accent-h', hover);
+    document.body.style.setProperty('--accent-glow', base + '22');
+    document.body.style.setProperty('--accent-border', base + '44');
+    document.querySelectorAll('.color-sw').forEach(s => s.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    localStorage.setItem('anki-accent', base + '|' + hover);
+    drawForgettingCurve();
+    drawStabilityChart();
+}
+
+/* ── Animated counters ────────────────────────────────────────── */
+function animateCount(el, target, suffix, duration) {
+    suffix = suffix || '';
+    duration = duration || 1600;
+    const start = performance.now();
+    function tick(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - t, 3);
+        const val = Math.round(ease * target);
+        el.textContent = val.toLocaleString() + suffix;
+        if (t < 1) requestAnimationFrame(tick);
+        else el.textContent = target.toLocaleString() + suffix;
+    }
+    requestAnimationFrame(tick);
+}
+
+/* ── Gate bars & acc bars (animate on load) ───────────────────── */
+function animateBars() {
+    document.querySelectorAll('.gate-bar[data-target]').forEach(function(bar) {
+        const target = parseFloat(bar.getAttribute('data-target'));
+        setTimeout(function() { bar.style.width = target + '%'; }, 300);
+    });
+    document.querySelectorAll('.acc-fill[data-target]').forEach(function(bar) {
+        const target = parseFloat(bar.getAttribute('data-target'));
+        setTimeout(function() { bar.style.width = target + '%'; }, 500);
+    });
+}
+
+/* ── Heatmap ──────────────────────────────────────────────────── */
+function buildHeatmap() {
+    var grid = document.getElementById('hm-grid');
+    if (!grid) return;
+    var today = new Date();
+    for (var i = 364; i >= 0; i--) {
+        var d = document.createElement('div');
+        d.className = 'hm-day';
+        var rand = Math.random();
+        var level = rand > 0.62 ? Math.ceil(Math.random() * 4) : 0;
+        if (level) d.setAttribute('data-l', level);
+        var dt = new Date(today);
+        dt.setDate(dt.getDate() - i);
+        var reviews = level ? level * 12 + Math.floor(Math.random() * 8) : 0;
+        d.title = dt.toLocaleDateString('en-US', { month:'short', day:'numeric' }) + ': ' + reviews + ' reviews';
+        grid.appendChild(d);
+    }
+}
+
+/* ── Forgetting curve SVG ─────────────────────────────────────── */
+function drawForgettingCurve() {
+    var svg = document.getElementById('fc-svg');
+    if (!svg) return;
+    var W = 480, H = 200;
+    var PL = 44, PR = 14, PT = 14, PB = 36;
+    var cW = W - PL - PR, cH = H - PT - PB;
+
+    function xPos(t) { return PL + (t / 60) * cW; }
+    function yPos(R) { return PT + (1 - R) * cH; }
+
+    var curves = [
+        { S: 3,  color: '#ef4444' },
+        { S: 7,  color: '#f59e0b' },
+        { S: 15, color: '#22c55e' },
+        { S: 30, color: '#6366f1' },
+    ];
+
+    var borderColor = getComputedStyle(document.body).getPropertyValue('--border').trim() || '#1e2e48';
+    var text3 = getComputedStyle(document.body).getPropertyValue('--text3').trim() || '#4e5d78';
+
+    var html = '';
+
+    // Grid lines at 25%, 50%, 75%
+    [0.25, 0.5, 0.75].forEach(function(R) {
+        var y = yPos(R).toFixed(1);
+        html += '<line x1="' + PL + '" y1="' + y + '" x2="' + (W - PR) + '" y2="' + y +
+                '" stroke="' + borderColor + '" stroke-width="1" stroke-dasharray="4 3"/>';
+    });
+
+    // Curves
+    curves.forEach(function(c) {
+        var pts = [];
+        for (var t = 0; t <= 60; t += 0.5) {
+            var R = Math.exp(-t / c.S);
+            pts.push(xPos(t).toFixed(1) + ',' + yPos(R).toFixed(1));
+        }
+        html += '<polyline points="' + pts.join(' ') + '" fill="none" stroke="' + c.color +
+                '" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+    });
+
+    // Axes
+    html += '<line x1="' + PL + '" y1="' + PT + '" x2="' + PL + '" y2="' + (H - PB) +
+            '" stroke="' + text3 + '" stroke-width="1"/>';
+    html += '<line x1="' + PL + '" y1="' + (H - PB) + '" x2="' + (W - PR) + '" y2="' + (H - PB) +
+            '" stroke="' + text3 + '" stroke-width="1"/>';
+
+    // X labels
+    [0, 15, 30, 45, 60].forEach(function(t) {
+        var x = xPos(t).toFixed(1);
+        html += '<text x="' + x + '" y="' + (H - 8) + '" text-anchor="middle" font-size="10" fill="' +
+                text3 + '" font-family="Inter,sans-serif">' + t + 'd</text>';
+    });
+
+    // Y labels
+    [0, 0.25, 0.5, 0.75, 1.0].forEach(function(R) {
+        var y = yPos(R).toFixed(1);
+        html += '<text x="' + (PL - 5) + '" y="' + (parseFloat(y) + 4) + '" text-anchor="end" font-size="10" fill="' +
+                text3 + '" font-family="Inter,sans-serif">' + Math.round(R * 100) + '%</text>';
+    });
+
+    svg.innerHTML = html;
+}
+
+/* ── Stability distribution SVG ──────────────────────────────── */
+function drawStabilityChart() {
+    var svg = document.getElementById('sd-svg');
+    if (!svg) return;
+    var W = 480, H = 200;
+    var PL = 38, PR = 12, PT = 16, PB = 38;
+    var cW = W - PL - PR, cH = H - PT - PB;
+
+    var bins   = ['<3d', '3-7d', '7-14d', '14-30d', '30-60d', '60+d'];
+    var counts = [12, 28, 45, 67, 82, 38];
+    var colors = ['#ef4444','#f59e0b','#eab308','#22c55e','#6366f1','#8b5cf6'];
+    var maxC = Math.max.apply(null, counts);
+    var n = bins.length;
+    var slotW = cW / n;
+    var barW = slotW * 0.62;
+    var gap = (slotW - barW) / 2;
+
+    var borderColor = getComputedStyle(document.body).getPropertyValue('--border').trim() || '#1e2e48';
+    var text3 = getComputedStyle(document.body).getPropertyValue('--text3').trim() || '#4e5d78';
+    var text2 = getComputedStyle(document.body).getPropertyValue('--text2').trim() || '#8a99b4';
+
+    var html = '';
+
+    // Grid lines
+    [0.25, 0.5, 0.75, 1.0].forEach(function(f) {
+        var y = (PT + cH - f * cH).toFixed(1);
+        html += '<line x1="' + PL + '" y1="' + y + '" x2="' + (W - PR) + '" y2="' + y +
+                '" stroke="' + borderColor + '" stroke-width="1" stroke-dasharray="3 3"/>';
+    });
+
+    // Bars
+    bins.forEach(function(bin, i) {
+        var x = (PL + i * slotW + gap).toFixed(1);
+        var barH = (counts[i] / maxC) * cH;
+        var y = (PT + cH - barH).toFixed(1);
+
+        html += '<rect x="' + x + '" y="' + y + '" width="' + barW.toFixed(1) + '" height="' +
+                barH.toFixed(1) + '" rx="3" fill="' + colors[i] + '" opacity="0.85"/>';
+
+        var cx = (PL + i * slotW + slotW / 2).toFixed(1);
+        html += '<text x="' + cx + '" y="' + (parseFloat(y) - 4) + '" text-anchor="middle" font-size="10" fill="' +
+                text2 + '" font-family="Inter,sans-serif" font-weight="600">' + counts[i] + '</text>';
+
+        html += '<text x="' + cx + '" y="' + (H - 8) + '" text-anchor="middle" font-size="9.5" fill="' +
+                text3 + '" font-family="Inter,sans-serif">' + bin + '</text>';
+    });
+
+    // Axes
+    html += '<line x1="' + PL + '" y1="' + PT + '" x2="' + PL + '" y2="' + (H - PB + 4) +
+            '" stroke="' + text3 + '" stroke-width="1"/>';
+    html += '<line x1="' + PL + '" y1="' + (H - PB + 4) + '" x2="' + (W - PR) + '" y2="' + (H - PB + 4) +
+            '" stroke="' + text3 + '" stroke-width="1"/>';
+
+    // Y labels (card counts)
+    [0, 0.25, 0.5, 0.75, 1.0].forEach(function(f) {
+        var y = (PT + cH - f * cH).toFixed(1);
+        var val = Math.round(f * maxC);
+        html += '<text x="' + (PL - 4) + '" y="' + (parseFloat(y) + 4) + '" text-anchor="end" font-size="9.5" fill="' +
+                text3 + '" font-family="Inter,sans-serif">' + val + '</text>';
+    });
+
+    svg.innerHTML = html;
+}
+
+/* ── Keyboard shortcuts ───────────────────────────────────────── */
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeSettings();
+    if ((e.ctrlKey || e.metaKey) && e.key === 'd') { e.preventDefault(); toggleTheme(); }
+    if (e.key === '1' && !e.ctrlKey && !e.metaKey) window.location.href = 'index.html';
+    if (e.key === '2' && !e.ctrlKey && !e.metaKey) window.location.href = 'interactive-demo.html';
+    if (e.key === '3' && !e.ctrlKey && !e.metaKey) window.location.href = 'technical-showcase.html';
+    if (e.key === '4' && !e.ctrlKey && !e.metaKey) window.location.href = 'user-guide.html';
+});
+
+/* ── Init ─────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', function() {
+    // Load saved theme
+    var savedTheme = localStorage.getItem('anki-demo-theme') ||
+                     localStorage.getItem('anki-theme') || 'dark';
+    applyTheme(savedTheme);
+
+    // Load saved accent
+    var savedAccent = localStorage.getItem('anki-accent');
+    if (savedAccent) {
+        var parts = savedAccent.split('|');
+        if (parts.length === 2) {
+            document.body.style.setProperty('--accent', parts[0]);
+            document.body.style.setProperty('--accent-h', parts[1]);
+        }
+    }
+
+    // Build heatmap
+    buildHeatmap();
+
+    // Draw SVG charts (after theme is applied)
+    setTimeout(function() {
+        drawForgettingCurve();
+        drawStabilityChart();
+    }, 50);
+
+    // Animate KPI counters & bars via IntersectionObserver
+    var observed = false;
+    var kpiObs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting && !observed) {
+                observed = true;
+                animateCount(document.getElementById('kv-acc'), 87, '', 1400);
+                animateCount(document.getElementById('kv-rev'), 8932, '', 1800);
+                animateCount(document.getElementById('kv-ret'), 95, '', 1400);
+                animateBars();
+                kpiObs.disconnect();
             }
-        }
-
-        // Counter animation
-        function animateCounters() {
-            const counters = document.querySelectorAll('.animate-counter');
-            
-            counters.forEach(counter => {
-                const target = parseFloat(counter.getAttribute('data-target'));
-                const increment = target / 100;
-                let current = 0;
-                
-                const updateCounter = () => {
-                    if (current < target) {
-                        current += increment;
-                        if (target % 1 === 0) {
-                            counter.textContent = Math.ceil(current);
-                        } else {
-                            counter.textContent = current.toFixed(1);
-                        }
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        if (target % 1 === 0) {
-                            counter.textContent = target;
-                        } else {
-                            counter.textContent = target.toFixed(1);
-                        }
-                        // Add % for percentage values
-                        if (counter.getAttribute('data-target') === '87') {
-                            counter.textContent += '%';
-                        } else if (counter.getAttribute('data-target') === '89') {
-                            counter.textContent += '%';
-                        }
-                    }
-                };
-                
-                // Start animation when element comes into view
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            setTimeout(() => updateCounter(), Math.random() * 500);
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                });
-                
-                observer.observe(counter);
-            });
-        }
-
-        // Chart bar growth animation
-        function animateChartBars() {
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes growHeight {
-                    from {
-                        height: 0 !important;
-                        opacity: 0;
-                    }
-                    to {
-                        opacity: 1;
-                    }
-                }
-                .animate-grow {
-                    animation: growHeight 1s ease-out forwards;
-                    height: 0;
-                    opacity: 0;
-                }
-            `;
-            document.head.appendChild(style);
-        }
-
-        // Smooth scroll navigation
-        function scrollToSection(sectionId) {
-            const section = document.getElementById(sectionId);
-            if (section) {
-                section.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-                
-                // Update active nav button
-                document.querySelectorAll('.header-nav-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                const activeBtn = document.querySelector(`[href="#${sectionId}"]`);
-                if (activeBtn) {
-                    activeBtn.classList.add('active');
-                }
-            }
-        }
-        
-        // Theme toggle function - persists across all demo pages
-        function toggleTheme() {
-            const currentTheme = document.body.getAttribute('data-theme') || 'light';
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            document.body.setAttribute('data-theme', newTheme);
-            
-            // Update theme toggle icon
-            const themeBtn = document.querySelector('.theme-toggle-btn');
-            themeBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-            
-            // Save to both storage keys for persistence across all pages
-            localStorage.setItem('anki-demo-theme', newTheme);
-            localStorage.setItem('anki-theme', newTheme);
-        }
-
-        // Settings Functions
-        function toggleSettings() {
-            const panel = document.getElementById('settingsPanel');
-            const overlay = document.getElementById('overlay');
-            
-            panel.classList.toggle('open');
-            overlay.classList.toggle('show');
-        }
-
-        function changeTextSize(size) {
-            document.body.setAttribute('data-text-size', size);
-            localStorage.setItem('anki-text-size', size);
-        }
-
-        function changeFontFamily(font) {
-            document.body.setAttribute('data-font-family', font);
-            localStorage.setItem('anki-font-family', font);
-        }
-
-        function toggleReduceMotion() {
-            const toggle = document.getElementById('reduceMotionToggle');
-            const isActive = toggle.classList.contains('active');
-            
-            toggle.classList.toggle('active');
-            document.body.setAttribute('data-reduce-motion', !isActive);
-            localStorage.setItem('anki-reduce-motion', !isActive);
-        }
-
-        function toggleHighContrast() {
-            const toggle = document.getElementById('highContrastToggle');
-            const currentTheme = document.body.getAttribute('data-theme');
-            
-            if (currentTheme === 'high-contrast') {
-                changeTheme('light');
-                toggle.classList.remove('active');
-            } else {
-                changeTheme('high-contrast');
-                toggle.classList.add('active');
-            }
-        }
-
-        function changeAccentColor(color, name) {
-            document.documentElement.style.setProperty('--primary-color', color);
-            document.documentElement.style.setProperty('--secondary-color', color);
-            
-            // Update active color option
-            document.querySelectorAll('.color-option').forEach(option => {
-                option.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            localStorage.setItem('anki-accent-color', color);
-        }
-        
-        // Initialize everything when the DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            generateHeatMap();
-            animateCounters();
-            animateChartBars();
-            
-            // Load saved theme - check both storage keys for persistence
-            const savedTheme = localStorage.getItem('anki-demo-theme') || 
-                               localStorage.getItem('anki-theme') || 
-                               'light';
-            document.body.setAttribute('data-theme', savedTheme);
-            const themeBtn = document.querySelector('.theme-toggle-btn');
-            if (themeBtn) {
-                themeBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
-            }
-            
-            // Save to both keys for consistency
-            localStorage.setItem('anki-demo-theme', savedTheme);
-            localStorage.setItem('anki-theme', savedTheme);
-            
-            // Handle scroll-spy for navigation
-            const sections = ['hero', 'features', 'experience', 'analytics', 'cta'];
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const sectionId = entry.target.id;
-                        document.querySelectorAll('.header-nav-btn').forEach(btn => {
-                            btn.classList.remove('active');
-                        });
-                        const activeBtn = document.querySelector(`[href="#${sectionId}"]`);
-                        if (activeBtn) {
-                            activeBtn.classList.add('active');
-                        }
-                    }
-                });
-            }, { threshold: 0.3 });
-            
-            sections.forEach(sectionId => {
-                const section = document.getElementById(sectionId);
-                if (section) {
-                    observer.observe(section);
-                }
-            });
-            
-            // Add stagger delay to elements with stagger-children class
-            document.querySelectorAll('.stagger-children').forEach(parent => {
-                Array.from(parent.children).forEach((child, index) => {
-                    child.style.setProperty('--stagger-delay', index);
-                });
-            });
-            
-            // Keyboard navigation
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    // Close any overlays
-                } else if (e.key === 'Enter' && e.ctrlKey) {
-                    // Quick start demo
-                    openInteractiveDemo();
-                }
-            });
-
-            // Add welcome message
-            console.log('🧠 Welcome to the PRCM | ASRL DEMO!');
-            console.log('🎮 Press Ctrl+Enter to launch the interactive demo');
-            console.log('📚 Explore all four interconnected demo experiences');
-
-            // Scroll-reveal for sections
-            const scrollRevealObs = new IntersectionObserver(entries => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) {
-                        e.target.classList.add('revealed');
-                        scrollRevealObs.unobserve(e.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.scroll-reveal').forEach(el => scrollRevealObs.observe(el));
         });
-    </script>
+    }, { threshold: 0.2 });
 
-    <!-- Site Footer -->
-    <footer class="site-footer">
-        <div class="site-footer-inner">
-            <div class="footer-brand-text">🧠 PRCM | ASRL</div>
-            <nav class="footer-nav-links">
-                <a href="START_HERE.html">Home</a>
-                <a href="index.html">Overview</a>
-                <a href="interactive-demo.html">Try Demo</a>
-                <a href="user-guide.html">Guide</a>
-                <a href="technical-showcase.html">Technical</a>
-            </nav>
-            <p class="footer-copyright">PRCM | ASRL Demo — Adaptive Learning Platform Showcase</p>
-        </div>
-    </footer>
+    var kpiGrid = document.querySelector('.kpi-grid');
+    if (kpiGrid) kpiObs.observe(kpiGrid);
+
+    console.log('🧠 PRCM | ASRL Dashboard');
+    console.log('Ctrl+D: toggle theme  |  1-4: navigate pages');
+});
+</script>
 </body>
 </html>
