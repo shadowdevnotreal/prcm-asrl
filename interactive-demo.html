@@ -1406,6 +1406,8 @@ function showTourStep(idx) {
     }
 
     overlay.classList.add('active');
+    // Allow clicks to reach the page on waitFor steps so user can interact with the target
+    overlay.style.pointerEvents = step.waitFor ? 'none' : 'auto';
     callout.style.display = 'block';
 
     if (step.center || !step.target) {
