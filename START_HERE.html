@@ -57,12 +57,13 @@
            RESET & BASE
            ============================================================ */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
             color: var(--text);
+            font-size: 15px;
             line-height: 1.6;
             overflow-x: hidden;
             transition: background 0.3s ease, color 0.3s ease;
@@ -169,6 +170,10 @@
         @media (max-width: 1400px) {
             .hero { padding: 4rem 1.5rem 3.5rem; }
             .wrapper { padding: 0 1.25rem; }
+        }
+        @media (max-width: 1366px) {
+            .hero { padding: 3rem 1.5rem 2.5rem; }
+            .section { padding: 4rem 1.5rem; }
         }
         @media (max-width: 768px) { .nav-menu { display: none; } }
 
