@@ -1089,6 +1089,9 @@ function flipCard() {
     if (isFlipped) return;
     document.getElementById('flashcard').classList.add('flipped');
     isFlipped = true;
+    if (_tourActive && TOUR_STEPS[_tourStep] && TOUR_STEPS[_tourStep].waitFor === 'flip') {
+        setTimeout(function() { _tourStep++; showTourStep(_tourStep); }, 450);
+    }
 }
 
 function answerCard(difficulty) {
@@ -1098,6 +1101,9 @@ function answerCard(difficulty) {
     else if (difficulty === 'hard') accuracyVal = Math.max(0, accuracyVal - 1);
     else if (difficulty === 'good') accuracyVal = Math.min(100, accuracyVal + 1);
     else if (difficulty === 'easy') accuracyVal = Math.min(100, accuracyVal + 2);
+    if (_tourActive && TOUR_STEPS[_tourStep] && TOUR_STEPS[_tourStep].waitFor === 'rate') {
+        setTimeout(function() { _tourStep++; showTourStep(_tourStep); }, 300);
+    }
     document.getElementById('reviews').textContent = reviewCount;
     document.getElementById('accuracy').textContent = accuracyVal + '%';
     currentCard = (currentCard + 1) % cards.length;
@@ -1460,25 +1466,6 @@ function showTourStep(idx) {
     }
 }
 
-// Hook into flipCard so tour auto-advances on flip
-var _origFlipCard = window.flipCard;
-function flipCard() {
-    if (typeof _origFlipCard === 'function') _origFlipCard();
-    if (_tourActive && TOUR_STEPS[_tourStep] && TOUR_STEPS[_tourStep].waitFor === 'flip') {
-        setTimeout(function() { _tourStep++; showTourStep(_tourStep); }, 450);
-    }
-}
-window.flipCard = flipCard;
-
-// Hook into answerCard so tour auto-advances on rate
-var _origAnswerCard = window.answerCard;
-function answerCard(d) {
-    if (typeof _origAnswerCard === 'function') _origAnswerCard(d);
-    if (_tourActive && TOUR_STEPS[_tourStep] && TOUR_STEPS[_tourStep].waitFor === 'rate') {
-        setTimeout(function() { _tourStep++; showTourStep(_tourStep); }, 300);
-    }
-}
-window.answerCard = answerCard;
 </script>
 </body>
 </html>
