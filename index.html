@@ -807,14 +807,19 @@
         .dashboard { padding-bottom: calc(58px + 20px); }
 
         /* ── Responsive ───────────────────────────────────────────── */
+        @media (max-width: 1400px) {
+            .dashboard { padding: 16px 16px 28px; }
+        }
         @media (max-width: 1280px) {
             .kpi-grid { grid-template-columns: repeat(2, 1fr); }
             .cta-btn { display: none; }
+            :root { --sidebar-w: 190px; }
         }
         @media (max-width: 1100px) {
             .streak-pill { display: none; }
             .bottom-row { grid-template-columns: 1fr; }
             .side-col { display: grid; grid-template-columns: 1fr 1fr; }
+            :root { --sidebar-w: 170px; }
         }
         @media (max-width: 900px) {
             .charts-row { grid-template-columns: 1fr; }

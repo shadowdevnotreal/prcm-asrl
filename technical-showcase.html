@@ -644,13 +644,21 @@
             animation: fadeInUp 0.6s ease forwards;
         }
 
+        @media (max-width: 1400px) {
+            .container { padding: 28px 20px; }
+            .header { margin-bottom: 40px; }
+        }
+        @media (max-width: 1200px) {
+            .header h1 { font-size: 38px; }
+            .container { padding: 24px 16px; }
+        }
         @media (max-width: 768px) {
             .container {
                 padding: 20px 10px;
             }
-            
+
             .header h1 {
-                font-size: 36px;
+                font-size: 32px;
             }
             
             .header p {
