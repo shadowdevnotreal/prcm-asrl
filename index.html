@@ -10,6 +10,7 @@
     <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { overflow-x: hidden; max-width: 100%; }
 
         /* ── Design tokens ────────────────────────────────────────── */
         body {
@@ -500,7 +501,8 @@
         .leg { display: flex; align-items: center; gap: 5px; font-size: 0.6875rem; color: var(--text2); }
         .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-        svg.chart-svg { width: 100%; height: auto; display: block; overflow: visible; }
+        svg.chart-svg { width: 100%; height: auto; display: block; overflow: visible; max-width: 100%; }
+        .chart-wrap { overflow: hidden; }
 
         /* ── Bottom row ───────────────────────────────────────────── */
         .bottom-row {
@@ -807,8 +809,10 @@
         /* ── Responsive ───────────────────────────────────────────── */
         @media (max-width: 1280px) {
             .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+            .cta-btn { display: none; }
         }
         @media (max-width: 1100px) {
+            .streak-pill { display: none; }
             .bottom-row { grid-template-columns: 1fr; }
             .side-col { display: grid; grid-template-columns: 1fr 1fr; }
         }
@@ -1106,7 +1110,7 @@
                         </div>
                         <span class="card-badge">SM-2 + FSRS</span>
                     </div>
-                    <svg class="chart-svg" id="fc-svg" viewBox="0 0 480 200" aria-label="Forgetting curve chart"></svg>
+                    <div class="chart-wrap"><svg class="chart-svg" id="fc-svg" viewBox="0 0 480 200" aria-label="Forgetting curve chart"></svg></div>
                     <div class="chart-legend">
                         <div class="leg"><div class="leg-dot" style="background:#ef4444"></div>S=3d</div>
                         <div class="leg"><div class="leg-dot" style="background:#f59e0b"></div>S=7d</div>
@@ -1124,7 +1128,7 @@
                         </div>
                         <span class="card-badge">272 cards</span>
                     </div>
-                    <svg class="chart-svg" id="sd-svg" viewBox="0 0 480 200" aria-label="Stability distribution chart"></svg>
+                    <div class="chart-wrap"><svg class="chart-svg" id="sd-svg" viewBox="0 0 480 200" aria-label="Stability distribution chart"></svg></div>
                     <div class="chart-legend">
                         <div class="leg"><div class="leg-dot" style="background:#ef4444"></div>&lt;3d</div>
                         <div class="leg"><div class="leg-dot" style="background:#f59e0b"></div>3-7d</div>
