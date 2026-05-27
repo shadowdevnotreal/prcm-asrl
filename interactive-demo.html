@@ -10,6 +10,7 @@
     <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { overflow-x: hidden; max-width: 100%; }
 
         /* ── Design tokens (dark default) ─────────────────────────── */
         body {
@@ -491,6 +492,9 @@
         .footer-copy { font-size: 0.6875rem; color: var(--text3); margin-top: 8px; }
 
         /* ── Responsive ───────────────────────────────────────────── */
+        @media (max-width: 1100px) {
+            .streak-pill { display: none; }
+        }
         @media (max-width: 900px) {
             .profile-grid { grid-template-columns: 1fr; }
             .charts-2col  { grid-template-columns: 1fr; }
@@ -1369,7 +1373,9 @@ function startTour() {
 
 function endTour() {
     _tourActive = false;
-    document.getElementById('tour-overlay').classList.remove('active');
+    var ov = document.getElementById('tour-overlay');
+    ov.classList.remove('active');
+    ov.style.pointerEvents = '';  // clear inline style so CSS none takes effect
     document.getElementById('tour-spot').style.display    = 'none';
     document.getElementById('tour-pulse').style.display   = 'none';
     document.getElementById('tour-callout').style.display = 'none';
@@ -1412,8 +1418,9 @@ function showTourStep(idx) {
     }
 
     overlay.classList.add('active');
-    // Allow clicks to reach the page on waitFor steps so user can interact with the target
-    overlay.style.pointerEvents = step.waitFor ? 'none' : 'auto';
+    // waitFor steps: pass clicks through so user can interact with the target element.
+    // Non-waitFor steps: clear inline style so CSS class controls pointer-events.
+    overlay.style.pointerEvents = step.waitFor ? 'none' : '';
     callout.style.display = 'block';
 
     if (step.center || !step.target) {

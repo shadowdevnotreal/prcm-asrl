@@ -85,6 +85,7 @@
             padding: 0;
             box-sizing: border-box;
         }
+        html, body { overflow-x: hidden; max-width: 100%; }
 
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -635,10 +636,14 @@
             .header-nav {
                 gap: 0.5rem;
             }
-            
             .header-nav-btn {
                 padding: 0.4rem 0.8rem;
                 font-size: 0.85rem;
+            }
+            .container {
+                grid-template-columns: 260px 1fr;
+                padding: 1.25rem;
+                gap: 1.25rem;
             }
         }
         
