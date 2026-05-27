@@ -139,7 +139,10 @@
             display: inline-flex; align-items: center;
         }
         .ts-tab:hover  { color: var(--sp-text); background: var(--sp-accent-dim); }
-        .ts-tab.active { color: var(--sp-accent-h); background: var(--sp-accent-dim); font-weight: 600; }
+        .ts-tab.active {
+            color: #fff; background: var(--sp-accent, #6366f1);
+            font-weight: 700; box-shadow: 0 2px 8px rgba(99,102,241,.4);
+        }
         .topbar-actions-ts {
             display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0;
         }
@@ -317,6 +320,38 @@
             .ts-nav-links { display: none; }
             .ts-step-label { display: none; }
         }
+
+        /* ── Bottom Navigation Bar ────────────────────────────────────── */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+            height: 58px; display: flex; align-items: stretch;
+            background: rgba(11,17,32,0.96);
+            border-top: 1px solid rgba(99,102,241,.22);
+            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+        }
+        [data-theme="light"] .bottom-nav {
+            background: rgba(241,245,249,0.96); border-top-color: #e2e8f0;
+        }
+        .bn-item {
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 2px;
+            text-decoration: none; padding: 6px 2px;
+            color: #64748b; font-size: 0.6rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            border-top: 2px solid transparent;
+            transition: color 0.15s, background 0.15s, border-color 0.15s;
+        }
+        .bn-item:hover { color: #6366f1; background: rgba(99,102,241,.07); }
+        .bn-item.active {
+            color: #818cf8; background: rgba(99,102,241,.12);
+            border-top-color: #6366f1; font-weight: 700;
+        }
+        [data-theme="light"] .bn-item { color: #94a3b8; }
+        [data-theme="light"] .bn-item:hover { color: #6366f1; }
+        [data-theme="light"] .bn-item.active { color: #4f46e5; }
+        .bn-icon { font-size: 1.1rem; line-height: 1; }
+        .bn-lbl  { line-height: 1; }
+        body { padding-bottom: 58px; }
 
         /* ── Page footer ─────────────────────────────────────────────── */
         .ts-footer {
@@ -1061,6 +1096,15 @@
     </div>
 
     <!-- Footer -->
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav" aria-label="Page navigation">
+        <a href="START_HERE.html" class="bn-item"><span class="bn-icon">🏠</span><span class="bn-lbl">Home</span></a>
+        <a href="index.html"      class="bn-item"><span class="bn-icon">📊</span><span class="bn-lbl">Overview</span></a>
+        <a href="interactive-demo.html" class="bn-item"><span class="bn-icon">🎴</span><span class="bn-lbl">Try Demo</span></a>
+        <a href="user-guide.html" class="bn-item"><span class="bn-icon">📚</span><span class="bn-lbl">Guide</span></a>
+        <a href="technical-showcase.html" class="bn-item active"><span class="bn-icon">⚙️</span><span class="bn-lbl">Technical</span></a>
+    </nav>
+
     <footer class="ts-footer">
         <div class="ts-footer-inner">
             <div class="ts-footer-brand">🧠 PRCM | ASRL</div>
